@@ -1,4 +1,5 @@
 ﻿using System;
+using BuyAndSellApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -23,7 +24,6 @@ namespace BuyAndSellApi.Models
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductAttribute> ProductAttribute { get; set; }
         public virtual DbSet<ProductAttributeValue> ProductAttributeValue { get; set; }
-        public virtual DbSet<ProductStatus> ProductStatus { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
@@ -36,7 +36,7 @@ namespace BuyAndSellApi.Models
                 optionsBuilder.UseNpgsql("Host=localhost;Database=buyandsell;Username=postgres;Password=betsegaw");
             }
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
@@ -310,14 +310,14 @@ namespace BuyAndSellApi.Models
                     .WithMany(p => p.Product)
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_product_product_status");
+                    .HasConstraintName("fk_product_lookup_value");
             });
 
             modelBuilder.Entity<ProductAttribute>(entity =>
             {
                 entity.ToTable("product_attribute");
 
-                entity.HasIndex(e => e.CId)
+                entity.HasIndex(e => e.CategoryId)
                     .HasName("fki_fk_product_template_detail");
 
                 entity.Property(e => e.Id)
@@ -328,7 +328,7 @@ namespace BuyAndSellApi.Models
                     .HasColumnName("active")
                     .HasDefaultValueSql("true");
 
-                entity.Property(e => e.CId).HasColumnName("c_id");
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
@@ -352,9 +352,9 @@ namespace BuyAndSellApi.Models
                     .HasColumnName("unit")
                     .HasMaxLength(25);
 
-                entity.HasOne(d => d.C)
+                entity.HasOne(d => d.Category)
                     .WithMany(p => p.ProductAttribute)
-                    .HasForeignKey(d => d.CId)
+                    .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_product_attribute_category");
             });
@@ -363,11 +363,11 @@ namespace BuyAndSellApi.Models
             {
                 entity.ToTable("product_attribute_value");
 
-                entity.HasIndex(e => e.PId)
-                    .HasName("fki_fk_product_attribute_value_product");
-
-                entity.HasIndex(e => e.PaId)
+                entity.HasIndex(e => e.ProductAttributeId)
                     .HasName("fki_fk_product_attribute_value_product_attribute");
+
+                entity.HasIndex(e => e.ProductId)
+                    .HasName("fki_fk_product_attribute_value_product");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -381,52 +381,26 @@ namespace BuyAndSellApi.Models
                     .HasColumnName("last_updated")
                     .HasDefaultValueSql("now()");
 
-                entity.Property(e => e.PId).HasColumnName("p_id");
+                entity.Property(e => e.ProductAttributeId).HasColumnName("product_attribute_id");
 
-                entity.Property(e => e.PaId).HasColumnName("pa_id");
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
 
                 entity.Property(e => e.Value)
                     .IsRequired()
                     .HasColumnName("value")
                     .HasMaxLength(250);
 
-                entity.HasOne(d => d.P)
+                entity.HasOne(d => d.ProductAttribute)
                     .WithMany(p => p.ProductAttributeValue)
-                    .HasForeignKey(d => d.PId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_product_attribute_value_product");
-
-                entity.HasOne(d => d.Pa)
-                    .WithMany(p => p.ProductAttributeValue)
-                    .HasForeignKey(d => d.PaId)
+                    .HasForeignKey(d => d.ProductAttributeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_product_attribute_value_product_attribute");
-            });
 
-            modelBuilder.Entity<ProductStatus>(entity =>
-            {
-                entity.ToTable("product_status");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Active)
-                    .HasColumnName("active")
-                    .HasDefaultValueSql("true");
-
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
-
-                entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-
-                entity.Property(e => e.LastUpdated)
-                    .HasColumnName("last_updated")
-                    .HasDefaultValueSql("now()");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(50);
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ProductAttributeValue)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_product_attribute_value_product");
             });
 
             modelBuilder.Entity<Role>(entity =>

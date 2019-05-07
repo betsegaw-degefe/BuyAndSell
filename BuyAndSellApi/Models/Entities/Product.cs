@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace BuyAndSellApi.Models
+namespace BuyAndSellApi.Models.Entities
 {
     public partial class Product
     {

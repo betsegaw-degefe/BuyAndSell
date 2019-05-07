@@ -8,27 +8,25 @@
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="BuyAndSellApi.csproj" t="IncludeRecursive" />
       <e p="Controllers" t="Include">
-        <e p="TodoController.cs" t="Include" />
         <e p="ValuesController.cs" t="Include" />
         <e p="user" t="Include">
           <e p="LoginController.cs" t="Include" />
         </e>
       </e>
       <e p="Models" t="Include">
-        <e p="Address.cs" t="Include" />
-        <e p="Category.cs" t="Include" />
-        <e p="LookupCategory.cs" t="Include" />
-        <e p="LookupValue.cs" t="Include" />
-        <e p="Order.cs" t="Include" />
-        <e p="Product.cs" t="Include" />
-        <e p="ProductAttribute.cs" t="Include" />
-        <e p="ProductAttributeValue.cs" t="Include" />
-        <e p="ProductStatus.cs" t="Include" />
-        <e p="Role.cs" t="Include" />
-        <e p="TodoContext.cs" t="Include" />
-        <e p="TodoItem.cs" t="Include" />
-        <e p="User.cs" t="Include" />
-        <e p="UserRole.cs" t="Include" />
+        <e p="Entities" t="Include">
+          <e p="Address.cs" t="Include" />
+          <e p="Category.cs" t="Include" />
+          <e p="LookupCategory.cs" t="Include" />
+          <e p="LookupValue.cs" t="Include" />
+          <e p="Order.cs" t="Include" />
+          <e p="Product.cs" t="Include" />
+          <e p="ProductAttribute.cs" t="Include" />
+          <e p="ProductAttributeValue.cs" t="Include" />
+          <e p="Role.cs" t="Include" />
+          <e p="User.cs" t="Include" />
+          <e p="UserRole.cs" t="Include" />
+        </e>
         <e p="buyandsellContext.cs" t="Include" />
       </e>
       <e p="Program.cs" t="Include" />

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 
-namespace BuyAndSellApi.Models
+namespace BuyAndSellApi.Models.Entities
 {
     public partial class ProductAttributeValue
     {

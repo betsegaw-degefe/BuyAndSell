@@ -5,6 +5,11 @@ namespace BuyAndSellApi.Models
 {
     public partial class LookupValue
     {
+        public LookupValue()
+        {
+            Product = new HashSet<Product>();
+        }
+
         public int Id { get; set; }
         public int LcId { get; set; }
         public string Name { get; set; }
@@ -15,5 +20,6 @@ namespace BuyAndSellApi.Models
         public bool? Active { get; set; }
 
         public virtual LookupCategory Lc { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }
