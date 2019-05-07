@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$APPLICATION_CONFIG_DIR$/consoles/db" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.Rider2018.3/system/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.Rider2018.3/system/resharper-host/local/Transient/ReSharperHost/v183/SolutionCaches/_BuyAndSellApi.-1904190078.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="BuyAndSellApi.csproj" t="IncludeRecursive" />
+      <e p="Controllers" t="Include">
+        <e p="TodoController.cs" t="Include" />
+        <e p="ValuesController.cs" t="Include" />
+        <e p="user" t="Include">
+          <e p="LoginController.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Models" t="Include">
+        <e p="Address.cs" t="Include" />
+        <e p="Category.cs" t="Include" />
+        <e p="LookupCategory.cs" t="Include" />
+        <e p="LookupValue.cs" t="Include" />
+        <e p="Order.cs" t="Include" />
+        <e p="Product.cs" t="Include" />
+        <e p="ProductAttribute.cs" t="Include" />
+        <e p="ProductAttributeValue.cs" t="Include" />
+        <e p="ProductStatus.cs" t="Include" />
+        <e p="Role.cs" t="Include" />
+        <e p="TodoContext.cs" t="Include" />
+        <e p="TodoItem.cs" t="Include" />
+        <e p="User.cs" t="Include" />
+        <e p="UserRole.cs" t="Include" />
+        <e p="buyandsellContext.cs" t="Include" />
+      </e>
+      <e p="Program.cs" t="Include" />
+      <e p="Properties" t="Include">
+        <e p="launchSettings.json" t="Include" />
+      </e>
+      <e p="Startup.cs" t="Include" />
+      <e p="appsettings.Development.json" t="Include" />
+      <e p="appsettings.json" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp2.2" t="Include">
+            <e p="BuyAndSellApi.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
