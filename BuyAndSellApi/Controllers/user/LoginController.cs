@@ -1,19 +1,36 @@
-using BuyAndSellApi.Models;
+using System.Collections;
+using System.Collections.Generic;
+using BuyAndSellApi.Models.Entities;
+using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuyAndSellApi.Controllers.user
 {
-    [Route("/user/[Controller]")]
+    [Route("user/[Controller]")]
     [ApiController]
-    public class LoginController : Controller
+    [Produces("application/json")]
+    public class LoginController : ControllerBase
     {
-        private readonly buyandsellContext _context;
+        private readonly IBuyAndSellRepository _repository;
 
-        public LoginController(buyandsellContext context)
+        public LoginController(IBuyAndSellRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-       
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult Get()
+        {
+            try
+            {
+                return Ok(_repository.GetUser("betsegaw", "betsegaw"));
+            }
+            catch
+            {
+                return BadRequest("Failed to get products");
+            }
+        }
     }
 }

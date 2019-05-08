@@ -1,4 +1,5 @@
-﻿using BuyAndSellApi.Models;
+﻿using BuyAndSellApi.Models.Entities;
+using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -20,15 +21,16 @@ namespace BuyAndSellApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-        
             //services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             var connection = @"Host=localhost;Database=buyandsell;Username=postgres;Password=betsegaw";
             //services.AddDbContext<buyandsellContext>(options => options.UseSqlServer(connection));
-            
+
             services.AddEntityFrameworkNpgsql()
-                           .AddDbContext<buyandsellContext>()
-                           .BuildServiceProvider();
+                .AddDbContext<BuyAndSellContext>()
+                .BuildServiceProvider();
+
+            services.AddScoped<IBuyAndSellRepository, BuyAndSellRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,5 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuyAndSellApi.Models.Entities
 {
@@ -29,7 +31,7 @@ namespace BuyAndSellApi.Models.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdated { get; set; }
 
-        public virtual Address Address { get; set; }
+        [ForeignKey("AddressId")] public virtual Address Address { get; set; }
         public virtual ICollection<Order> OrderBuyer { get; set; }
         public virtual ICollection<Order> OrderSeller { get; set; }
         public virtual ICollection<UserRole> UserRole { get; set; }

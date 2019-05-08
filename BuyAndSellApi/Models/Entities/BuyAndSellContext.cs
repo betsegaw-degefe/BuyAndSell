@@ -1,17 +1,16 @@
 ﻿using System;
-using BuyAndSellApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace BuyAndSellApi.Models
+namespace BuyAndSellApi.Models.Entities
 {
-    public partial class buyandsellContext : DbContext
+    public partial class BuyAndSellContext : DbContext
     {
-        public buyandsellContext()
+        public BuyAndSellContext()
         {
         }
 
-        public buyandsellContext(DbContextOptions<buyandsellContext> options)
+        public BuyAndSellContext(DbContextOptions<BuyAndSellContext> options)
             : base(options)
         {
         }
@@ -43,43 +42,25 @@ namespace BuyAndSellApi.Models
 
             modelBuilder.Entity<Address>(entity =>
             {
-                entity.ToTable("address");
-
                 entity.HasIndex(e => e.ParentId)
                     .HasName("fki_fk_address_address");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("id")
                     .HasDefaultValueSql("nextval('adress_id_seq'::regclass)");
 
                 entity.Property(e => e.Active)
-                    .HasColumnName("active")
                     .HasDefaultValueSql("true");
 
                 entity.Property(e => e.CreatedAt)
-                    .HasColumnName("created_at")
                     .HasDefaultValueSql("now()");
 
-                entity.Property(e => e.CreatedBy).HasColumnName("created_by");
 
                 entity.Property(e => e.LastUpdated)
-                    .HasColumnName("last_updated")
                     .HasDefaultValueSql("now()");
 
-                entity.Property(e => e.LastUpdatedBy).HasColumnName("last_updated_by");
-
-                entity.Property(e => e.Level).HasColumnName("level");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.ParentId).HasColumnName("parent_id");
 
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
-                    .HasForeignKey(d => d.ParentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_address_address");
             });
@@ -501,7 +482,7 @@ namespace BuyAndSellApi.Models
 
             modelBuilder.Entity<UserRole>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.RoleId })
+                entity.HasKey(e => new {e.UserId, e.RoleId})
                     .HasName("user_role_pkey");
 
                 entity.ToTable("user_role");

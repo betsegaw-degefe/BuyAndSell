@@ -16,6 +16,7 @@
       <e p="Models" t="Include">
         <e p="Entities" t="Include">
           <e p="Address.cs" t="Include" />
+          <e p="BuyAndSellContext.cs" t="Include" />
           <e p="Category.cs" t="Include" />
           <e p="LookupCategory.cs" t="Include" />
           <e p="LookupValue.cs" t="Include" />
@@ -27,7 +28,10 @@
           <e p="User.cs" t="Include" />
           <e p="UserRole.cs" t="Include" />
         </e>
-        <e p="buyandsellContext.cs" t="Include" />
+        <e p="Repository" t="Include">
+          <e p="BuyAndSellRepository.cs" t="Include" />
+          <e p="IBuyAndSellRepository.cs" t="Include" />
+        </e>
       </e>
       <e p="Program.cs" t="Include" />
       <e p="Properties" t="Include">
