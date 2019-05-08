@@ -11,20 +11,23 @@ namespace BuyAndSellApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        
+
+        public IConfigurationRoot ConfigurationRoot { get; set; }
+        public static string ConnectionString { get; private set; }
+        public IConfiguration Configuration { get; }
+        
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            ConfigurationRoot = new ConfigurationBuilder().SetBasePath(environment.ContentRootPath).AddJsonFile("appsettings.json").Build();  
+            
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            var connection = @"Host=localhost;Database=buyandsell;Username=postgres;Password=betsegaw";
-            //services.AddDbContext<buyandsellContext>(options => options.UseSqlServer(connection));
 
             services.AddEntityFrameworkNpgsql()
                 .AddDbContext<BuyAndSellContext>()
@@ -48,6 +51,7 @@ namespace BuyAndSellApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            ConnectionString = Configuration["ConnectionStrings:BuyAndSellDatabase"];
         }
     }
 }
