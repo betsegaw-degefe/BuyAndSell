@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuyAndSellApi.Models.Entities
 {
@@ -29,9 +29,11 @@ namespace BuyAndSellApi.Models.Entities
         [Column("last_updated")] public DateTime LastUpdated { get; set; }
         [Column("created_by")] public short CreatedBy { get; set; }
         [Column("last_updated_by")] public short LastUpdatedBy { get; set; }
-        [Column("active")] public bool? Active { get; set; }
 
-        [ForeignKey("ParentId")] public virtual Address Parent { get; set; }
+        [Column("active"), DefaultValue("true")]
+        public bool? Active { get; set; }
+
+        [ForeignKey("parent_id")] public virtual Address Parent { get; set; }
         public virtual ICollection<Address> InverseParent { get; set; }
         public virtual ICollection<User> User { get; set; }
     }

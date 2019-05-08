@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c547fec-0698-49e5-8e68-b2faf72c9f28" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Repository/BuyAndSellRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Repository/IBuyAndSellRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.BuyAndSellApi/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BuyAndSellApi/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BuyAndSellApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BuyAndSellApi/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/user/LoginController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/user/LoginController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Address.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Category.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Entities/Address.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Entities/Address.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Entities/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Entities/Category.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Entities/LookupCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Entities/LookupCategory.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Entities/LookupValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Entities/LookupValue.cs" afterDir="false" />
@@ -22,26 +15,6 @@
       <change beforePath="$PROJECT_DIR$/Models/Entities/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Entities/Role.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Entities/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Entities/UserRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Entities/UserRole.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Entities/buyandsellContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/LookupCategory.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/LookupValue.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Order.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Product.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/ProductAttribute.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/ProductAttributeValue.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Role.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/User.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/UserRole.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp2.2/BuyAndSellApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp2.2/BuyAndSellApi.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp2.2/BuyAndSellApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp2.2/BuyAndSellApi.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/BuyAndSellApi.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/BuyAndSellApi.csproj.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/BuyAndSellApi.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/BuyAndSellApi.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp2.2/BuyAndSellApi.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp2.2/BuyAndSellApi.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp2.2/BuyAndSellApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp2.2/BuyAndSellApi.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp2.2/BuyAndSellApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp2.2/BuyAndSellApi.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Database/buyandsell.pdf" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -105,46 +78,60 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Models/Entities/Address.cs">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="33" column="76" lean-forward="true" selection-start-line="33" selection-start-column="76" selection-end-line="33" selection-end-column="76" />
+            <state relative-caret-position="137">
+              <caret line="286" selection-start-line="286" selection-end-line="286" />
               <folding>
-                <marker date="1557331058677" expanded="false" signature="6:47" ph="..." />
-                <marker date="1557331058677" expanded="true" signature="240:1304" ph="{...}" />
-                <marker date="1557331058677" expanded="true" signature="298:1302" ph="{...}" />
-                <marker date="1557331058677" expanded="true" signature="329:441" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="6:96" ph="..." />
+                <marker date="1557339068323" expanded="true" signature="137:11554" ph="{...}" />
+                <marker date="1557339068323" expanded="true" signature="194:11552" ph="{...}" />
+                <marker date="1557339068323" expanded="true" signature="235:255" ph="{...}" />
+                <marker date="1557339068323" expanded="true" signature="362:382" ph="{...}" />
+                <marker date="1557339068323" expanded="true" signature="1186:1610" ph="{...}" />
+                <marker date="1557339068323" expanded="true" signature="1242:1600" ph="{...}" />
+                <marker date="1557339068323" expanded="true" signature="1686:11546" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="1831:2514" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="2569:3324" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="3385:4047" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="4105:4808" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="4860:6161" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="6215:6995" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="7058:7782" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="7850:8902" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="8953:9307" ph="{...}" />
+                <marker date="1557339068323" expanded="false" signature="9358:10026" ph="{...}" />
+                <marker date="1557339068323" expanded="true" signature="10081:11311" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Models/Entities/UserRole.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
+            <state relative-caret-position="247">
+              <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
               <folding>
-                <marker date="1557331145326" expanded="false" signature="6:96" ph="..." />
-                <marker date="1557331145326" expanded="true" signature="137:19938" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="194:19936" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="235:255" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="362:382" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="1186:1610" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="1242:1600" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="1686:19930" ph="{...}" />
-                <marker date="1557331145326" expanded="false" signature="1831:2610" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="2665:4167" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="4228:5559" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="5617:7070" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="7122:9210" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="9264:11066" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="11129:12815" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="12883:14686" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="14737:15558" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="15609:18053" ph="{...}" />
-                <marker date="1557331145326" expanded="true" signature="18108:19695" ph="{...}" />
+                <marker date="1557339081770" expanded="false" signature="6:173" ph="..." />
+                <marker date="1557339081770" expanded="true" signature="214:815" ph="{...}" />
+                <marker date="1557339081770" expanded="true" signature="275:813" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Models/Entities/Address.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="380">
+              <caret line="32" column="48" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="48" />
+              <folding>
+                <marker date="1557337814043" expanded="true" signature="6:173" ph="..." />
+                <marker date="1557337814043" expanded="true" signature="214:1310" ph="{...}" />
+                <marker date="1557337814043" expanded="true" signature="272:1308" ph="{...}" />
+                <marker date="1557337814043" expanded="true" signature="303:415" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -161,14 +148,23 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Models/Repository/BuyAndSellRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Models/Entities/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Models/Entities/Address.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Controllers/ValuesController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Controllers/user/LoginController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Models/Repository/IBuyAndSellRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Repository/BuyAndSellRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/UserRole.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/LookupValue.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/Role.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/Address.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/Category.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/LookupCategory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/ProductAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/Order.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/Product.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/Entities/ProductAttributeValue.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -191,9 +187,18 @@
         <option value="$PROJECT_DIR$/Models/Repository/BuyAndSellRepository.cs" />
         <option value="$PROJECT_DIR$/Startup.cs" />
         <option value="$PROJECT_DIR$/Controllers/user/LoginController.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/Category.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/LookupCategory.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/LookupValue.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/ProductAttribute.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/Product.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/ProductAttributeValue.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/Role.cs" />
         <option value="$PROJECT_DIR$/Models/Entities/Address.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/Order.cs" />
         <option value="$PROJECT_DIR$/Models/Entities/User.cs" />
         <option value="$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs" />
+        <option value="$PROJECT_DIR$/Models/Entities/UserRole.cs" />
       </list>
     </option>
   </component>
@@ -215,11 +220,6 @@
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
               <item name="BuyAndSellApi" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-            <path>
-              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="BuyAndSellApi" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Controllers" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
@@ -292,12 +292,13 @@
       <workItem from="1557237372212" duration="4405000" />
       <workItem from="1557248143003" duration="1686000" />
       <workItem from="1557250828958" duration="7264000" />
-      <workItem from="1557322347552" duration="8764000" />
+      <workItem from="1557322347552" duration="9625000" />
+      <workItem from="1557332196653" duration="6888000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52175000" />
+    <option name="totallyTimeSpent" value="59924000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -309,9 +310,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1489" y="25" width="1551" height="875" extended-state="6" />
+    <frame x="1489" y="25" width="1551" height="875" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19387075" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19653565" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -329,7 +331,7 @@
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Unit Tests" order="11" />
       <window_info anchor="bottom" id="REST Client" order="12" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="13" sideWeight="0.4996682" visible="true" weight="0.53206" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4996682" weight="0.53206" />
       <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.50033176" side_tool="true" weight="0.8884462" />
       <window_info anchor="bottom" id="Build" order="15" weight="0.3287858" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -339,6 +341,35 @@
       <window_info anchor="right" id="Errors In Solution" order="4" />
       <window_info anchor="right" id="Database" order="5" weight="0.24419376" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19653565" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3287858" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39972714" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32934928" />
+      <window_info anchor="bottom" id="NuGet" order="7" weight="0.32934928" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" order="11" />
+      <window_info anchor="bottom" id="REST Client" order="12" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4996682" weight="0.53206" />
+      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.50033176" side_tool="true" weight="0.8884462" />
+      <window_info anchor="bottom" id="Build" order="15" weight="0.3287858" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="right" id="Errors In Solution" order="4" />
+      <window_info anchor="right" id="Database" order="5" weight="0.24419376" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -381,27 +412,6 @@
     <entry file="file://$PROJECT_DIR$/Models/Entities/BuyAndSellRepository.cs" />
     <entry file="file://$PROJECT_DIR$/Models/Order.cs" />
     <entry file="file://$PROJECT_DIR$/Models/UserRole.cs" />
-    <entry file="file://$PROJECT_DIR$/Models/Entities/ProductAttribute.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/Entities/Product.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/Entities/ProductAttributeValue.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Models/BuyAndSellRepository.cs" />
     <entry file="file://$PROJECT_DIR$/Models/IBuyAndSellRepository.cs" />
     <entry file="file://$PROJECT_DIR$/Models/Address.cs" />
@@ -476,56 +486,170 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/ProductAttributeValue.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="26" column="45" lean-forward="true" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
+          <folding>
+            <marker date="1557337318245" expanded="false" signature="6:173" ph="..." />
+            <marker date="1557337318245" expanded="true" signature="214:997" ph="{...}" />
+            <marker date="1557337318245" expanded="true" signature="302:995" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/Role.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
+          <folding>
+            <marker date="1557337635783" expanded="false" signature="6:173" ph="..." />
+            <marker date="1557337635783" expanded="true" signature="214:916" ph="{...}" />
+            <marker date="1557337635783" expanded="true" signature="266:914" ph="{...}" />
+            <marker date="1557337635783" expanded="true" signature="294:362" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/LookupCategory.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
+          <folding>
+            <marker date="1557338115822" expanded="true" signature="6:173" ph="..." />
+            <marker date="1557338115822" expanded="true" signature="214:1304" ph="{...}" />
+            <marker date="1557338115822" expanded="true" signature="287:1302" ph="{...}" />
+            <marker date="1557338115822" expanded="true" signature="325:458" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/LookupValue.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
+          <folding>
+            <marker date="1557335843309" expanded="true" signature="6:173" ph="..." />
+            <marker date="1557335843309" expanded="true" signature="214:1173" ph="{...}" />
+            <marker date="1557335843309" expanded="true" signature="281:1171" ph="{...}" />
+            <marker date="1557335843309" expanded="true" signature="316:382" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Models/Entities/User.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+        <state relative-caret-position="151">
+          <caret line="43" column="74" selection-start-line="43" selection-start-column="74" selection-end-line="43" selection-end-column="74" />
           <folding>
-            <marker date="1557331074108" expanded="false" signature="6:47" ph="..." />
-            <marker date="1557331074108" expanded="true" signature="195:1439" ph="{...}" />
-            <marker date="1557331074108" expanded="true" signature="227:1437" ph="{...}" />
-            <marker date="1557331074108" expanded="true" signature="255:418" ph="{...}" />
+            <marker date="1557338604546" expanded="true" signature="6:173" ph="..." />
+            <marker date="1557338604546" expanded="true" signature="214:2085" ph="{...}" />
+            <marker date="1557338604546" expanded="true" signature="266:2083" ph="{...}" />
+            <marker date="1557338604546" expanded="true" signature="294:457" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/Product.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+          <folding>
+            <marker date="1557336280245" expanded="false" signature="6:173" ph="..." />
+            <marker date="1557336280245" expanded="true" signature="214:1512" ph="{...}" />
+            <marker date="1557336280245" expanded="true" signature="272:1510" ph="{...}" />
+            <marker date="1557336280245" expanded="true" signature="303:439" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/ProductAttribute.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="29" column="75" selection-start-line="29" selection-start-column="75" selection-end-line="29" selection-end-column="75" />
+          <folding>
+            <marker date="1557335884151" expanded="false" signature="6:173" ph="..." />
+            <marker date="1557335884151" expanded="true" signature="214:1422" ph="{...}" />
+            <marker date="1557335884151" expanded="true" signature="291:1420" ph="{...}" />
+            <marker date="1557335884151" expanded="true" signature="331:425" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/Order.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <marker date="1557337821989" expanded="true" signature="6:139" ph="..." />
+            <marker date="1557337821989" expanded="true" signature="180:1100" ph="{...}" />
+            <marker date="1557337821989" expanded="true" signature="234:1098" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/Category.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+          <folding>
+            <marker date="1557335825861" expanded="false" signature="6:173" ph="..." />
+            <marker date="1557335825861" expanded="true" signature="214:1349" ph="{...}" />
+            <marker date="1557335825861" expanded="true" signature="274:1347" ph="{...}" />
+            <marker date="1557335825861" expanded="true" signature="306:443" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Models/Entities/Address.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="33" column="76" lean-forward="true" selection-start-line="33" selection-start-column="76" selection-end-line="33" selection-end-column="76" />
+        <state relative-caret-position="380">
+          <caret line="32" column="48" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="48" />
           <folding>
-            <marker date="1557331058677" expanded="false" signature="6:47" ph="..." />
-            <marker date="1557331058677" expanded="true" signature="240:1304" ph="{...}" />
-            <marker date="1557331058677" expanded="true" signature="298:1302" ph="{...}" />
-            <marker date="1557331058677" expanded="true" signature="329:441" ph="{...}" />
+            <marker date="1557337814043" expanded="true" signature="6:173" ph="..." />
+            <marker date="1557337814043" expanded="true" signature="214:1310" ph="{...}" />
+            <marker date="1557337814043" expanded="true" signature="272:1308" ph="{...}" />
+            <marker date="1557337814043" expanded="true" signature="303:415" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Entities/UserRole.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+          <folding>
+            <marker date="1557339081770" expanded="false" signature="6:173" ph="..." />
+            <marker date="1557339081770" expanded="true" signature="214:815" ph="{...}" />
+            <marker date="1557339081770" expanded="true" signature="275:813" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Models/Entities/BuyAndSellContext.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
+        <state relative-caret-position="137">
+          <caret line="286" selection-start-line="286" selection-end-line="286" />
           <folding>
-            <marker date="1557331145326" expanded="false" signature="6:96" ph="..." />
-            <marker date="1557331145326" expanded="true" signature="137:19938" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="194:19936" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="235:255" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="362:382" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="1186:1610" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="1242:1600" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="1686:19930" ph="{...}" />
-            <marker date="1557331145326" expanded="false" signature="1831:2610" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="2665:4167" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="4228:5559" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="5617:7070" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="7122:9210" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="9264:11066" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="11129:12815" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="12883:14686" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="14737:15558" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="15609:18053" ph="{...}" />
-            <marker date="1557331145326" expanded="true" signature="18108:19695" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="6:96" ph="..." />
+            <marker date="1557339068323" expanded="true" signature="137:11554" ph="{...}" />
+            <marker date="1557339068323" expanded="true" signature="194:11552" ph="{...}" />
+            <marker date="1557339068323" expanded="true" signature="235:255" ph="{...}" />
+            <marker date="1557339068323" expanded="true" signature="362:382" ph="{...}" />
+            <marker date="1557339068323" expanded="true" signature="1186:1610" ph="{...}" />
+            <marker date="1557339068323" expanded="true" signature="1242:1600" ph="{...}" />
+            <marker date="1557339068323" expanded="true" signature="1686:11546" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="1831:2514" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="2569:3324" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="3385:4047" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="4105:4808" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="4860:6161" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="6215:6995" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="7058:7782" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="7850:8902" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="8953:9307" ph="{...}" />
+            <marker date="1557339068323" expanded="false" signature="9358:10026" ph="{...}" />
+            <marker date="1557339068323" expanded="true" signature="10081:11311" ph="{...}" />
           </folding>
         </state>
       </provider>
