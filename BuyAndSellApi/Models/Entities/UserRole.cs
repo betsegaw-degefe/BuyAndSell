@@ -6,19 +6,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuyAndSellApi.Models.Entities
 {
-    [Table("user_role")]
+    [Table("user_role", Schema = "account")]
     public partial class UserRole
     {
-        [Key, Column("user_id")] public int UserId { get; set; }
-        [Column("role_id")] public int RoleId { get; set; }
-        [Column("created_at")] public DateTime CreatedAt { get; set; }
-        [Column("last_updated")] public DateTime LastUpdated { get; set; }
-        [Column("created_by")] public short CreatedBy { get; set; }
+        public int UserId { get; set; }
+        public int RoleId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime LastUpdated { get; set; }
+        public short CreatedBy { get; set; }
 
-        [Column("active"), DefaultValue("true")]
-        public bool? Active { get; set; }
+        [Required, DefaultValue("true")] public bool? Active { get; set; }
 
-        [ForeignKey("role_id")] public virtual Role Role { get; set; }
-        [ForeignKey("user_id")] public virtual User User { get; set; }
+        [ForeignKey("RoleId")] public virtual Role Role { get; set; }
+        [ForeignKey("UserId")] public virtual User User { get; set; }
     }
 }

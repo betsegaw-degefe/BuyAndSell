@@ -6,35 +6,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuyAndSellApi.Models.Entities
 {
-    [Table("product_attribute")]
-    public partial class ProductAttribute
+    [Table("product_attribute", Schema = "commodity")]
+    public partial class ProductAttribute : BaseEntity
     {
         public ProductAttribute()
         {
             ProductAttributeValue = new HashSet<ProductAttributeValue>();
         }
 
-        [Key, Column("id")] public int Id { get; set; }
-        [Column("category_id")] public int CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         [Required]
-        [Column("name")]
         [StringLength(50)]
         public string Name { get; set; }
 
         [Required]
-        [Column("data_type")]
         [StringLength(50)]
         public string DataType { get; set; }
 
-        [Column("unit"), StringLength(25)] public string Unit { get; set; }
-        [Column("created_at")] public DateTime CreatedAt { get; set; }
-        [Column("last_updated")] public DateTime LastUpdated { get; set; }
-        [Column("created_by")] public short CreatedBy { get; set; }
-        [Column("last_updated_by")] public short LastUpdatedBy { get; set; }
-        [Column("active"), DefaultValue("true")] public bool? Active { get; set; }
+        [StringLength(25)] public string Unit { get; set; }
+        public short LastUpdatedBy { get; set; }
 
-        [ForeignKey("category_id")] public virtual Category Category { get; set; }
+
+        [ForeignKey("CategoryId")] public virtual Category Category { get; set; }
         public virtual ICollection<ProductAttributeValue> ProductAttributeValue { get; set; }
     }
 }

@@ -6,34 +6,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuyAndSellApi.Models.Entities
 {
-    [Table("product")]
-    public partial class Product
+    [Table("product", Schema = "commodity")]
+    public partial class Product : BaseEntity
     {
         public Product()
         {
-            Order = new HashSet<Order>();
+            Order = new HashSet<OrderProduct>();
             ProductAttributeValue = new HashSet<ProductAttributeValue>();
         }
 
-        [Key, Column("id")] public int Id { get; set; }
-        [Column("status_id")] public int StatusId { get; set; }
+        public int StatusId { get; set; }
 
-        [Required]
-        [Column("condition")]
-        [StringLength(10)]
-        public string Condition { get; set; }
+        [Required] [StringLength(10)] public string Condition { get; set; }
 
-        [Column("quantity")] public int Quantity { get; set; }
-        [Column("price")] public decimal Price { get; set; }
-        [Column("negotiable")] public bool? Negotiable { get; set; }
-        [Column("created_at")] public DateTime CreatedAt { get; set; }
-        [Column("last_updated")] public DateTime LastUpdated { get; set; }
-        [Column("created_by")] public short CreatedBy { get; set; }
-        [Column("active"), DefaultValue("true")] public bool? Active { get; set; }
-        [Column("description"), StringLength(300)] public string Description { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public bool? Negotiable { get; set; }
 
-        [ForeignKey("status_id")] public virtual LookupValue Status { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
+        [StringLength(300)] public string Description { get; set; }
+
+        [ForeignKey("StatusId")] public virtual LookupValue Status { get; set; }
+        public virtual ICollection<OrderProduct> Order { get; set; }
         public virtual ICollection<ProductAttributeValue> ProductAttributeValue { get; set; }
     }
 }

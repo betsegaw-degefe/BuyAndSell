@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using BuyAndSellApi.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
@@ -10,10 +12,10 @@ namespace BuyAndSellApi.Models.Entities
         public BuyAndSellContext()
         {
         }
-        
-        public static string GetConnectionString()  
-        {  
-            return Startup.ConnectionString;  
+
+        public static string GetConnectionString()
+        {
+            return Startup.ConnectionString;
         }
 
         public BuyAndSellContext(DbContextOptions<BuyAndSellContext> options)
@@ -25,7 +27,7 @@ namespace BuyAndSellApi.Models.Entities
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<LookupCategory> LookupCategory { get; set; }
         public virtual DbSet<LookupValue> LookupValue { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderProduct> Order { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductAttribute> ProductAttribute { get; set; }
         public virtual DbSet<ProductAttributeValue> ProductAttributeValue { get; set; }
@@ -37,9 +39,6 @@ namespace BuyAndSellApi.Models.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseNpgsql();
-                //"Host=localhost;Database=buyandsell;Username=postgres;Password=betsegaw"
                 var connection = GetConnectionString();
                 optionsBuilder.UseNpgsql(connection);
             }
@@ -136,7 +135,7 @@ namespace BuyAndSellApi.Models.Entities
                     .HasConstraintName("fk_lookup_value_lookup_category");
             });
 
-            modelBuilder.Entity<Order>(entity =>
+            modelBuilder.Entity<OrderProduct>(entity =>
             {
                 entity.HasIndex(e => e.BuyerId)
                     .HasName("fki_fk_order_user");
@@ -293,7 +292,7 @@ namespace BuyAndSellApi.Models.Entities
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("fki_fk_user_role_user");
-                
+
 
                 entity.Property(e => e.CreatedAt)
                     .HasDefaultValueSql("now()");
@@ -317,6 +316,18 @@ namespace BuyAndSellApi.Models.Entities
             modelBuilder.HasSequence<int>("product_template_detail_id_seq");
 
             modelBuilder.HasSequence<int>("product_template_detail_value_id_seq");
+            
+            // Map property names to column names.
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                //var entityTypeInfo = entity.ClrType.GetTypeInfo();
+
+                foreach(var property in entity.GetProperties())
+                {
+                    property.Relational().ColumnName = property.Name.ToUnderScoreCase();
+                    
+                }
+            }
         }
     }
 }
