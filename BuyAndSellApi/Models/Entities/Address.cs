@@ -18,7 +18,7 @@ namespace BuyAndSellApi.Models.Entities
 
         [Required] [StringLength(50)] public string Name { get; set; }
 
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
 
         public int Level { get; set; }
 

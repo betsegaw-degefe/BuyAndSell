@@ -1,4 +1,5 @@
-﻿using BuyAndSellApi.Models.Entities;
+﻿using AutoMapper;
+using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,8 @@ namespace BuyAndSellApi
             services.AddEntityFrameworkNpgsql()
                 .AddDbContext<BuyAndSellContext>()
                 .BuildServiceProvider();
+
+            services.AddAutoMapper();
 
             services.AddScoped<IBuyAndSellRepository, BuyAndSellRepository>();
         }
