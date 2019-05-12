@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BuyAndSellApi.Models.Entities
 {
     [Table("user", Schema = "account")]
-    public partial class User
+    public partial class User : BaseEntity
     {
         public User()
         {
@@ -16,7 +16,6 @@ namespace BuyAndSellApi.Models.Entities
             UserRole = new HashSet<UserRole>();
         }
 
-        public int Id { get; set; }
 
         [Required, StringLength(45)] public string FirstName { get; set; }
 
@@ -35,11 +34,8 @@ namespace BuyAndSellApi.Models.Entities
 
         [Required, StringLength(100)] public string Password { get; set; }
 
-        [Required, DefaultValue("true")] public bool? Active { get; set; }
 
         public DateTime LastOnline { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime LastUpdated { get; set; }
 
         [ForeignKey("AddressId")] public virtual Address Address { get; set; }
         public virtual ICollection<OrderProduct> OrderBuyer { get; set; }

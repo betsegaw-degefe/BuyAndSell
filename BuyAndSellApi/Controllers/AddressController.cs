@@ -1,6 +1,7 @@
 using System;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuyAndSellApi.Controllers
@@ -10,20 +11,21 @@ namespace BuyAndSellApi.Controllers
     [Produces("application/json")]
     public class AddressController : ControllerBase
     {
-        private readonly IBuyAndSellRepository _repository;
+        private readonly IBuyAndSellRepository<BaseEntity> _repository;
 
-        public AddressController(IBuyAndSellRepository repository)
+        public AddressController(IBuyAndSellRepository<BaseEntity> repository)
         {
             _repository = repository;
         }
 
         // search address by id and return if found.
+        [Authorize]
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
             try
             {
-                var address = _repository.GetAddressById(id);
+                var address = _repository.Get(id);
                 if (address != null) return Ok(address);
                 else return NotFound();
             }
@@ -35,14 +37,15 @@ namespace BuyAndSellApi.Controllers
         }
 
         // register address and return address detail.
+        [Authorize]
         [HttpPost("register")]
         public IActionResult Register([FromBody] Models.Entities.Address address)
         {
             try
             {
                 // save user to db.
-                _repository.AddEntity(address);
-                if (_repository.SaveAll())
+                _repository.Insert(address);
+                if (_repository.SaveChanges())
                 {
                     return Created($"/api/address/{address.Id}", address);
                 }

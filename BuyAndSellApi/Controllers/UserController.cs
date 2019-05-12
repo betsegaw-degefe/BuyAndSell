@@ -11,11 +11,11 @@ namespace BuyAndSellApi.Controllers
     [Produces("application/json")]
     public class UserController : ControllerBase
     {
-        private readonly IBuyAndSellRepository _repository;
+        private readonly IBuyAndSellRepository<BaseEntity> _repository;
 
         private readonly IMapper _mapper;
 
-        public UserController(IBuyAndSellRepository repository, IMapper mapper)
+        public UserController(IBuyAndSellRepository<BaseEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -27,7 +27,7 @@ namespace BuyAndSellApi.Controllers
         {
             try
             {
-                var user = _repository.GetUser(id);
+                var user = _repository.Get(id);
                 if (user != null) return Ok(user);
                 else return NotFound();
             }
@@ -45,8 +45,9 @@ namespace BuyAndSellApi.Controllers
             try
             {
                 // save user to db.
-                _repository.AddEntity(user);
-                if (_repository.SaveAll())
+                _repository.Insert(user);
+                //AddEntity(user);
+                if (_repository.SaveChanges())
                 {
                     return Created($"/api/user/{user.Id}", user);
                 }

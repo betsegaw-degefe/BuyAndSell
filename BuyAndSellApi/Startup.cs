@@ -36,7 +36,7 @@ namespace BuyAndSellApi
 
             services.AddAutoMapper();
 
-            services.AddScoped<IBuyAndSellRepository, BuyAndSellRepository>();
+            services.AddScoped<IBuyAndSellRepository<BaseEntity>, BuyAndSellRepository<BaseEntity>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
