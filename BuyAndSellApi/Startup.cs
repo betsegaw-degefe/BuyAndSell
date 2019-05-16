@@ -39,20 +39,19 @@ namespace BuyAndSellApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Buy and sell API", 
+                    Title = "Buy and sell API",
                     Version = "v1",
                     Contact = new OpenApiContact
                     {
                         Name = "Betsegaw Degefe",
-                        Email = "betsegawyes@gmail.com",                       
-                    } 
-                    
+                        Email = "betsegawyes@gmail.com",
+                    }
                 });
             });
 
             services.AddAutoMapper();
 
-            services.AddScoped<IBuyAndSellRepository<BaseEntity>, BuyAndSellRepository<BaseEntity>>();
+            services.AddScoped(typeof(IBuyAndSellRepository<>), typeof(BuyAndSellRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

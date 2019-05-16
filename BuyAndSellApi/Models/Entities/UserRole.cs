@@ -7,15 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BuyAndSellApi.Models.Entities
 {
     [Table("user_role", Schema = "account")]
-    public partial class UserRole
+    public partial class UserRole : BaseEntity
     {
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime LastUpdated { get; set; }
-        public short CreatedBy { get; set; }
+        [Key] public int UserId { get; set; }
+        [Key] public int RoleId { get; set; }
 
-        [Required, DefaultValue("true")] public bool? Active { get; set; }
 
         [ForeignKey("RoleId")] public virtual Role Role { get; set; }
         [ForeignKey("UserId")] public virtual User User { get; set; }

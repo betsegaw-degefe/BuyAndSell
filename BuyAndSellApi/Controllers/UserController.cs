@@ -14,10 +14,10 @@ namespace BuyAndSellApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IBuyAndSellRepository<BaseEntity> _repository;
+        private readonly IBuyAndSellRepository<User> _repository;
         private readonly IMapper _mapper;
 
-        public UserController(IBuyAndSellRepository<BaseEntity> repository, IMapper mapper)
+        public UserController(IBuyAndSellRepository<User> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

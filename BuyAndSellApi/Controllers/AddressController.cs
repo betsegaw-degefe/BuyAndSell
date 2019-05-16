@@ -12,9 +12,9 @@ namespace BuyAndSellApi.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
-        private readonly IBuyAndSellRepository<BaseEntity> _repository;
+        private readonly IBuyAndSellRepository<Address> _repository;
 
-        public AddressController(IBuyAndSellRepository<BaseEntity> repository)
+        public AddressController(IBuyAndSellRepository<Address> repository)
         {
             _repository = repository;
         }
@@ -64,7 +64,7 @@ namespace BuyAndSellApi.Controllers
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Register([FromBody] Models.Entities.Address address)
+        public IActionResult Register([FromBody] Address address)
         {
             try
             {
