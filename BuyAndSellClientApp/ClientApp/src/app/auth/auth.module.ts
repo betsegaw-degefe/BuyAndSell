@@ -1,30 +1,35 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 import { AuthRoutingModule } from './auth-routing.module';
-
-import { NbAuthModule } from '@nebular/auth';
+import { ThemeModule } from '../@theme/theme.module';
+import { NbAuthModule, NbLoginComponent } from '@nebular/auth';
 import { NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule } from '@nebular/theme';
-import { LoginComponent } from './login/login.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule,
+    ThemeModule,
     NbAlertModule,
     NbInputModule,
     NbButtonModule,
     NbCheckboxModule,
     AuthRoutingModule,
-
     NbAuthModule,
+
+    NgbModule.forRoot(),
+    ThemeModule.forRoot(),
   ],
-  declarations: [LoginComponent,],
-  bootstrap: [LoginComponent]
+  bootstrap: [NbLoginComponent],
+  declarations: [
+    //NbLoginComponent
+  ],
 })
 export class AuthModule {
 }

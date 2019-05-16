@@ -1,60 +1,32 @@
-import { CommonModule } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
-
-import { AppRouting } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbButtonModule, NbCardModule, NbThemeModule, NbLayoutModule } from '@nebular/theme';
-
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
+import { CoreModule } from './@core/core.module';
 
-const formSetting: any = {
-  redirectDelay: 0,
-  showMessages: {
-    success: true,
-  },
-};
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { ThemeModule } from './@theme/theme.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
-
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    NbThemeModule,
-    NbLayoutModule,
-    NbCardModule,
-    NbButtonModule,
-    BrowserModule,
-    AppRouting,
-    BrowserAnimationsModule,
-    RouterModule,
-
-    //NbLayoutModule.forRoot({}),
-    NbAuthModule.forRoot({
-      strategies: [
-        NbDummyAuthStrategy.setup({
-          name: 'email',
-
-          alwaysFail: true,
-          delay: 1000,
-        }),
-      ],
-      forms: {
-        login: formSetting,
-        register: formSetting,
-        requestPassword: formSetting,
-        resetPassword: formSetting,
-        logout: {
-          redirectDelay: 0,
-        },
-      },
-    }),
-  ],
   declarations: [AppComponent],
-  bootstrap: [AppComponent]
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+
+    NgbModule.forRoot(),
+    ThemeModule.forRoot(),
+    CoreModule.forRoot(),
+  ],
+  bootstrap: [AppComponent],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+  ],
 })
-export class AppModule { }
+export class AppModule {
+}
