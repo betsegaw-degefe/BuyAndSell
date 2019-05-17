@@ -1,0 +1,38 @@
+//@import '../../theme/styles/global/breakpoints';
+@import "../@theme/styles/themes";
+
+:host {
+  $auth-layout-padding: 2.5rem;
+
+  nb-card {
+    margin: 0;
+    height: calc(100vh - 2 * #{$auth-layout-padding});
+  }
+
+  nb-card-header {
+    display: none !important;
+  }
+
+  .navigation .link {
+    text-decoration: none;
+
+    .icon {
+      font-size: 2rem;
+    }
+  }
+
+  nb-card-body {
+    display: flex;
+    width: 100%;
+  }
+
+  nb-auth-block {
+    margin: auto;
+  }
+
+  /deep/ {
+    nb-layout .layout .layout-container .content .columns nb-layout-column {
+      padding: $auth-layout-padding;
+    }
+  }
+}

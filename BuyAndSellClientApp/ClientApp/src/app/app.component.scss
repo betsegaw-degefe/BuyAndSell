@@ -1,0 +1,5 @@
+@import "./@theme/styles/themes";
+
+:host {
+    nb-card-header { display: none !important; }
+}

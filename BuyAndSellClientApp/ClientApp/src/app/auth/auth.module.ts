@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
-import { NbAuthModule, NbLoginComponent } from '@nebular/auth';
+import { AuthComponent } from './auth.component'
 import { NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule } from '@nebular/theme';
+import { NbAuthModule, NbLoginComponent,NbPasswordAuthStrategy } from '@nebular/auth';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //import { LoginComponent } from './login/login.component';
+import { LoginModule } from './login/login.module';
 
 
 @NgModule({
@@ -21,14 +23,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NbButtonModule,
     NbCheckboxModule,
     AuthRoutingModule,
-    NbAuthModule,
-
+    LoginModule,
+    
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          name: 'email',
+        }),
+      ],
+      forms: {},
+    }),
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
   ],
   bootstrap: [NbLoginComponent],
   declarations: [
-    //NbLoginComponent
+    AuthComponent,
   ],
 })
 export class AuthModule {
