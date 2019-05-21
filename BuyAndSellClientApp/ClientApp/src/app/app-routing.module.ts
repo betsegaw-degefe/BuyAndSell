@@ -10,6 +10,8 @@ import {
   NbResetPasswordComponent,
 } from '@nebular/auth';
 import { AuthComponent } from './auth/auth.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
   //{ path: 'pages', loadChildren: './auth/auth.module#AuthModule' },
@@ -19,15 +21,15 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: NbLoginComponent,
+        component: LoginComponent,
       },
       {
         path: 'login',
-        component: NbLoginComponent,
+        component: LoginComponent,
       },
       {
         path: 'register',
-        component: NbRegisterComponent,
+        component: RegisterComponent,
       },
     ],
   },

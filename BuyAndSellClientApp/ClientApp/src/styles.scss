@@ -4,6 +4,10 @@
 //@import '~@nebular/auth/styles/themes/default';
 @import '~@nebular/auth/styles/themes/corporate';
 @import '~@nebular/auth/styles/globals';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "./style/themes";
 //@import '~@nebular/theme/styles/prebuilt/corporate'; 
 //@import '~@nebular/auth/styles/themes/corporate';
 //@import '~@nebular/auth/styles/all'; // or @import '~@nebular/auth/styles/theme/{theme-name}';

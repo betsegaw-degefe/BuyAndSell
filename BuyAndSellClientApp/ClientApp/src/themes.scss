@@ -1,6 +1,23 @@
 @import '~@nebular/theme/styles/theming';
 @import '~@nebular/theme/styles/themes/corporate';
 
+@import '~@angular/material/theming';
+@include mat-core();
+
+@import './matooma-theme';
+@import './yellow-mars-theme';
+
+// all custom themes includes
+// Include the alternative theme styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
+.matooma-theme {
+  @include angular-material-theme($matooma-theme);
+}
+
+.yellow-mars-theme {
+  @include angular-material-theme($yellow-mars-theme);
+}
 $nb-themes: nb-register-theme((
   // add your variables here like:
   // color-bg: #4ca6ff,

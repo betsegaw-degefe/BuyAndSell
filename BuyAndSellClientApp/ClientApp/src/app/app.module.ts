@@ -10,16 +10,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthModule } from './auth/auth.module'
+import { RegisterModule } from './auth/register/register.module';
+import { LoginModule } from './auth/login/login.module';
+import { PagesComponent } from './pages/pages.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PagesComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     AuthModule,
+    RegisterModule,
+    LoginModule,
 
     NgbModule.forRoot(),
     ThemeModule.forRoot(),

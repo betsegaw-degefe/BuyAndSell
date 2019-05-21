@@ -3,9 +3,9 @@ import { NbAuthComponent } from '@nebular/auth';
 
 
 @Component({
-    selector: 'auth',
-    styleUrls: ['./auth.component.scss'],
-    template: `
+  selector: 'auth',
+  styleUrls: ['./auth.component.scss'],
+  template: `
     <nb-layout>
       <nb-layout-column>
         <nb-card>
@@ -19,4 +19,8 @@ import { NbAuthComponent } from '@nebular/auth';
     </nb-layout>
   `,
 })
-export class AuthComponent extends NbAuthComponent{ }
+export class AuthComponent extends NbAuthComponent {
+  onFileComplete(data: any) {
+    console.log(data); // We just print out data bubbled up from event emitter.
+  }
+}
