@@ -14,7 +14,10 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
-  //{ path: 'pages', loadChildren: './auth/auth.module#AuthModule' },
+  {
+    path: 'pages',
+    loadChildren: './pages/pages.module#PagesModule'
+  },
   {
     path: 'auth',
     component: AuthComponent,

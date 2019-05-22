@@ -12,11 +12,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthModule } from './auth/auth.module'
 import { RegisterModule } from './auth/register/register.module';
 import { LoginModule } from './auth/login/login.module';
-import { PagesComponent } from './pages/pages.component';
 
 
 @NgModule({
-  declarations: [AppComponent, PagesComponent],
+  declarations: [AppComponent, ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -28,6 +27,7 @@ import { PagesComponent } from './pages/pages.component';
 
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
+    
     CoreModule.forRoot(),
   ],
   bootstrap: [AppComponent],
