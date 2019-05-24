@@ -17,6 +17,10 @@ const routes: Routes = [{
       redirectTo: 'dashboard',
       pathMatch: 'full',
     },
+    {
+      path: 'category',
+      loadChildren: './category/category.module#CategoryModule',
+    },
   ],
 }];
 

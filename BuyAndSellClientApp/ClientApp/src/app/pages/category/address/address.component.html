@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-4">
+    <nb-card accent="primary" class="accent accent-primary" [size]="'medium'">
+      <nb-card-header>Ethiopia</nb-card-header>
+      <nb-list>
+        <nb-list-item *ngFor="let address of addresses">
+          {{ address.name }}
+        </nb-list-item>
+      </nb-list>
+      <nb-card-footer>By Wikipedia</nb-card-footer>
+    </nb-card>
+  </div>
+  <div class="col-md-4">
+    <nb-card accent="primary" class="accent accent-primary" [size]="'medium'">
+      <nb-card-header>Ethiopia<section></section>
+      </nb-card-header>
+      <nb-list>
+        <nb-list-item *ngFor="let fruit of fruits">
+          {{ fruit }}
+        </nb-list-item>
+      </nb-list>
+      <nb-card-footer>By Wikipedia</nb-card-footer>
+    </nb-card>
+  </div>
+</div>

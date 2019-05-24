@@ -8,74 +8,80 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace BuyAndSellApi
-{
-    public class Startup
-    {
+namespace BuyAndSellApi {
+    public class Startup {
         public IConfigurationRoot ConfigurationRoot { get; set; }
         public static string ConnectionString { get; private set; }
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
-        {
+        public Startup (IConfiguration configuration, IHostingEnvironment environment) {
             Configuration = configuration;
-            ConfigurationRoot = new ConfigurationBuilder().SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appsettings.json").Build();
+            ConfigurationRoot = new ConfigurationBuilder ().SetBasePath (environment.ContentRootPath)
+                .AddJsonFile ("appsettings.json").Build ();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        public void ConfigureServices (IServiceCollection services) {
+            services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2)
+                .AddJsonOptions (options => {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver ();
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
-            services.AddEntityFrameworkNpgsql()
-                .AddDbContext<BuyAndSellContext>()
-                .BuildServiceProvider();
+            services.AddEntityFrameworkNpgsql ()
+                .AddDbContext<BuyAndSellContext> ()
+                .BuildServiceProvider ();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
+            services.AddSwaggerGen (c => {
+                c.SwaggerDoc ("v1", new OpenApiInfo {
                     Title = "Buy and sell API",
-                    Version = "v1",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Betsegaw Degefe",
-                        Email = "betsegawyes@gmail.com",
-                    }
+                        Version = "v1",
+                        Contact = new OpenApiContact {
+                            Name = "Betsegaw Degefe",
+                                Email = "betsegawyes@gmail.com",
+                        }
                 });
             });
 
-            services.AddAutoMapper();
+            services.AddAutoMapper ();
 
-            services.AddScoped(typeof(IBuyAndSellRepository<>), typeof(BuyAndSellRepository<>));
+            services.AddScoped (typeof (IBuyAndSellRepository<>), typeof (BuyAndSellRepository<>));
+
+            services.AddCors (options => {
+                options.AddPolicy ("CorsPolicy",
+                    builder => builder.AllowAnyOrigin ()
+                    .AllowAnyMethod ()
+                    .AllowAnyHeader ()
+                    .AllowCredentials ());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
+        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
+            if (env.IsDevelopment ()) {
+                app.UseDeveloperExceptionPage ();
+            } else {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseHsts ();
             }
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            app.UseSwagger ();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Buy and sell API"); });
+            app.UseSwaggerUI (c => { c.SwaggerEndpoint ("/swagger/v1/swagger.json", "Buy and sell API"); });
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            // Configure to use the CorsPolicy on all requests
+            app.UseCors ("CorsPolicy");
+
+            app.UseHttpsRedirection ();
+            app.UseMvc ();
             ConnectionString = Configuration["ConnectionStrings:BuyAndSellDatabase"];
         }
     }

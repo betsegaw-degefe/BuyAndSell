@@ -20,6 +20,31 @@ namespace BuyAndSellApi.Controllers
         }
 
         /// <summary>
+        /// Gets all Address.
+        /// </summary>
+        /// <returns>A list of Address</returns>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                var addresses = _repository.GetAll();
+                if (addresses != null) return Ok(addresses);
+                else return NotFound();
+            }
+            catch (Exception ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+
+
+
+        /// <summary>
         /// Gets Address by id.
         /// </summary>
         /// <param name="id">The id of the Address you want to get</param>

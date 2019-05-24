@@ -12,10 +12,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthModule } from './auth/auth.module'
 import { RegisterModule } from './auth/register/register.module';
 import { LoginModule } from './auth/login/login.module';
+import { AddressService } from '../app/service/address/address.service'
 
 
 @NgModule({
-  declarations: [AppComponent, ],
+  declarations: [AppComponent,],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -27,12 +28,16 @@ import { LoginModule } from './auth/login/login.module';
 
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
-    
+
     CoreModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' },
+    {
+      provide: APP_BASE_HREF,
+      useValue: '/',
+    },
+    AddressService,
   ],
 })
 export class AppModule {

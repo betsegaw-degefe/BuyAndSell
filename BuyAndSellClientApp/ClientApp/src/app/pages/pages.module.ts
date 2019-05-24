@@ -6,7 +6,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
-  declarations: [PagesComponent],
+  declarations: [PagesComponent, ],
   imports: [
     CommonModule,
     PagesRoutingModule,

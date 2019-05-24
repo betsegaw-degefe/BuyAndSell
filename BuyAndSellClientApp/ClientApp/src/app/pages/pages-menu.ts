@@ -11,7 +11,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         children: [
             {
                 title: 'Address',
-                link: '',
+                link: '/pages/category/address',
+                icon: 'nb-location',
             },
             {
                 title: 'Product',
