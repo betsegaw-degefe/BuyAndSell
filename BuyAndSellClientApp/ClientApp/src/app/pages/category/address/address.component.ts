@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AddressService } from 'src/app/service/address/address.service';
-// import { AddressModel } from 'src/app/models/address-model';
+//import { AddressModel } from 'src/app/models/address-model';
 
 @Component({
   selector: 'app-address',
@@ -24,17 +24,59 @@ export class AddressComponent implements OnInit {
 
     //this.data.get().subscribe(data => this.addresses = data);
   }
-  // users: { name: string, title: string }[] = [
-  //   { name: 'Carla Espinosa', title: 'Nurse' },
-  //   { name: 'Bob Kelso', title: 'Doctor of Medicine' },
-  //   { name: 'Janitor', title: 'Janitor' },
-  //   { name: 'Perry Cox', title: 'Doctor of Medicine' },
-  //   { name: 'Ben Sullivan', title: 'Carpenter and photographer' },
-  //   { name: 'Carla Espinosa', title: 'Nurse' },
-  //   { name: 'Bob Kelso', title: 'Doctor of Medicine' },
-  //   { name: 'Janitor', title: 'Janitor' },
-  //   { name: 'Perry Cox', title: 'Doctor of Medicine' },
-  //   { name: 'Ben Sullivan', title: 'Carpenter and photographer' },
-  // ];
 
+  // items = [
+  //   {
+  //     title: 'Profile',
+  //     expanded: true,
+  //     children: [
+  //       {
+  //         title: 'Change Password',
+  //         link: [], // goes into angular `routerLink`
+  //       },
+  //       {
+  //         title: 'Privacy Policy',
+  //         url: '#', // goes directly into `href` attribute
+  //       },
+  //       {
+  //         title: 'Logout',
+  //         link: [],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: 'Shopping Bag',
+  //     children: [
+  //       {
+  //         title: 'First Product',
+  //         link: [], // goes into angular `routerLink`
+  //       },
+  //       {
+  //         title: 'Second Product',
+  //         url: '#', // goes directly into `href` attribute
+  //       },
+  //       {
+  //         title: 'Third Product',
+  //         link: [],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: 'Orders',
+  //     children: [
+  //       {
+  //         title: 'First Order',
+  //         link: [], // goes into angular `routerLink`
+  //       },
+  //       {
+  //         title: 'Second Order',
+  //         url: '#', // goes directly into `href` attribute
+  //       },
+  //       {
+  //         title: 'Third Order',
+  //         link: [],
+  //       },
+  //     ],
+  //   },
+  // ];
 }

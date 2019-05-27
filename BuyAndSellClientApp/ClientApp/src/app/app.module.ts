@@ -13,6 +13,8 @@ import { AuthModule } from './auth/auth.module'
 import { RegisterModule } from './auth/register/register.module';
 import { LoginModule } from './auth/login/login.module';
 import { AddressService } from '../app/service/address/address.service'
+import { Configuration } from './app.constants';
+import { NbTreeGridModule, NbMenuModule } from '@nebular/theme';
 
 
 @NgModule({
@@ -25,9 +27,12 @@ import { AddressService } from '../app/service/address/address.service'
     AuthModule,
     RegisterModule,
     LoginModule,
+    NbTreeGridModule,
+    
 
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
+    NbMenuModule.forRoot(),
 
     CoreModule.forRoot(),
   ],
@@ -38,6 +43,7 @@ import { AddressService } from '../app/service/address/address.service'
       useValue: '/',
     },
     AddressService,
+    Configuration,
   ],
 })
 export class AppModule {

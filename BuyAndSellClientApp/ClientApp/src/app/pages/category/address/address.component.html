@@ -1,15 +1,29 @@
 <div class="row">
-  <div class="col-md-4">
-    <nb-card accent="primary" class="accent accent-primary" [size]="'medium'">
-      <nb-card-header>Ethiopia</nb-card-header>
-      <nb-list>
-        <nb-list-item *ngFor="let address of addresses">
-          {{ address.name }}
-        </nb-list-item>
-      </nb-list>
-      <nb-card-footer>By Wikipedia</nb-card-footer>
-    </nb-card>
-  </div>
+  <ng-container *ngFor="let address of addresses">
+    <div class="col-md-4" *ngIf="address.parentId===null">
+      <nb-card accent="primary" class="accent accent-primary">
+        <nb-card-header>{{ address.name }}</nb-card-header>
+        <ng-container *ngFor="let subAddress of addresses">
+          <nb-list *ngIf="subAddress.parentId===address.id">
+            <nb-list-item>
+              {{ subAddress.name }}
+                <nb-list-item>
+                  {{ subAddress.name }}
+                </nb-list-item>
+            </nb-list-item>
+          </nb-list>
+          <!-- <mat-tree>
+            <mat-nested-tree-node>
+              parent node
+              <mat-nested-tree-node> -- child node1 </mat-nested-tree-node>
+              <mat-nested-tree-node> -- child node2 </mat-nested-tree-node>
+            </mat-nested-tree-node>
+          </mat-tree> -->
+        </ng-container>
+        <nb-card-footer>By Wikipedia</nb-card-footer>
+      </nb-card>
+    </div>
+  </ng-container>
   <div class="col-md-4">
     <nb-card accent="primary" class="accent accent-primary" [size]="'medium'">
       <nb-card-header>Ethiopia<section></section>
@@ -23,3 +37,13 @@
     </nb-card>
   </div>
 </div>
+<!-- <div class="row">
+  <div class="col-md-4" *ngFor="let address of addresses">
+    <nb-card accent="primary" class="accent accent-primary" >
+      <nb-card-header> Ethiopia</nb-card-header>
+
+      <nb-menu [items]="items" autoCollapse="true">
+      </nb-menu>
+    </nb-card>
+  </div>
+</div> -->
