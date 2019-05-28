@@ -17,25 +17,22 @@
 <form (ngSubmit)="login()" #form="ngForm" aria-labelledby="title">
 
   <div class="form-control-group">
-    <label class="label" for="input-email">Email address:</label>
+    <label class="label" for="input-username">Username:</label>
     <input nbInput
            fullWidth
-           [(ngModel)]="user.email"
-           #email="ngModel"
-           name="email"
-           id="input-email"
-           pattern=".+@.+\..+"
-           placeholder="Email address"
+           [(ngModel)]="user.username"
+           name="username"
+           #username="ngModel"
+           id="input-username"
+           pattern=".+"
+           placeholder="Username"
            autofocus
-           [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
+           [status]="username.dirty ? (username.invalid  ? 'danger' : '') : ''"
            [required]="getConfigValue('forms.validation.email.required')"
-           [attr.aria-invalid]="email.invalid && email.touched ? true : null">
-    <ng-container *ngIf="email.invalid && email.touched">
-      <p class="error-message" *ngIf="email.errors?.required">
-        Email is required!
-      </p>
-      <p class="error-message" *ngIf="email.errors?.pattern">
-        Email should be the real one!
+           [attr.aria-invalid]="username.invalid && username.touched ? true : null">
+    <ng-container *ngIf="username.invalid && username.touched">
+      <p class="error-message" *ngIf="username.errors?.required">
+        Username is required!
       </p>
     </ng-container>
   </div>

@@ -24,7 +24,7 @@ namespace BuyAndSellApi.Models.Entities
         [StringLength(45)] public string LastName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
-        public char? Gender { get; set; }
+        [StringLength(10)]public string Gender { get; set; }
         public int AddressId { get; set; }
         [StringLength(50)] public string Email { get; set; }
 
@@ -32,7 +32,9 @@ namespace BuyAndSellApi.Models.Entities
 
         [Required, StringLength(50)] public string UserName { get; set; }
 
-        [Required, StringLength(100)] public string Password { get; set; }
+        [Required, StringLength(100)] public byte[] Password { get; set; }
+        
+        [Required, StringLength(100)] public byte[] Salt { get; set; }
 
 
         public DateTime LastOnline { get; set; }

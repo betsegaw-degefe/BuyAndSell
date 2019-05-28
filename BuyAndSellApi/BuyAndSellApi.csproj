@@ -14,6 +14,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Request" />
+  </ItemGroup>
+
   <PropertyGroup>
     <!-- 
     Make sure documentation XML is also included when publishing (not only when testing)

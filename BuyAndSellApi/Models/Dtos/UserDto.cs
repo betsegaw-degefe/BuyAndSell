@@ -13,7 +13,7 @@ namespace BuyAndSellApi.Models.Dtos
         public string LastName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
-        public char? Gender { get; set; }
+        public string Gender { get; set; }
         public int AddressId { get; set; }
         public string Email { get; set; }
 

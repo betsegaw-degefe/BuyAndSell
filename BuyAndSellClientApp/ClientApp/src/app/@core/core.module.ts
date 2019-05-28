@@ -79,6 +79,8 @@ export const NB_CORE_PROVIDERS = [
         dateOfBirth: {
           required: true,
         },
+        Gender:{
+        },
         address:{
           required: true,
         },

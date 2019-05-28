@@ -1,15 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using AutoMapper;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -39,19 +42,7 @@ namespace BuyAndSellApi {
                 .AddDbContext<BuyAndSellContext> ()
                 .BuildServiceProvider ();
 
-            // // Register the Swagger generator, defining 1 or more Swagger documents
-            // services.AddSwaggerGen (c => {
-            //     c.SwaggerDoc ("v1", new OpenApiInfo {
-            //         Title = "Buy and sell API",
-            //             Version = "v1",
-            //             Contact = new OpenApiContact {
-            //                 Name = "Betsegaw Degefe",
-            //                     Email = "betsegawyes@gmail.com",
-            //             }
-            //     });
-            // });
-
-            services.AddSwaggerGen (c => {
+           services.AddSwaggerGen (c => {
                 c.SwaggerDoc ("v1", new OpenApiInfo {
                     Title = "Buy and sell API",
                         Version = "v1",
@@ -70,7 +61,7 @@ namespace BuyAndSellApi {
             services.AddAutoMapper ();
 
             services.AddScoped (typeof (IBuyAndSellRepository<>), typeof (BuyAndSellRepository<>));
-
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddCors (options => {
                 options.AddPolicy ("CorsPolicy",
                     builder => builder.AllowAnyOrigin ()
@@ -78,6 +69,18 @@ namespace BuyAndSellApi {
                     .AllowAnyHeader ()
                     .AllowCredentials ());
             });
+            
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                            .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
 
         // This method gets called by the runtime. This method configure the HTTP request pipeline.
@@ -98,6 +101,10 @@ namespace BuyAndSellApi {
 
             // Configure to use the CorsPolicy on all requests
             app.UseCors ("CorsPolicy");
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            
+            
+            app.UseAuthentication();
 
             app.UseHttpsRedirection ();
             app.UseMvc ();

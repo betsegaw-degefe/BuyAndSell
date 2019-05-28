@@ -2,8 +2,9 @@ import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,7 @@ import { LoginModule } from './auth/login/login.module';
 import { AddressService } from '../app/service/address/address.service'
 import { Configuration } from './app.constants';
 import { NbTreeGridModule, NbMenuModule } from '@nebular/theme';
+import { Http } from '@angular/http';
 
 
 @NgModule({
@@ -42,8 +44,14 @@ import { NbTreeGridModule, NbMenuModule } from '@nebular/theme';
       provide: APP_BASE_HREF,
       useValue: '/',
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
     AddressService,
     Configuration,
+    Http
   ],
 })
 export class AppModule {
