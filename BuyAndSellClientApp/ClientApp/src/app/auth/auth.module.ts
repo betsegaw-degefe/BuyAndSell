@@ -14,6 +14,8 @@ import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { MatButtonModule, MatIconModule, MatProgressBarModule } from '@angular/material';
 import { MatFileUploadModule } from 'src/lib/matFileUpload';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from '../interceptors/token.interceptor';
 
 @NgModule({
   imports: [
@@ -48,6 +50,13 @@ import { MatFileUploadModule } from 'src/lib/matFileUpload';
   bootstrap: [AuthComponent],
   declarations: [
     AuthComponent,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
   ],
 })
 

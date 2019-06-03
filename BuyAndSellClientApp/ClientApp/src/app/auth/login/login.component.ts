@@ -22,10 +22,12 @@ export class LoginComponent extends NbLoginComponent implements OnInit {
 
   login() {
     //this.router.navigate(['pages/agent']);
+    //console.log(this.user);
     this.authService.login(this.user)
       .subscribe(res => {
-        console.log(res);
+        
         if (res.token) {
+          console.log(res);
           localStorage.setItem("token", res.token);
           this.router.navigate(['pages']);
         }

@@ -6,13 +6,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
         group: true,
     },
     {
+        title: 'Home',
+        icon: 'nb-home',
+        link: '/pages/home',
+    },
+    {
         title: 'Manage Category',
         icon: 'nb-locked',
         children: [
             {
                 title: 'Address',
                 link: '/pages/category/address',
-                icon: 'nb-location',
             },
             {
                 title: 'Product',

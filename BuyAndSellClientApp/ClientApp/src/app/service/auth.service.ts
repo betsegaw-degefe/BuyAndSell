@@ -9,7 +9,7 @@ import { isNumber } from 'util';
 @Injectable()
 export class AuthService {
     private actionUrl: string;
-    private headers = new Headers({ 'Content-Type': 'application/json' })
+    //private headers = new Headers({ 'Content-Type': 'application/json' })
 
     constructor(private http: HttpClient, private configuration: Configuration) {
         this.actionUrl = configuration.serverWithApiUrl + 'account/';
@@ -24,7 +24,8 @@ export class AuthService {
     // }
 
     login(model: any): Observable<any> {
-        return this.http.post(this.actionUrl + 'login', model)
+        console.log(model);
+        return this.http.post<any>(this.actionUrl + 'login', model)
             .pipe(
                 tap(_ => this.log('login')),
                 catchError(this.handleError('login', []))
@@ -35,8 +36,7 @@ export class AuthService {
         model.addressId = parseInt(model.address);
         model.active = true;
         model.lastOnline = new Date().toLocaleDateString();
-        console.log(isNumber(model.addressId));
-        return this.http.post(this.actionUrl + 'register', model)
+        return this.http.post<any>(this.actionUrl + 'register', model)
             .pipe(
                 tap(_ => this.log('register')),
                 catchError(this.handleError('register', []))
@@ -59,7 +59,7 @@ export class AuthService {
 
     /** Log a HeroService message with the MessageService */
     private log(message: string) {
-        //console.log(message);
+        console.log(message);
     }
 
 }

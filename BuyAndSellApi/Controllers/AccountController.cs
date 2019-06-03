@@ -57,6 +57,7 @@ namespace BuyAndSellApi.Controllers {
         [HttpPost ("login")]
         public async Task<IActionResult> Login (LoginDto loginDto) {
             var userFromRepo = await _authrepo.Login (loginDto.UserName, loginDto.Password);
+            Console.WriteLine ("User login object: " + userFromRepo);
             if (userFromRepo == null)
                 return Unauthorized ();
 
@@ -129,7 +130,7 @@ namespace BuyAndSellApi.Controllers {
 
             var userToCreate = _mapper.Map<User> (userDto);
             //Console userToCreate.AddressId
-            Console.WriteLine ("Address Id " + userDto.AddressId);
+            Console.WriteLine ("Password " + userDto.Password);
             // System.Diagnostics.Debug.WriteLine(userDto.AddressId);
             var createdUser = await _authrepo.Register (userToCreate, userDto.Password);
             return StatusCode (201, new { username = createdUser.UserName, fullname = createdUser.FirstName + " " + createdUser.LastName });

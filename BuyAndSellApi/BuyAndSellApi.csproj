@@ -18,13 +18,6 @@
     <Folder Include="Models\Request" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <!-- 
-    Make sure documentation XML is also included when publishing (not only when testing)
-    see https://github.com/Azure/service-fabric-issues/issues/190
-    -->
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.2\BuyAndSellApi.xml</DocumentationFile>
   </PropertyGroup>

@@ -24,10 +24,9 @@ export class RegisterComponent extends NbRegisterComponent implements OnInit {
     }
 
     register() {
-        console.log(this.user.address);
+        console.log(this.user.password);
         let address: Number = parseInt(<string>this.user.address);
         this.user.address = address;
-        console.log(this.user.address);
         this.authService.register(this.user)
             .subscribe(res => {
                 console.log(res);
