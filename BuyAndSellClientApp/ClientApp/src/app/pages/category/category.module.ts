@@ -5,15 +5,17 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { CategoryRoutingModule } from './category-routing.module';
 import { CategoryComponent } from './category.component';
 import { AddressModule } from './address/address.module';
-import { ProductComponent } from './product/product.component';
+import { ProductModule } from './product/product.module';
+import { NbCardModule } from '@nebular/theme';
 
 @NgModule({
-  declarations: [CategoryComponent, ProductComponent, ],
+  declarations: [CategoryComponent, ],
   imports: [
     CommonModule,
     ThemeModule,
     CategoryRoutingModule,
-    AddressModule
+    AddressModule,
+    ProductModule,
   ]
 })
 export class CategoryModule { }

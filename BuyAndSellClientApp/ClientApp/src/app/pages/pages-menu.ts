@@ -20,7 +20,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             },
             {
                 title: 'Product',
-                link: '',
+                link: '/pages/category/product',
             },
             {
                 title: 'Lookup',

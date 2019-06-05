@@ -17,6 +17,7 @@ import { AddressService } from '../app/service/address/address.service'
 import { Configuration } from './app.constants';
 import { NbTreeGridModule, NbMenuModule } from '@nebular/theme';
 import { Http } from '@angular/http';
+import { TreeModule, TreeComponent } from 'angular-tree-component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { Http } from '@angular/http';
     RegisterModule,
     LoginModule,
     NbTreeGridModule,
+    TreeModule.forRoot(),
     
 
     NgbModule.forRoot(),

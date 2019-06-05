@@ -6,6 +6,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
+import { ProductDetailModule } from './product-detail/product-detail.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { HomeModule } from './home/home.module';
     PagesRoutingModule,
     ThemeModule,
     DashboardModule,
-    HomeModule
+    HomeModule,
+    ProductDetailModule
 
   ]
 })

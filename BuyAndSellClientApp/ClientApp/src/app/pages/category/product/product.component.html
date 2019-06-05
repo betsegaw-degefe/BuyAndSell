@@ -1,3 +1,10 @@
-<p>
-  product works!
-</p>
+<div class="row">
+  <div class="col-md-4" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11]">
+    <nb-card accent="primary" class="accent accent-primary">
+      <nb-card-header>Category name</nb-card-header>
+      <nb-card-body>
+        <tree-root [nodes]="nodes"></tree-root>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

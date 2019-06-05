@@ -16,10 +16,6 @@
     flex: 1;
   }
 
-  .pointer {
-    cursor: pointer;
-  }
-
   .details {
     padding: 1.25rem 1.25rem 0;
 
@@ -51,18 +47,12 @@
     justify-content: space-around;
     padding: 0.75rem 0;
     border: none;
+  }
 
-    a {
-      text-decoration: none;
-      color: nb-theme(color-fg);
-
-      &:hover {
-        color: nb-theme(color-fg-heading);
-      }
-
-      i {
-        font-size: 1.75rem;
-      }
-    }
+  button{
+    justify-content: space-around;
+    padding: 0.75rem 10px;
+    margin: 1rem 1rem;
+    cursor: pointer;
   }
 }

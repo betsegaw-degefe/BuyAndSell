@@ -5,7 +5,7 @@ import { NbCardModule } from '@nebular/theme';
 import { ThemeModule } from 'src/app/@theme/theme.module';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent,],
   imports: [
     ThemeModule,
     CommonModule,
