@@ -7,10 +7,11 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
 import { ProductDetailModule } from './product-detail/product-detail.module';
+import { PostProductComponent } from './post-product/post-product.component';
 
 
 @NgModule({
-  declarations: [PagesComponent,],
+  declarations: [PagesComponent, PostProductComponent,],
   imports: [
     CommonModule,
     PagesRoutingModule,

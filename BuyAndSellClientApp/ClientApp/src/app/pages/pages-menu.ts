@@ -11,8 +11,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/home',
     },
     {
+        title: 'Sell Product',
+        icon: 'nb-e-commerce',
+        link: '/pages/postproduct',
+    },
+    {
         title: 'Manage Category',
-        icon: 'nb-locked',
+        icon: 'nb-list',
         children: [
             {
                 title: 'Address',

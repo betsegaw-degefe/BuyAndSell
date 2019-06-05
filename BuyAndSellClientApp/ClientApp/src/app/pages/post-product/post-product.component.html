@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-4">
+    <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
+      <nb-card-body>
+        <label for="typeahead-format">Search for a category:</label>
+        <input id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
+          [ngbTypeahead]="search" [resultFormatter]="formatter" placeholder="Search category" />
+        <hr>
+        <pre>Category: {{ model | json }}</pre>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-8">
+    <nb-card size="" accent="primary" class="accent accent-primary pointer">
+      <nb-card-header>Block form</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="inputFirstName">First Name</label>
+              <input id="inputFirstName" type="text" nbInput fullWidth shape="rectangle" 
+               placeholder="First Name" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="inputLastName">Last Name</label>
+              <input id="inputLastName" type="text" nbInput fullWidth placeholder="Last Name">
+            </div>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="btn" nbButton status="primary" shape="rectangle" float="left">Submit</button>
+        </div>
+      </nb-card-body>
+     
+    </nb-card>
+  </div>
+</div>
