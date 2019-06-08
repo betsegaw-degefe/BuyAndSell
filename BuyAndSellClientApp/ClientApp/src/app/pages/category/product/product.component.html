@@ -1,10 +1,43 @@
 <div class="row">
-  <div class="col-md-4" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11]">
-    <nb-card accent="primary" class="accent accent-primary">
-      <nb-card-header>Category name</nb-card-header>
-      <nb-card-body>
-        <tree-root [nodes]="nodes"></tree-root>
-      </nb-card-body>
-    </nb-card>
-  </div>
+  <ng-container *ngFor="let category of categories">
+    <div class="col-md-4" *ngIf="category.parentId===null">
+      <nb-card accent="primary" class="accent accent-primary">
+        <nb-card-header>{{ category.name }}</nb-card-header>
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+            <ng-container *ngFor="let categorynode of categories">
+              <ng-container *ngIf="categorynode.name === node.item && categorynode.parentId === category.id">
+                {{node.item}}
+              </ng-container>
+            </ng-container>
+          </mat-tree-node>
+          <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+            <mat-form-field>
+              <input matInput #itemValue placeholder="New item...">
+            </mat-form-field>
+            <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+          </mat-tree-node>
+
+          <mat-tree-node *ngFor="let node;" matTreeNodePadding>
+            <ng-container *ngFor="let categorynode of categories">
+              <ng-container
+                *ngIf="node.item === categorynode.name  && (categorynode.parentId === category.id || categorynode.parent.parentId === category.id)">
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                {{node.item}}
+                <button mat-icon-button>
+                  <mat-icon>add</mat-icon>
+                </button>
+              </ng-container>
+            </ng-container>
+          </mat-tree-node>
+        </mat-tree>
+      </nb-card>
+    </div>
+  </ng-container>
 </div>

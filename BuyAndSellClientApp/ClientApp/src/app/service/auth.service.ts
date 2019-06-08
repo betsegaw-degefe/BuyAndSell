@@ -9,19 +9,10 @@ import { isNumber } from 'util';
 @Injectable()
 export class AuthService {
     private actionUrl: string;
-    //private headers = new Headers({ 'Content-Type': 'application/json' })
 
     constructor(private http: HttpClient, private configuration: Configuration) {
         this.actionUrl = configuration.serverWithApiUrl + 'account/';
     }
-
-    // login(data: any): Observable<any> {
-    //     return this.http.post<any>(this.actionUrl + 'login', data)
-    //         .pipe(
-    //             tap(_ => this.log('login')),
-    //             catchError(this.handleError('login', []))
-    //         );
-    // }
 
     login(model: any): Observable<any> {
         console.log(model);

@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { PostProductComponent } from './post-product/post-product.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +23,10 @@ const routes: Routes = [{
     {
       path: 'productdetail',
       component: ProductDetailComponent,
+    },
+    {
+      path: 'cart',
+      component: CartComponent,
     },
     {
       path: '',

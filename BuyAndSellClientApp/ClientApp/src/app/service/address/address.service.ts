@@ -6,16 +6,10 @@ import { Observable, of, throwError } from 'rxjs';
 import { AddressModel } from 'src/app/models/address-model';
 import { Configuration } from 'src/app/app.constants';
 
-// const httpOptions = {
-//   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-// };
-//const apiUrl = serverWithApiUrl+'/address';
-
 @Injectable()
 export class AddressService {
 
   private actionUrl: string;
-  //private accessPointUrl: string = 'https://localhost:5001/api/address';
   public addresses: AddressModel[] = [];
 
   constructor(private http: HttpClient, private configuration: Configuration) {

@@ -1,4 +1,5 @@
 import { NbMenuItem } from '@nebular/theme';
+import { icons } from 'eva-icons';
 
 export const MENU_ITEMS: NbMenuItem[] = [
     {
@@ -14,6 +15,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Sell Product',
         icon: 'nb-e-commerce',
         link: '/pages/postproduct',
+    },
+    {
+        title: 'Cart',
+        icon: 'eva eva-shopping-cart-outline',
+        link: '/pages/cart',
     },
     {
         title: 'Manage Category',
@@ -35,7 +41,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     },
     {
         title: 'Manage User',
-        icon: 'nb-locked',
+        icon: 'eva eva-people-outline',
         children: [
             {
                 title: 'Role',

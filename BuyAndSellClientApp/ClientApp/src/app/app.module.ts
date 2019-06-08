@@ -18,6 +18,7 @@ import { Configuration } from './app.constants';
 import { NbTreeGridModule, NbMenuModule } from '@nebular/theme';
 import { Http } from '@angular/http';
 import { TreeModule, TreeComponent } from 'angular-tree-component';
+import { ProductCategoryService } from './service/product-category.service';
 
 
 @NgModule({
@@ -45,13 +46,9 @@ import { TreeModule, TreeComponent } from 'angular-tree-component';
     {
       provide: APP_BASE_HREF,
       useValue: '/',
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
+    } ,
     AddressService,
+    ProductCategoryService,
     Configuration,
     Http
   ],

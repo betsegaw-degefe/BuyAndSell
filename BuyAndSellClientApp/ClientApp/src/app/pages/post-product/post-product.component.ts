@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { ProductCategoryService } from 'src/app/service/product-category.service';
 
 
 const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
@@ -20,11 +21,19 @@ const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'C
 export class PostProductComponent implements OnInit {
 
   public model: any;
+  public categories = [];
   formatter = (result: string) => result.toUpperCase();
 
-  constructor() { }
+  constructor(private data: ProductCategoryService) { }
 
   ngOnInit() {
+    this.data.get()
+      .subscribe(success => {
+        if (success) {
+          this.categories = this.data.productCategory
+          console.log(this.categories)
+        }
+      })
   }
 
   search = (text$: Observable<string>) =>

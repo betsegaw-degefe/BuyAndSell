@@ -28,7 +28,7 @@ namespace BuyAndSellApi.Models.Entities
         public int AddressId { get; set; }
         [StringLength(50)] public string Email { get; set; }
 
-        [Required, StringLength(75)] public string ProfilePicture { get; set; }
+        [StringLength(75)] public string ProfilePicture { get; set; }
 
         [Required, StringLength(50)] public string UserName { get; set; }
 
