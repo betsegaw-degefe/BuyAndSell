@@ -15,10 +15,11 @@ import { RegisterModule } from './auth/register/register.module';
 import { LoginModule } from './auth/login/login.module';
 import { AddressService } from '../app/service/address/address.service'
 import { Configuration } from './app.constants';
-import { NbTreeGridModule, NbMenuModule } from '@nebular/theme';
+import { NbTreeGridModule, NbMenuModule, NbDialogModule } from '@nebular/theme';
 import { Http } from '@angular/http';
 import { TreeModule, TreeComponent } from 'angular-tree-component';
 import { ProductCategoryService } from './service/product-category.service';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -38,8 +39,9 @@ import { ProductCategoryService } from './service/product-category.service';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     NbMenuModule.forRoot(),
-
+    NbDialogModule.forRoot(),
     CoreModule.forRoot(),
+    
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -52,6 +54,7 @@ import { ProductCategoryService } from './service/product-category.service';
     Configuration,
     Http
   ],
+  exports: [],
 })
 export class AppModule {
 }

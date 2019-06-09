@@ -1,9 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, TemplateRef } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
+import { NbDialogService } from '@nebular/theme';
+import { ModalComponent } from './modal/modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 /**
  * Node for to-do item
@@ -20,28 +24,6 @@ export class TodoItemFlatNode {
   expandable: boolean;
 }
 
-
-
-/**
- * The Json object for to-do list data.
- */
-// const UPDATED_TREE_DATA = {
-//   Groceries: {
-//     'Almond Meal flour': [],
-//     'Organic eggs': null,
-//     'Protein Powder': null,
-//     Fruits: {
-//       Apple: null,
-//       Berries: ['Blueberry', 'Raspberry'],
-//       Orange: null
-//     }
-//   },
-//   Reminders: [
-//     'Cook dinner',
-//     'Read the Material Design spec',
-//     'Upgrade Application to Angular'
-//   ]
-// };
 var TREE_DATA = {}
 const UPDATED_TREE_DATA = TREE_DATA;
 
@@ -119,13 +101,13 @@ export class ChecklistDatabase {
 export class ProductComponent implements OnInit {
 
   public categories = [];
-
+  subCategory: any = {};
 
   ngOnInit() {
-    this.data.get()
+    this.productCategoryService.get()
       .subscribe(success => {
         if (success) {
-          this.categories = this.data.productCategory
+          this.categories = this.productCategoryService.productCategory
           console.log(this.categories);
           for (let index = 0; index < this.categories.length; index++) {
             if (this.categories[index].level === 2) {
@@ -140,9 +122,41 @@ export class ProductComponent implements OnInit {
           console.log(TREE_DATA)
           const data = this._database.buildFileTree(UPDATED_TREE_DATA, 0);
           this._database.dataChange.next(data);
-          //console.log(this.node.item)
         }
       })
+  }
+
+  // Open modal to add sub category.
+  async open(node: TodoItemFlatNode) {
+    console.log(node);
+    var parentId: any;
+    var level: number;
+
+    // loop through the categories and check which node is selected.
+    for (let i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].name === node.item) {
+        parentId = this.categories[i].id;
+        level = this.categories[i].level + 1;
+        this.subCategory.parentId = parentId;
+        this.subCategory.level = level;
+      }
+    }
+
+    // wait till the user submit the name of the sub category and register it to the db.
+    await this.dialogService.open(ModalComponent)
+      .onClose.subscribe(name => {
+        if (name != null) {
+          this.subCategory.name = name;
+          this.productCategoryService.register(this.subCategory)
+            .subscribe(res => {
+              console.log(res);
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+                this.router.navigate(["/pages/category/product"]));
+            }, (err) => {
+              console.log(err);
+            });
+        }
+      });
   }
 
   /** Map from flat node to nested node. This helps us finding the nested node to be modified */
@@ -166,7 +180,12 @@ export class ProductComponent implements OnInit {
   /** The selection for checklist */
   checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
 
-  constructor(private data: ProductCategoryService, private _database: ChecklistDatabase, ) {
+  constructor(private productCategoryService: ProductCategoryService,
+    private _database: ChecklistDatabase,
+    private dialogService: NbDialogService,
+    private modalService: NgbModal,
+    private router: Router,
+  ) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
       this.isExpandable, this.getChildren);
     this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
@@ -175,6 +194,7 @@ export class ProductComponent implements OnInit {
     _database.dataChange.subscribe(data => {
       this.dataSource.data = data;
     });
+
   }
 
   getLevel = (node: TodoItemFlatNode) => node.level;

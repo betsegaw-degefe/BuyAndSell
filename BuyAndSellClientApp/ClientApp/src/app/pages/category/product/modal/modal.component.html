@@ -1,0 +1,13 @@
+<div class="col-md-12">
+  <nb-card accent="primary" class="accent accent-primary">
+    <nb-card-header>Add sub category</nb-card-header>
+    <nb-card-body>
+      <label for="name">Category name</label>
+      <input #name type="text" nbInput fullWidth shape="rectangle" placeholder="Name" />
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton fullWidth shape="rectangle" status="success" (click)="submit(name.value)">Submit</button>
+      <button nbButton fullWidth shape="rectangle" status="danger" (click)="cancel()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</div>

@@ -4,14 +4,12 @@
       <nb-card accent="primary" class="accent accent-primary">
         <nb-card-header>{{ category.name }}</nb-card-header>
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+
           <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
             <button mat-icon-button disabled></button>
-            <ng-container *ngFor="let categorynode of categories">
-              <ng-container *ngIf="categorynode.name === node.item && categorynode.parentId === category.id">
-                {{node.item}}
-              </ng-container>
-            </ng-container>
+            {{node.item}}
           </mat-tree-node>
+
           <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
             <button mat-icon-button disabled></button>
             <mat-form-field>
@@ -20,7 +18,7 @@
             <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
           </mat-tree-node>
 
-          <mat-tree-node *ngFor="let node;" matTreeNodePadding>
+          <mat-tree-node class="width-control" *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
             <ng-container *ngFor="let categorynode of categories">
               <ng-container
                 *ngIf="node.item === categorynode.name  && (categorynode.parentId === category.id || categorynode.parent.parentId === category.id)">
@@ -30,9 +28,11 @@
                   </mat-icon>
                 </button>
                 {{node.item}}
-                <button mat-icon-button>
-                  <mat-icon>add</mat-icon>
-                </button>
+                <div class="addIcon">
+                  <button mat-icon-button  (click)="open(node)" >
+                    <mat-icon >add</mat-icon>
+                  </button>
+                </div>
               </ng-container>
             </ng-container>
           </mat-tree-node>

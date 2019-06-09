@@ -9,6 +9,7 @@ import { ProductDetailModule } from './product-detail/product-detail.module';
 import { PostProductComponent } from './post-product/post-product.component';
 import { CartComponent } from './cart/cart.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     DashboardModule,
     HomeModule,
     ProductDetailModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    NgbModule
 
   ]
 })
