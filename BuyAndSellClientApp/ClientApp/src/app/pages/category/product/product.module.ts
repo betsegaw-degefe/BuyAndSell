@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from './product.component';
 import { TreeModule } from 'angular-tree-component';
-import { NbCardModule, NbDialogService, NbButtonModule, NbInputModule } from '@nebular/theme';
+import { NbCardModule, NbDialogService, NbButtonModule, NbInputModule, NbActionsModule, NbLayoutModule, NbLayoutComponent } from '@nebular/theme';
 import { MatCommonModule, MatInputModule, MatButtonModule, MatFormFieldModule, MatRippleModule, MatIconModule } from '@angular/material';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
 import { MatTreeModule } from '@angular/material/tree';
@@ -26,11 +26,12 @@ const modules = [
   NbCardModule,
   NbButtonModule,
   NbInputModule,
+  NbActionsModule,
 ];
 
 
 @NgModule({
-  declarations: [ProductComponent, ModalComponent],
+  declarations: [ProductComponent, ModalComponent,],
   imports: [...modules,],
   providers: [
     ProductCategoryService,

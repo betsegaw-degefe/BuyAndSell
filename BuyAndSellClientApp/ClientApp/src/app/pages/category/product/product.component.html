@@ -1,8 +1,20 @@
 <div class="row">
+  <div class="col-md-2">
+    <nb-card>
+      <button nbButton shape="rectangle" status="success" (click)="createCategory()">Add Category</button>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
   <ng-container *ngFor="let category of categories">
     <div class="col-md-4" *ngIf="category.parentId===null">
       <nb-card accent="primary" class="accent accent-primary">
-        <nb-card-header>{{ category.name }}</nb-card-header>
+        <nb-card-header>
+          {{ category.name }}
+          <button mat-icon-button (click)="createSubCategory(category.name)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </nb-card-header>
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 
           <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
@@ -28,11 +40,9 @@
                   </mat-icon>
                 </button>
                 {{node.item}}
-                <div class="addIcon">
-                  <button mat-icon-button  (click)="open(node)" >
-                    <mat-icon >add</mat-icon>
-                  </button>
-                </div>
+                <button mat-icon-button (click)="open(node)">
+                  <mat-icon>add</mat-icon>
+                </button>
               </ng-container>
             </ng-container>
           </mat-tree-node>

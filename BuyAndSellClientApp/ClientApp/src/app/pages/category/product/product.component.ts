@@ -126,13 +126,67 @@ export class ProductComponent implements OnInit {
       })
   }
 
-  // Open modal to add sub category.
+  async createCategory(){
+    this.subCategory.parentId = null;
+    this.subCategory.level = 1;
+
+    await this.dialogService.open(ModalComponent)
+    .onClose.subscribe(name => {
+      if (name != null) {
+        this.subCategory.name = name;
+        this.productCategoryService.register(this.subCategory)
+          .subscribe(res => {
+            console.log(res);
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+              this.router.navigate(["/pages/category/product"]));
+          }, (err) => {
+            console.log(err);
+          });
+      }
+    });
+  }
+
+  /**
+   * Called when plus button next to main category is called
+   * return: create a subcategory.
+   */
+  async createSubCategory(subCategory: string) {
+    console.log(subCategory);
+    for (let i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].name === subCategory) {
+        this.subCategory.parentId = this.categories[i].id;
+        this.subCategory.level = this.categories[i].level + 1;
+      }
+    }
+
+    console.log(this.subCategory);
+    await this.dialogService.open(ModalComponent)
+      .onClose.subscribe(name => {
+        if (name != null) {
+          this.subCategory.name = name;
+          this.productCategoryService.register(this.subCategory)
+            .subscribe(res => {
+              console.log(res);
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+                this.router.navigate(["/pages/category/product"]));
+            }, (err) => {
+              console.log(err);
+            });
+        }
+      });
+  }
+
+  /**
+   * Open modal to add sub category.
+   **/
   async open(node: TodoItemFlatNode) {
     console.log(node);
     var parentId: any;
     var level: number;
 
-    // loop through the categories and check which node is selected.
+    /**
+     * loop through the categories and check which node is selected.
+     **/
     for (let i = 0; i < this.categories.length; i++) {
       if (this.categories[i].name === node.item) {
         parentId = this.categories[i].id;
@@ -142,7 +196,10 @@ export class ProductComponent implements OnInit {
       }
     }
 
-    // wait till the user submit the name of the sub category and register it to the db.
+    /**
+     * Wait till the user submit the name of the sub category and register 
+     * it to the db.
+     **/
     await this.dialogService.open(ModalComponent)
       .onClose.subscribe(name => {
         if (name != null) {
