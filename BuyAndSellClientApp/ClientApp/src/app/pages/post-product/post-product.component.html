@@ -1,31 +1,26 @@
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-5">
     <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
       <nb-card-body>
         <label for="typeahead-format">Search for a category:</label>
         <input id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
-          [ngbTypeahead]="search" [resultFormatter]="formatter" placeholder="Search category" />
+          [ngbTypeahead]="search" placeholder="Search category" />
         <hr>
-        <pre>Category: {{ model | json }}</pre>
+        <pre>Category:</pre>
+        <section>{{ model }}</section>
       </nb-card-body>
     </nb-card>
   </div>
 
-  <div class="col-md-8">
+  <div class="col-md-7">
     <nb-card size="" accent="primary" class="accent accent-primary pointer">
       <nb-card-header>Block form</nb-card-header>
       <nb-card-body>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-6" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11]">
             <div class="form-group">
               <label for="inputFirstName">First Name</label>
               <input id="inputFirstName" type="text" nbInput fullWidth shape="rectangle" placeholder="First Name" />
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="inputLastName">Last Name</label>
-              <input id="inputLastName" type="text" nbInput fullWidth placeholder="Last Name">
             </div>
           </div>
         </div>

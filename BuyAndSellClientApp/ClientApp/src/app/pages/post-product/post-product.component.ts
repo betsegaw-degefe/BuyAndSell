@@ -22,7 +22,10 @@ export class PostProductComponent implements OnInit {
 
   public model: any;
   public categories = [];
-  formatter = (result: string) => result.toUpperCase();
+  public categoriesName = [];
+  public categoriesParentId = [];
+  private categoryNameCounter: number = 0;
+  //formatter = (result: string) => result.toUpperCase();
 
   constructor(private data: ProductCategoryService) { }
 
@@ -31,7 +34,32 @@ export class PostProductComponent implements OnInit {
       .subscribe(success => {
         if (success) {
           this.categories = this.data.productCategory
-          console.log(this.categories)
+          console.log(this.categories);
+          for (let i = 0; i < this.categories.length; i++) {
+            if (this.categories[i].level === 3) {
+              this.categoriesName[this.categoryNameCounter]
+                = this.categories[i].parent.parent.name + " | "
+                + this.categories[i].parent.name + " | "
+                + this.categories[i].name;
+              this.categoriesParentId[this.categoryNameCounter] = this.categories[i].parentId;
+              this.categoryNameCounter++;
+            }
+          }
+          for (let i = 0; i < this.categories.length; i++) {
+            if (this.categories[i].level === 2) {
+              for (let j = 0; j < this.categoriesParentId.length; j++) {
+                if (this.categories[i].id === this.categoriesParentId[j]) {
+                  break;
+                } else if (j + 1 === this.categoriesParentId.length) {
+                  this.categoriesName[this.categoryNameCounter]
+                    = this.categories[i].parent.name + " | "
+                    + this.categories[i].name;
+                  this.categoryNameCounter++;
+                }
+              }
+            }
+          }
+          console.log(this.categoriesName);
         }
       })
   }
@@ -41,7 +69,7 @@ export class PostProductComponent implements OnInit {
       debounceTime(200),
       distinctUntilChanged(),
       map(term => term === '' ? []
-        : states.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+        : this.categoriesName.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
 
 }

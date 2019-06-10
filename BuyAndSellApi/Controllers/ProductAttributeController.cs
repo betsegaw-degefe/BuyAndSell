@@ -54,7 +54,7 @@ namespace BuyAndSellApi.Controllers
         ///        "CategoryId": 2,
         ///        "Name": "Size",
         ///        "DataType": "Text",
-        ///        "Unit": "2",
+        ///        "Unit": "none",
         ///        "Active":"true"
         ///     }
         /// </remarks>
