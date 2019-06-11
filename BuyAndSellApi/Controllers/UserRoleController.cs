@@ -34,7 +34,7 @@ namespace BuyAndSellApi.Controllers
             {
                 var role = _repository.Get(id);
                 if (role != null) return Ok(role);
-                else return NotFound();
+                return NotFound();
             }
             catch (Exception ex)
             {

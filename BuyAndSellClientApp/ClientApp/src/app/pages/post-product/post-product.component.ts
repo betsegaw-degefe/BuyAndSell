@@ -25,6 +25,7 @@ export class PostProductComponent implements OnInit {
   public categoriesName = [];
   public categoriesParentId = [];
   private categoryNameCounter: number = 0;
+  values = '';
   //formatter = (result: string) => result.toUpperCase();
 
   constructor(private data: ProductCategoryService) { }
@@ -64,12 +65,19 @@ export class PostProductComponent implements OnInit {
       })
   }
 
+
+  onKey(event: any) { // without type info
+    this.values += event.target.value;
+    console.log(this.values)
+  }
+
   search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
       map(term => term === '' ? []
-        : this.categoriesName.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+        : this.categoriesName.filter(v => v.toLowerCase()
+          .indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
 
 }

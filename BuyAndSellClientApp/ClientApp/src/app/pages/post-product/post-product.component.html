@@ -3,7 +3,7 @@
     <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
       <nb-card-body>
         <label for="typeahead-format">Search for a category:</label>
-        <input id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
+        <input (keyup)="onKey($event)" id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
           [ngbTypeahead]="search" placeholder="Search category" />
         <hr>
         <pre>Category:</pre>

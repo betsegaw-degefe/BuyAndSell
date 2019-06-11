@@ -59,7 +59,7 @@ namespace BuyAndSellApi.Controllers
             {
                 var address = _repository.Get(id);
                 if (address != null) return Ok(address);
-                else return NotFound();
+                return NotFound();
             }
             catch (Exception ex)
             {

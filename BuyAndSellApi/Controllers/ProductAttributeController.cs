@@ -34,7 +34,7 @@ namespace BuyAndSellApi.Controllers
             {
                 var productAttribute = _repository.Get(id);
                 if (productAttribute != null) return Ok(productAttribute);
-                else return NotFound();
+                return NotFound();
             }
             catch (Exception ex)
             {

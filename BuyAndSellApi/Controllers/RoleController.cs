@@ -33,7 +33,7 @@ namespace BuyAndSellApi.Controllers
             {
                 var roles = _repository.GetAll();
                 if (roles != null) return Ok(roles);
-                else return NotFound();
+                return NotFound();
             }
             catch (Exception ex)
             {

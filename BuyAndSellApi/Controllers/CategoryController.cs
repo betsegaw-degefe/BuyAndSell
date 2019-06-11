@@ -27,7 +27,7 @@ namespace BuyAndSellApi.Controllers {
             try {
                 var categories = _repository.GetAll ();
                 if (categories != null) return Ok (categories);
-                else return NotFound ();
+                return NotFound ();
             } catch (Exception ex) {
                 // return error message if there was an exception
                 return BadRequest (new { message = ex.Message });
@@ -47,7 +47,7 @@ namespace BuyAndSellApi.Controllers {
             try {
                 var category = _repository.Get (id);
                 if (category != null) return Ok (category);
-                else return NotFound ();
+                return NotFound ();
             } catch (Exception ex) {
                 // return error message if there was an exception
                 return BadRequest (new { message = ex.Message });
