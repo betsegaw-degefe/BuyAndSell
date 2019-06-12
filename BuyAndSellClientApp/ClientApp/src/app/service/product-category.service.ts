@@ -17,6 +17,9 @@ export class ProductCategoryService {
     this.actionUrl = configuration.serverWithApiUrl + 'category/';
   }
 
+  /**
+   * Get all product category.
+   */
   public get(): Observable<boolean> {
     return this.http.get(this.actionUrl)
       .pipe(map((data: any[]) => {
@@ -25,7 +28,23 @@ export class ProductCategoryService {
       }));
   }
 
-  register(model: any): Observable<any> {
+  /**
+   * Search a product category by category name.
+   * @param model 
+   */
+  public getCategory(categoryName: any): Observable<any> {
+    return this.http.post<any>(this.actionUrl + 'searchByName', categoryName)
+      .pipe(
+        tap(_ => this.log('searchByName')),
+        catchError(this.handleError('searchByName', []))
+      );
+  }
+
+  /**
+   * Register product category 
+   * @param model: product category model
+   */
+  public register(model: any): Observable<any> {
     model.active = true;
     return this.http.post<any>(this.actionUrl + 'register', model)
       .pipe(

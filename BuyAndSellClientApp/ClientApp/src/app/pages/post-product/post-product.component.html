@@ -1,31 +1,40 @@
 <div class="row">
   <div class="col-md-5">
-    <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
+    <nb-card size="" accent="primary" class="accent accent-primary pointer">
       <nb-card-body>
         <label for="typeahead-format">Search for a category:</label>
-        <input (keyup)="onKey($event)" id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
+        <!-- (keyup)="onKey($event)" -->
+        <input id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
           [ngbTypeahead]="search" placeholder="Search category" />
         <hr>
         <pre>Category:</pre>
         <section>{{ model }}</section>
+        <button id="searchCategoryProperty" type="submit" class="btn" nbButton status="success" shape="rectangle"
+          (click)="searchProductPropery(model)">Search</button>
       </nb-card-body>
     </nb-card>
   </div>
 
   <div class="col-md-7">
-    <nb-card size="" accent="primary" class="accent accent-primary pointer">
+    <nb-card accent="primary" class="accent accent-primary pointer">
       <nb-card-header>Block form</nb-card-header>
       <nb-card-body>
         <div class="row">
-          <div class="col-sm-6" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11]">
+          <div class="col-sm-6">
+            <pre>Product property not found.</pre>
+          </div>
+          <div class="col-sm-6" *ngFor="let productProperty of productProperties">
             <div class="form-group">
-              <label for="inputFirstName">First Name</label>
-              <input id="inputFirstName" type="text" nbInput fullWidth shape="rectangle" placeholder="First Name" />
+              <label for="inputFirstName">{{productProperty.name}}</label>
+              <input id="inputFirstName" type={{productProperty.dataType}} nbInput fullWidth shape="rectangle"
+                placeholder={{productProperty.name}} />
             </div>
           </div>
         </div>
         <div>
-          <button type="submit" class="btn" nbButton status="primary" shape="rectangle" float="left">Submit</button>
+          <button type="submit" class="btn" nbButton status="success" shape="rectangle" float="Right">Save</button>
+          <button type="submit" class="btn" nbButton status="primary" shape="rectangle" float="Right">Add
+            Property</button>
         </div>
       </nb-card-body>
 

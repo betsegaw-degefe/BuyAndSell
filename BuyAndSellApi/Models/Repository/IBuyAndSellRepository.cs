@@ -8,6 +8,8 @@ namespace BuyAndSellApi.Models.Repository
     public interface IBuyAndSellRepository<T> where T : BaseEntity
     {
         T Get(object id);
+
+        //T Get(object name);
         IQueryable<T> GetAll();
         void Insert(T entity);
         void InsertAll(ICollection<T> range);
@@ -19,14 +21,6 @@ namespace BuyAndSellApi.Models.Repository
         Task DeleteAsync(T entity);
         bool SaveChanges();
         Task SaveChangesAsync();
-
-
-        //IEnumerable<User> GetUser(string userName, string password);
-        //User GetUser(int id);
-
-        //bool SaveAll();
-        //void AddEntity(object model);
-
-        //Address GetAddressById(int id);
+        
     }
 }

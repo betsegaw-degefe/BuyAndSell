@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Http;
@@ -10,11 +12,34 @@ namespace BuyAndSellApi.Controllers {
     [ApiController]
     public class CategoryController : ControllerBase {
         private readonly IBuyAndSellRepository<Category> _repository;
+        private readonly BuyAndSellContext _context;
 
-        public CategoryController (IBuyAndSellRepository<Category> repository) {
+        public CategoryController (IBuyAndSellRepository<Category> repository, BuyAndSellContext context) {
             _repository = repository;
+            context = _context;
         }
 
+        /// <summary>
+        /// Gets Category by name.
+        /// </summary>
+        /// <param name="searchByName.Name">The Name of the Category you want to get</param>
+        /// <returns>An ActionResult of Category</returns>
+        [HttpPost ("searchByName")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetCategory ([FromBody] SearchByNameDto searchByName) {
+            try {
+                var category = from s in _repository.GetAll () select s;
+                if (!String.IsNullOrEmpty (searchByName.Name)) {
+                    category = category.Where (s => s.Name.ToUpper ().Contains (searchByName.Name.ToUpper ()));
+                }
+                return Ok (category);
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
         /// <summary>
         /// Gets all Category.
         /// </summary>

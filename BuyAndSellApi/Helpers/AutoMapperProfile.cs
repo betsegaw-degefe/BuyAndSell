@@ -10,6 +10,7 @@ namespace BuyAndSellApi.Helpers
         {
             CreateMap<LoginDto, User>();
             CreateMap<UserDto, User>();
+            CreateMap<SearchByNameDto, ProductAttribute>();
         }
     }
 }
