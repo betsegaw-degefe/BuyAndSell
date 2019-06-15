@@ -3,41 +3,119 @@
     <nb-card size="" accent="primary" class="accent accent-primary pointer">
       <nb-card-body>
         <label for="typeahead-format">Search for a category:</label>
-        <!-- (keyup)="onKey($event)" -->
         <input id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
           [ngbTypeahead]="search" placeholder="Search category" />
         <hr>
         <pre>Category:</pre>
         <section>{{ model }}</section>
         <button id="searchCategoryProperty" type="submit" class="btn" nbButton status="success" shape="rectangle"
-          (click)="searchProductPropery(model)">Search</button>
+          (click)="searchProductProperty(model)">Search</button>
       </nb-card-body>
     </nb-card>
   </div>
-
-  <div class="col-md-7">
+  <div class="col-md-7" *ngIf="searchCategory">
     <nb-card accent="primary" class="accent accent-primary pointer">
-      <nb-card-header>Block form</nb-card-header>
+      <nb-card-header>{{searchCategory}}</nb-card-header>
+
       <nb-card-body>
+        <div class="col-sm-12" *ngIf="productProperties.length === 0">
+          <pre>Product property not found.</pre>
+        </div>
         <div class="row">
-          <div class="col-sm-6">
-            <pre>Product property not found.</pre>
-          </div>
-          <div class="col-sm-6" *ngFor="let productProperty of productProperties">
+          <div class="col-sm-6"
+            *ngFor="let productProperty of productProperties; let index = index;trackBy:trackByIndex;">
             <div class="form-group">
-              <label for="inputFirstName">{{productProperty.name}}</label>
-              <input id="inputFirstName" type={{productProperty.dataType}} nbInput fullWidth shape="rectangle"
-                placeholder={{productProperty.name}} />
+              <label for={{productProperty.name}}>{{productProperty.name}}</label>
+              <input id={{productProperty.name}} type="productProperty.dataType" nbInput fullWidth shape="rectangle"
+                [(ngModel)]="propertyValue[productProperty.name]" placeholder={{productProperty.name}} />
+            </div>
+          </div>
+        </div>
+        <div *ngIf="productProperties.length != 0">
+          <hr>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputCondition">Condition</label>
+                <input id="inputCondition" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="productModel.Condition" placeholder="Condition" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputQuantity">Quantity</label>
+                <input id="inputQuantity" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="productModel.Quantity" placeholder="Quantity" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputPrice">Price</label>
+                <input id="inputPrice" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="productModel.Price"
+                  placeholder="Price" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputNegotiation">Negotiation</label>
+                <input id="inputNegotiation" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="productModel.Negotiation" placeholder="Negotiation" />
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="btn btn-outline-primary waves-effect float-left">
+                  <span>Choose files<i class="fas fa-cloud-upload-alt ml-3" aria-hidden="true"></i></span>
+                  <input type="file" multiple>
+                </div>
+                <div class="file-path-wrapper">
+                  <input nbInput fullWidth shape="rectangle" type="text" placeholder="Upload one or more files">
+                </div>
+                <label for="inputChooseImage">Choose image</label>
+                <input id="inputChooseImage" type="image" class="btn" name="image" />                
+              </div>
+            </div>
+          </div> -->
+          <div class="row" style="margin-bottom:15px;">
+            <div class="col-sm-3">
+              <label for="file">Product Image</label>
+            </div>
+            <div class="col-sm-12">
+              <input type="file" #file fullWidth placeholder="Choose file" (change)="uploadImage(file.files)"
+                style="display:none;">
+              <button type="button" class="btn btn-success" (click)="file.click()">Upload Image</button>
+            </div>
+            <div class="col-md-4">
+              <span class="upload" *ngIf="progress > 0">
+                {{progress}}%
+              </span>
+              <span class="upload" *ngIf="message">
+                {{message}}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="inputDescription">Description</label>
+                <textarea id="inputDescription" class="form-control" [(ngModel)]="productModel.Description"
+                  placeholder="Description"></textarea>
+              </div>
             </div>
           </div>
         </div>
         <div>
-          <button type="submit" class="btn" nbButton status="success" shape="rectangle" float="Right">Save</button>
           <button type="submit" class="btn" nbButton status="primary" shape="rectangle" float="Right">Add
+            Property</button>
+          <button *ngIf="productProperties.length != 0" type="submit" class="btn" nbButton status="success"
+            shape="rectangle" float="Right" (click)="saveProduct()">Save
             Property</button>
         </div>
       </nb-card-body>
-
     </nb-card>
   </div>
 </div>

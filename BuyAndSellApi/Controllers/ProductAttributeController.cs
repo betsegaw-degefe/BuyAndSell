@@ -14,19 +14,17 @@ namespace BuyAndSellApi.Controllers {
     [ApiController]
     public class ProductAttributeController : ControllerBase {
         private readonly IBuyAndSellRepository<ProductAttribute> _repository;
-        //private readonly DbSet<ProductAttribute> _productAttributes;
         private readonly BuyAndSellContext _context;
 
         public ProductAttributeController (IBuyAndSellRepository<ProductAttribute> repository, BuyAndSellContext context) {
             _repository = repository;
-            //_productAttributes = context.Set<ProductAttribute> ();
             context = _context;
         }
 
         /// <summary>
         /// Gets ProductAttribute by name.
         /// </summary>
-        /// <param name="searchByName.Name">The Name of the ProductAttribute you want to get</param>
+        /// <param name="searchByName">The Name of the ProductAttribute you want to get</param>
         /// <returns>An ActionResult of ProductAttribute</returns>
         [HttpPost ("searchByName")]
         [ProducesResponseType (StatusCodes.Status200OK)]

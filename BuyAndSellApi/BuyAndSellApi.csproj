@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Request" />
+    <Folder Include="Resources\Images" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

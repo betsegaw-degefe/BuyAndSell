@@ -6,9 +6,18 @@ nb-card-footer {
   justify-content: space-around;
   border: none;
 }
-.btn{
+.btn {
   float: left;
   justify-content: space-around;
   margin-top: 1.5em;
   margin-right: 2em;
+}
+::ng-deep nb-layout-column {
+  height: 80vw;
+}
+.upload {
+  font-weight: bold;
+  color: #28a745;
+  margin-left: 15px;
+  line-height: 36px;
 }

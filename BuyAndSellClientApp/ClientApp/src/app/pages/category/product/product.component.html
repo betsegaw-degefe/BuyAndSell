@@ -15,21 +15,7 @@
             <mat-icon>add</mat-icon>
           </button>
         </nb-card-header>
-        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-
-          <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-            <button mat-icon-button disabled></button>
-            {{node.item}}
-          </mat-tree-node>
-
-          <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
-            <button mat-icon-button disabled></button>
-            <mat-form-field>
-              <input matInput #itemValue placeholder="New item...">
-            </mat-form-field>
-            <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
-          </mat-tree-node>
-
+        <mat-tree ngF [dataSource]="dataSource" [treeControl]="treeControl">   
           <mat-tree-node class="width-control" *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
             <ng-container *ngFor="let categorynode of categories">
               <ng-container

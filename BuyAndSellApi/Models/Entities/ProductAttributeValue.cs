@@ -7,16 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BuyAndSellApi.Models.Entities
 {
     [Table("product_attribute_value", Schema = "commodity")]
-    public partial class ProductAttributeValue
+    public partial class ProductAttributeValue : BaseEntity
     {
-        public int Id { get; set; }
         public int ProductAttributeId { get; set; }
 
         [Required] [StringLength(250)] public string Value { get; set; }
-
-        public DateTime LastUpdated { get; set; }
-
-        [Required, DefaultValue("true")] public bool? Active { get; set; }
 
         public int ProductId { get; set; }
 

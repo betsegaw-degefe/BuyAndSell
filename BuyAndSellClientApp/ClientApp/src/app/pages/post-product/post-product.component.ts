@@ -1,8 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
 import { PostProductService } from 'src/app/service/post-product.service';
+import { ProductService } from 'src/app/service/product.service';
+import { ProductAttributeValueService } from 'src/app/service/product-attribute-value.service';
+import { ProductModel } from 'src/app/models/product-model';
+import { NbToastrService } from '@nebular/theme';
+import { Router } from '@angular/router';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { Configuration } from 'src/app/app.constants';
 
 
 @Component({
@@ -12,20 +19,40 @@ import { PostProductService } from 'src/app/service/post-product.service';
 })
 export class PostProductComponent implements OnInit {
 
+  private actionUrl: string;
   public model: any;
+  public productModel: any = {};
+  public propertyValue: any = {};
   public categories = [];
   public categoriesName = [];
   public categoriesParentId = [];
   private categoryNameCounter: number = 0;
   public searchCategory: String = "";
   public searchCategoryModel: any = {};
-  private productProperties: any = [];
+  public productProperties: any = [];
+  public props: any = [];
 
+  public progress: number; // To control the progress of the image uploading.
+  public message: string; // message which display after image uploading finished.
+  @Output() public onUploadFinished = new EventEmitter();
 
 
   values = '';
 
-  constructor(private data: ProductCategoryService, private postProductdata: PostProductService) { }
+  constructor(private data: ProductCategoryService,
+    private http: HttpClient,
+    private postProductdata: PostProductService,
+    private productdata: ProductService,
+    private productAttributeValuedata: ProductAttributeValueService,
+    private toastrService: NbToastrService,
+    private router: Router,
+    private configuration: Configuration) {
+    this.actionUrl = configuration.serverWithApiUrl + 'upload/';
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
 
   ngOnInit() {
     this.data.get()
@@ -62,13 +89,12 @@ export class PostProductComponent implements OnInit {
       })
   }
 
-
   onKey(event: any) { // without type info
     this.values += event.target.value;
     console.log(this.values)
   }
 
-  searchProductPropery(data: any) {
+  searchProductProperty(data: any) {
     console.log(data);
     for (let i = data.length - 1; i > 0; i--) {
       if (data[i] === "|") {
@@ -84,7 +110,9 @@ export class PostProductComponent implements OnInit {
           this.postProductdata.getProductAttribute(res[0].id)
             .subscribe(res => {
               if (res) {
+                //this.props =Object.assign(res);
                 this.productProperties = res;
+                console.log(this.productProperties)
               }
             })
         }
@@ -99,5 +127,70 @@ export class PostProductComponent implements OnInit {
         : this.categoriesName.filter(v => v.toLowerCase()
           .indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
+  saveProduct() {
+    var propertyValueModel: any = {}
+    this.productModel.StatusId = 1;
+    //this.productModel.Value = "Cottex"
+    console.log(this.propertyValue);
+    //var count = Object.keys(this.propertyValueModel).length;
+    //console.log(count);
 
+
+
+    console.log(this.productModel)
+    this.productdata.register(this.productModel)
+      .subscribe(res => {
+        if (res) {
+          this.productModel = {}
+          this.productModel = res;
+          console.log(this.productModel)
+          for (var propertyKey in this.propertyValue) {
+            //console.log(propertyKey + " -> " + this.propertyValue[propertyKey]);
+            for (let index = 0; index < this.productProperties.length; index++) {
+              if (this.productProperties[index].name === propertyKey) {
+                propertyValueModel.ProductAttributeId = this.productProperties[index].id
+                propertyValueModel.Value = this.propertyValue[propertyKey]
+                propertyValueModel.ProductId = this.productModel.id
+              }
+            }
+          }
+          console.log(propertyValueModel);
+          this.productAttributeValuedata.register(propertyValueModel)
+            .subscribe(res => {
+              if (res) {
+                console.log(res);
+                this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+                  this.router.navigate(["/pages/postproduct"]));
+              }
+            });
+          //this.productAttributeValueModel.ProductId = this.productModel.id
+          //this.productAttributeValueModel.ProductAttributeId = this.productProperties.id
+        }
+      });
+  }
+
+  // upload image to back end
+  public uploadImage = (files) => {
+
+    if (files.length === 0) {
+      return;
+    }
+    console.log(files);
+
+    //let fileToUpload = <File>files[0];
+    console.log(files[0]);
+    const formData = new FormData();
+    //formData.append("userfile", fileInputElement.files[0]);
+    formData.append("file", files[0]);
+    console.log(formData.get("file"));
+    this.http.post('https://localhost:5001/api/upload', formData, { reportProgress: true, observe: 'events' })
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round(100 * event.loaded / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'Upload success.';
+          this.onUploadFinished.emit(event.body);
+        }
+      });
+  }
 }
