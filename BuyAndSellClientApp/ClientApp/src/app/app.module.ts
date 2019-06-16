@@ -20,6 +20,8 @@ import { Http } from '@angular/http';
 import { TreeModule, TreeComponent } from 'angular-tree-component';
 import { ProductCategoryService } from './service/product-category.service';
 import { RouterModule } from '@angular/router';
+import { NgxUploaderModule } from 'ngx-uploader';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -31,6 +33,7 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     AuthModule,
     RegisterModule,
+    FormsModule,
     LoginModule,
     NbTreeGridModule,
     TreeModule.forRoot(),
@@ -40,7 +43,8 @@ import { RouterModule } from '@angular/router';
     NbMenuModule.forRoot(),
     NbDialogModule.forRoot(),
     CoreModule.forRoot(),
-    NbToastrModule.forRoot()
+    NbToastrModule.forRoot(),
+    NgxUploaderModule
     
   ],
   bootstrap: [AppComponent],
@@ -53,6 +57,7 @@ import { RouterModule } from '@angular/router';
     ProductCategoryService,
     Configuration,
     Http,
+    
   ],
   exports: [],
 })

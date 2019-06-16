@@ -4,6 +4,8 @@ import { PostProductComponent } from './post-product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NbCardModule, NbInputModule, NbButtonModule } from '@nebular/theme';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
+import { FileUploadService } from 'src/app/service/file-upload.service';
+import { NgxUploaderModule } from 'ngx-uploader';
 
 @NgModule({
   declarations: [PostProductComponent,],
@@ -13,9 +15,11 @@ import { ProductCategoryService } from 'src/app/service/product-category.service
     NbButtonModule,
     NbInputModule,
     NgbModule,
+    NgxUploaderModule
   ],
   providers: [
     ProductCategoryService,
+    FileUploadService
   ],
 })
 export class PostProductModule { }

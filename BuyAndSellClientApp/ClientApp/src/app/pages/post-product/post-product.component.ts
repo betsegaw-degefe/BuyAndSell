@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
@@ -8,9 +8,11 @@ import { ProductAttributeValueService } from 'src/app/service/product-attribute-
 import { ProductModel } from 'src/app/models/product-model';
 import { NbToastrService } from '@nebular/theme';
 import { Router } from '@angular/router';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Configuration } from 'src/app/app.constants';
-
+import { RequestOptions } from '@angular/http';
+import { FileUploadService } from 'src/app/service/file-upload.service';
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 
 @Component({
   selector: 'app-post-product',
@@ -31,22 +33,21 @@ export class PostProductComponent implements OnInit {
   public searchCategoryModel: any = {};
   public productProperties: any = [];
   public props: any = [];
+  request: HttpRequest<any>;
 
   public progress: number; // To control the progress of the image uploading.
   public message: string; // message which display after image uploading finished.
-  @Output() public onUploadFinished = new EventEmitter();
-
-
-  values = '';
+  //@Output() public onUploadFinished = new EventEmitter();
 
   constructor(private data: ProductCategoryService,
     private http: HttpClient,
     private postProductdata: PostProductService,
     private productdata: ProductService,
     private productAttributeValuedata: ProductAttributeValueService,
-    private toastrService: NbToastrService,
+    private fileService: FileUploadService,
     private router: Router,
-    private configuration: Configuration) {
+    private configuration: Configuration
+  ) {
     this.actionUrl = configuration.serverWithApiUrl + 'upload/';
   }
 
@@ -89,11 +90,6 @@ export class PostProductComponent implements OnInit {
       })
   }
 
-  onKey(event: any) { // without type info
-    this.values += event.target.value;
-    console.log(this.values)
-  }
-
   searchProductProperty(data: any) {
     console.log(data);
     for (let i = data.length - 1; i > 0; i--) {
@@ -130,14 +126,6 @@ export class PostProductComponent implements OnInit {
   saveProduct() {
     var propertyValueModel: any = {}
     this.productModel.StatusId = 1;
-    //this.productModel.Value = "Cottex"
-    console.log(this.propertyValue);
-    //var count = Object.keys(this.propertyValueModel).length;
-    //console.log(count);
-
-
-
-    console.log(this.productModel)
     this.productdata.register(this.productModel)
       .subscribe(res => {
         if (res) {
@@ -169,28 +157,76 @@ export class PostProductComponent implements OnInit {
       });
   }
 
-  // upload image to back end
   public uploadImage = (files) => {
-
     if (files.length === 0) {
       return;
     }
-    console.log(files);
 
-    //let fileToUpload = <File>files[0];
-    console.log(files[0]);
+    let fileToUpload = <File>files[0];
     const formData = new FormData();
-    //formData.append("userfile", fileInputElement.files[0]);
-    formData.append("file", files[0]);
-    console.log(formData.get("file"));
-    this.http.post('https://localhost:5001/api/upload', formData, { reportProgress: true, observe: 'events' })
+    formData.append('file', fileToUpload, fileToUpload.name);
+    //'Content-Type': "multipart/form-data"
+    const headers = new HttpHeaders().append("Content-Type", "multipart/form-data");
+
+    this.http.post('https://localhost:5001/api/upload', formData, { headers, reportProgress: true, observe: 'events' })
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress)
           this.progress = Math.round(100 * event.loaded / event.total);
         else if (event.type === HttpEventType.Response) {
           this.message = 'Upload success.';
-          this.onUploadFinished.emit(event.body);
+          //this.onUploadFinished.emit(event.body);
         }
       });
   }
+
+  // upload image to back end
+  // public upload(files) {
+
+  //   if (files.length === 0) {
+  //     return;
+  //   }
+  //   console.log(files);
+
+  //   const formData = new FormData();
+  //   for (let file of files)
+  //     formData.append('Image', file, file.name);
+
+  //   const uploadReq = new HttpRequest('POST', `api/upload`, formData, {
+  //     reportProgress: true,
+  //   });
+  // this.request = this.request.clone({
+  //   headers:
+  //     this.request.headers.set('Content-Type', 'image/*')
+  // });
+  // 'Content-Type': 'multipart/form-data'
+  // 'Accept': 'multipart/form-data'
+  //let headers = new HttpHeaders().set("Content-Type", undefined);
+  // this.http.post('https://localhost:5001/api/upload', formData)
+  //   {
+  //     headers: { "Content-Type": 'multipart/form-data', 'Accept': 'multipart/form-data' },
+  //     //   reportProgress: true, observe: 'events'
+  //   }
+  // ).subscribe(event => {
+  // if (event.type === HttpEventType.UploadProgress)
+  //   this.progress = Math.round(100 * event.loaded / event.total);
+  // else if (event.type === HttpEventType.Response)
+  //   this.message = event.body.toString();
+  //console.log(event);
+  // });
+
+  //formData.append("userfile", fileInputElement.files[0]);
+  //formData.append("file", files[0]);
+  //console.log(formData.get("file"));
+  // this.http.post('https://localhost:5001/api/upload', formData, { reportProgress: true, observe: 'events' })
+  //   .subscribe(event => {
+  //     if (event.type === HttpEventType.UploadProgress)
+  //       this.progress = Math.round(100 * event.loaded / event.total);
+  //     else if (event.type === HttpEventType.Response) {
+  //       this.message = 'Upload success.';
+  //       //this.onUploadFinished.emit(event.body);
+  //     }
+  //   });
+  //}
+
+
 }

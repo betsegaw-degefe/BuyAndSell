@@ -36,6 +36,7 @@
     "ionicons": "^4.5.8",
     "nebular-icons": "^1.1.0",
     "ng-eva-icon": "0.0.6",
+    "ngx-uploader": "^7.1.0",
     "node-sass": "^4.12.0",
     "pace-js": "^1.0.2",
     "roboto-fontface": "^0.10.0",

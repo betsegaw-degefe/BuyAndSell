@@ -86,7 +86,8 @@
             </div>
             <div class="col-sm-12">
               <input type="file" #file fullWidth placeholder="Choose file" (change)="uploadImage(file.files)"
-                style="display:none;">
+                style="display:none;" multiple>
+              <!-- <input type="file" (change)="uploadPhoto()" #fileInput>  -->
               <button type="button" class="btn btn-success" (click)="file.click()">Upload Image</button>
             </div>
             <div class="col-md-4">
