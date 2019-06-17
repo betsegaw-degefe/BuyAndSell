@@ -3,7 +3,7 @@ import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from
 import { Configuration } from '../app.constants';
 import { ProductModel } from '../models/product-model';
 import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,19 @@ export class ProductService {
         tap(_ => this.log('register')),
         catchError(this.handleError('register', []))
       );
+  }
+
+
+  /**
+   * Get all products
+   */
+  public get(): Observable<boolean> {
+    return this.http.get(this.actionUrl)
+      .pipe(map((data: any[]) => {
+        //this.productCategory = data;
+        this.product = data
+        return true;
+      }));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

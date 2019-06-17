@@ -22,9 +22,4 @@ export class FileUploadService {
     return this.http.post(this.actionUrl, input)
       .pipe(map(res => console.log(res)));
   }
-  // return this.http.post<any>(this.actionUrl + 'register', model)
-  // .pipe(
-  //   tap(_ => this.log('register')),
-  //   catchError(this.handleError('register', []))
-  // );
 }

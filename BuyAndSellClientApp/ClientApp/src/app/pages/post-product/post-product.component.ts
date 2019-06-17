@@ -124,6 +124,8 @@ export class PostProductComponent implements OnInit {
         : this.categoriesName.filter(v => v.toLowerCase()
           .indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
+
+  // Upload image to the server
   public uploadFile = (files) => {
     if (files.length === 0) {
       return;
@@ -133,7 +135,7 @@ export class PostProductComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', <File>files[0]);
 
-    this.http.post('https://localhost:5001/api/upload', formData, {
+    this.http.post(this.actionUrl, formData, {
       headers: {
         'Accept': 'application/json',
         'Authorization': 'encodedData'
@@ -143,17 +145,20 @@ export class PostProductComponent implements OnInit {
         if (event.type === HttpEventType.UploadProgress)
           this.progress = Math.round(100 * event.loaded / event.total);
         else if (event.type === HttpEventType.Response) {
-          this.message = 'Upload success.';
+          this.message = 'successfully Uploaded!.';
           this.onUploadFinished.emit(event.body);
           this.imageUrl = event.body;
           console.log(this.imageUrl.dbPath)
-          //console.log
         }
       });
   }
+
+  // Save product to product attribute value and product table.
   saveProduct() {
     var propertyValueModel: any = {}
     this.productModel.StatusId = 1;
+    if (this.imageUrl != null)
+      this.productModel.imageUrl = this.imageUrl.dbPath;
     this.productdata.register(this.productModel)
       .subscribe(res => {
         if (res) {

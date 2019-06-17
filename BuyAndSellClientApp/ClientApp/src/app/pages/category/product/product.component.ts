@@ -126,24 +126,24 @@ export class ProductComponent implements OnInit {
       })
   }
 
-  async createCategory(){
+  async createCategory() {
     this.subCategory.parentId = null;
     this.subCategory.level = 1;
 
     await this.dialogService.open(ModalComponent)
-    .onClose.subscribe(name => {
-      if (name != null) {
-        this.subCategory.name = name;
-        this.productCategoryService.register(this.subCategory)
-          .subscribe(res => {
-            console.log(res);
-            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-              this.router.navigate(["/pages/category/product"]));
-          }, (err) => {
-            console.log(err);
-          });
-      }
-    });
+      .onClose.subscribe(name => {
+        if (name != null) {
+          this.subCategory.name = name;
+          this.productCategoryService.register(this.subCategory)
+            .subscribe(res => {
+              console.log(res);
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+                this.router.navigate(["/pages/category/product"]));
+            }, (err) => {
+              console.log(err);
+            });
+        }
+      });
   }
 
   /**
@@ -158,8 +158,6 @@ export class ProductComponent implements OnInit {
         this.subCategory.level = this.categories[i].level + 1;
       }
     }
-
-    console.log(this.subCategory);
     await this.dialogService.open(ModalComponent)
       .onClose.subscribe(name => {
         if (name != null) {

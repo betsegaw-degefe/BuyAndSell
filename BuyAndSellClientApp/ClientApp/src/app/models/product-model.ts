@@ -6,6 +6,7 @@ export class ProductModel {
     public Price: Number;
     public Negotiable: boolean;
     public Description: String;
+    public ImageUrl: string;
     public CreatedAt: Date;
     public LastUpdated: Date;
     public CreatedBy: number;

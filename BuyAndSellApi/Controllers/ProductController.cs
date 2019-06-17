@@ -4,22 +4,19 @@ using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BuyAndSellApi.Controllers
-{
+namespace BuyAndSellApi.Controllers {
     [Produces ("application/json")]
     [Route ("api/[Controller]")]
     [ApiController]
-    public class ProductController :  ControllerBase
-    {
+    public class ProductController : ControllerBase {
         private readonly IBuyAndSellRepository<Product> _repository;
         private readonly BuyAndSellContext _context;
 
-        public ProductController(IBuyAndSellRepository<Product> repository, BuyAndSellContext context)
-        {
+        public ProductController (IBuyAndSellRepository<Product> repository, BuyAndSellContext context) {
             _repository = repository;
             _context = context;
         }
-        
+
         /// <summary>
         /// Gets Product by id.
         /// </summary>
@@ -39,7 +36,26 @@ namespace BuyAndSellApi.Controllers
                 return BadRequest (new { message = ex.Message });
             }
         }
-        
+
+        /// <summary>
+        /// Gets all Products.
+        /// </summary>
+        /// <returns>A list of Products</returns>
+        [HttpGet]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetAll () {
+            try {
+                var products = _repository.GetAll ();
+                if (products != null) return Ok (products);
+                return NotFound ();
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
         /// <summary>
         /// Creates Product.
         /// </summary>

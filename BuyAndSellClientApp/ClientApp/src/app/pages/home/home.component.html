@@ -1,36 +1,35 @@
 <div class="row">
-  <div class="col-md-4" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11]">
-    <div >
-        <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
-            <nb-card-body (click)="redirect()">
-              <div class="picture" [style.background-image]="'url(assets/images/eva.png)'"></div>
-    
-              <div class="details">
-                <div class="title">
-                    HUMAN HAIR EXTENSIONS T Type
-                </div>
-                <div class="description">
-                    Lace Front Human Hair Wigs For Women Remy Hair Straight Wig With Baby Hair Natural Hairline Full End Red Color
-                </div>
+  <div class="col-md-3" *ngFor="let product of products">
+    <div>
+      <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
+        <nb-card-body (click)="redirect()">
+          <div class="picture" [style.background-image]="'url('+ product.imageUrl+')'"></div>
+          <div class="details">
+            <div class="header">
+              <div>
+                <h5 class="text-primary">{{product.description}}</h5>
               </div>
-            </nb-card-body>
-    
-          <nb-card-footer>
-            <a href="https://akveo.github.io/react-native-ui-kitten" target="_blank">
-              <i class="ion-ios-world"></i>
-            </a>
-            <a href="https://itunes.apple.com/us/app/kitten-tricks/id1246143230" target="_blank">
-              <i class="ion-social-apple"></i>
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.akveo.kittenTricks" target="_blank">
-              <i class="ion-social-android"></i>
-            </a>
-            <a href="https://github.com/akveo/react-native-ui-kitten" target="_blank">
-              <i class="ion-social-github"></i>
-            </a>
-          </nb-card-footer>
-        </nb-card>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-5">
+                <h5 class="text-danger">
+                  {{product.price}} Birr
+                </h5>
+              </div>
+              <div class="col-md-7 text-info">
+                <h5 class="text-info">
+                  <ngb-rating [(rate)]="starRate" [readonly]="readonly" max=5>
+                  </ngb-rating>
+                  <span class="current-rate"> {{ starRate }}</span>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+        </nb-card-footer>
+      </nb-card>
     </div>
-   
   </div>
 </div>
