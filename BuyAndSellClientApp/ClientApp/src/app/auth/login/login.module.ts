@@ -7,7 +7,7 @@ import { RouterModule, Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import { FormBuilder } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
+//import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
 
 
 @NgModule({
@@ -20,11 +20,11 @@ import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
     ],
     providers: [
         AuthService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
-            multi: true
-        },
+        // {
+        //     // provide: HTTP_INTERCEPTORS,
+        //     // useClass: TokenInterceptor,
+        //     // multi: true
+        // },
     ],
 })
 export class LoginModule {

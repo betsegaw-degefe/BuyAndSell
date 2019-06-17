@@ -6,16 +6,21 @@ import { NbCardModule, NbInputModule, NbButtonModule } from '@nebular/theme';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
 import { FileUploadService } from 'src/app/service/file-upload.service';
 import { NgxUploaderModule } from 'ngx-uploader';
+import { UploadComponent } from './upload/upload.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [PostProductComponent,],
+  declarations: [PostProductComponent, UploadComponent],
   imports: [
     CommonModule,
     NbCardModule,
     NbButtonModule,
     NbInputModule,
     NgbModule,
-    NgxUploaderModule
+    NgxUploaderModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     ProductCategoryService,

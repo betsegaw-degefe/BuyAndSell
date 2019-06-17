@@ -19,6 +19,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace BuyAndSellApi {
     public class Startup {
@@ -34,7 +35,7 @@ namespace BuyAndSellApi {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
-            services.AddMvc().SetCompatibilityVersion (CompatibilityVersion.Version_2_2)
+            services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2)
                 .AddJsonOptions (options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver ();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -44,7 +45,7 @@ namespace BuyAndSellApi {
                 .AddDbContext<BuyAndSellContext> ()
                 .BuildServiceProvider ();
 
-           services.AddSwaggerGen (c => {
+            services.AddSwaggerGen (c => {
                 c.SwaggerDoc ("v1", new OpenApiInfo {
                     Title = "Buy and sell API",
                         Version = "v1",
@@ -63,7 +64,7 @@ namespace BuyAndSellApi {
             services.AddAutoMapper ();
 
             services.AddScoped (typeof (IBuyAndSellRepository<>), typeof (BuyAndSellRepository<>));
-            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository> ();
             services.AddCors (options => {
                 options.AddPolicy ("CorsPolicy",
                     builder => builder.AllowAnyOrigin ()
@@ -72,15 +73,23 @@ namespace BuyAndSellApi {
                     .AllowCredentials ());
             });
             
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                            .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+             services.Configure<FormOptions>(x =>
+            {
+                x.MultipartHeadersLengthLimit = Int32.MaxValue;
+                x.MultipartBoundaryLengthLimit = Int32.MaxValue;
+                x.MultipartBodyLengthLimit = Int64.MaxValue;
+                x.ValueLengthLimit = Int32.MaxValue;
+                x.BufferBodyLengthLimit = Int64.MaxValue;
+                x.MemoryBufferThreshold = Int32.MaxValue;
+            });
+            services.AddAuthentication (JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer (options => {
+                    options.TokenValidationParameters = new TokenValidationParameters {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey (Encoding.ASCII
+                    .GetBytes (Configuration.GetSection ("AppSettings:Token").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
                     };
                 });
         }
@@ -103,19 +112,18 @@ namespace BuyAndSellApi {
 
             // Configure to use the CorsPolicy on all requests
             app.UseCors ("CorsPolicy");
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            
-            app.UseAuthentication();
+            app.UseCors (x => x.AllowAnyOrigin ().AllowAnyHeader ().AllowAnyMethod ());
+
+            app.UseAuthentication ();
 
             app.UseHttpsRedirection ();
-            
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
+
+            app.UseStaticFiles ();
+            app.UseStaticFiles (new StaticFileOptions () {
+                FileProvider = new PhysicalFileProvider (Path.Combine (Directory.GetCurrentDirectory (), @"Resources")),
+                    RequestPath = new PathString ("/Resources")
             });
-            
+
             app.UseMvc ();
             ConnectionString = Configuration["ConnectionStrings:BuyAndSellDatabase"];
         }

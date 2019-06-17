@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
-import { TokenInterceptor } from './interceptors/token.interceptor';
+//import { TokenInterceptor } from './interceptors/token.interceptor';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,10 +22,11 @@ import { ProductCategoryService } from './service/product-category.service';
 import { RouterModule } from '@angular/router';
 import { NgxUploaderModule } from 'ngx-uploader';
 import { FormsModule } from '@angular/forms';
+import { UploadComponent } from './pages/post-product/upload/upload.component';
 
 
 @NgModule({
-  declarations: [AppComponent,],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

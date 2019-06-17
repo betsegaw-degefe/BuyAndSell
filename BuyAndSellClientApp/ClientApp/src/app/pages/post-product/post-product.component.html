@@ -81,16 +81,16 @@
             </div>
           </div> -->
           <div class="row" style="margin-bottom:15px;">
-            <div class="col-sm-3">
-              <label for="file">Product Image</label>
+            <div class="col-sm-12">
+
             </div>
             <div class="col-sm-12">
-              <input type="file" #file fullWidth placeholder="Choose file" (change)="uploadImage(file.files)"
-                style="display:none;" multiple>
-              <!-- <input type="file" (change)="uploadPhoto()" #fileInput>  -->
-              <button type="button" class="btn btn-success" (click)="file.click()">Upload Image</button>
+              <label for="file">Product Image</label><br>
+              <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)"
+                style="display:none;">
+              <button type="button" fullWidth class="btn btn-success" (click)="file.click()">Upload Image</button>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
               <span class="upload" *ngIf="progress > 0">
                 {{progress}}%
               </span>

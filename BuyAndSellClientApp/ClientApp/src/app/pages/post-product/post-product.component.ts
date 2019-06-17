@@ -33,11 +33,12 @@ export class PostProductComponent implements OnInit {
   public searchCategoryModel: any = {};
   public productProperties: any = [];
   public props: any = [];
-  request: HttpRequest<any>;
+  public imageUrl: any;
 
-  public progress: number; // To control the progress of the image uploading.
-  public message: string; // message which display after image uploading finished.
-  //@Output() public onUploadFinished = new EventEmitter();
+  public progress: number;
+  public message: string;
+  @Output() public onUploadFinished = new EventEmitter();
+
 
   constructor(private data: ProductCategoryService,
     private http: HttpClient,
@@ -123,6 +124,33 @@ export class PostProductComponent implements OnInit {
         : this.categoriesName.filter(v => v.toLowerCase()
           .indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
+  public uploadFile = (files) => {
+    if (files.length === 0) {
+      return;
+    }
+
+    let fileToUpload = <File>files[0];
+    const formData = new FormData();
+    formData.append('file', <File>files[0]);
+
+    this.http.post('https://localhost:5001/api/upload', formData, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'encodedData'
+      }, reportProgress: true, observe: 'events'
+    })
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round(100 * event.loaded / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'Upload success.';
+          this.onUploadFinished.emit(event.body);
+          this.imageUrl = event.body;
+          console.log(this.imageUrl.dbPath)
+          //console.log
+        }
+      });
+  }
   saveProduct() {
     var propertyValueModel: any = {}
     this.productModel.StatusId = 1;
@@ -156,77 +184,4 @@ export class PostProductComponent implements OnInit {
         }
       });
   }
-
-  public uploadImage = (files) => {
-    if (files.length === 0) {
-      return;
-    }
-
-    let fileToUpload = <File>files[0];
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-    //'Content-Type': "multipart/form-data"
-    const headers = new HttpHeaders().append("Content-Type", "multipart/form-data");
-
-    this.http.post('https://localhost:5001/api/upload', formData, { headers, reportProgress: true, observe: 'events' })
-      .subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress)
-          this.progress = Math.round(100 * event.loaded / event.total);
-        else if (event.type === HttpEventType.Response) {
-          this.message = 'Upload success.';
-          //this.onUploadFinished.emit(event.body);
-        }
-      });
-  }
-
-  // upload image to back end
-  // public upload(files) {
-
-  //   if (files.length === 0) {
-  //     return;
-  //   }
-  //   console.log(files);
-
-  //   const formData = new FormData();
-  //   for (let file of files)
-  //     formData.append('Image', file, file.name);
-
-  //   const uploadReq = new HttpRequest('POST', `api/upload`, formData, {
-  //     reportProgress: true,
-  //   });
-  // this.request = this.request.clone({
-  //   headers:
-  //     this.request.headers.set('Content-Type', 'image/*')
-  // });
-  // 'Content-Type': 'multipart/form-data'
-  // 'Accept': 'multipart/form-data'
-  //let headers = new HttpHeaders().set("Content-Type", undefined);
-  // this.http.post('https://localhost:5001/api/upload', formData)
-  //   {
-  //     headers: { "Content-Type": 'multipart/form-data', 'Accept': 'multipart/form-data' },
-  //     //   reportProgress: true, observe: 'events'
-  //   }
-  // ).subscribe(event => {
-  // if (event.type === HttpEventType.UploadProgress)
-  //   this.progress = Math.round(100 * event.loaded / event.total);
-  // else if (event.type === HttpEventType.Response)
-  //   this.message = event.body.toString();
-  //console.log(event);
-  // });
-
-  //formData.append("userfile", fileInputElement.files[0]);
-  //formData.append("file", files[0]);
-  //console.log(formData.get("file"));
-  // this.http.post('https://localhost:5001/api/upload', formData, { reportProgress: true, observe: 'events' })
-  //   .subscribe(event => {
-  //     if (event.type === HttpEventType.UploadProgress)
-  //       this.progress = Math.round(100 * event.loaded / event.total);
-  //     else if (event.type === HttpEventType.Response) {
-  //       this.message = 'Upload success.';
-  //       //this.onUploadFinished.emit(event.body);
-  //     }
-  //   });
-  //}
-
-
 }

@@ -10,10 +10,11 @@ import { PostProductComponent } from './post-product/post-product.component';
 import { CartComponent } from './cart/cart.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UploadComponent } from './post-product/upload/upload.component';
 
 
 @NgModule({
-  declarations: [PagesComponent, PostProductComponent, CartComponent,],
+  declarations: [PagesComponent, PostProductComponent, CartComponent,UploadComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
