@@ -2,7 +2,7 @@
   <div class="col-md-3" *ngFor="let product of products">
     <div>
       <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
-        <nb-card-body (click)="redirect()">
+        <nb-card-body (click)="redirect(product)">
           <div class="picture" [style.background-image]="'url('+ product.imageUrl+')'"></div>
           <div class="details">
             <div class="header">

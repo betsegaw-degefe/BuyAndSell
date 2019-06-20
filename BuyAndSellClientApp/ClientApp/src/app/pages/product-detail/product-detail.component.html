@@ -1,36 +1,68 @@
 <div class="row">
   <div class="col-md-5">
-    <nb-card size="large" accent="primary" class="accent accent-primary pointer">
+    <nb-card size="large" accent="primary" class="accent accent-primary">
       <nb-card-body>
-        <div class="picture" [style.background-image]="'url(assets/images/eva.png)'"></div>
-
+        <div class="picture" [style.background-image]="'url('+ product.imageUrl+')'"></div>
         <div class="details">
-          <div class="title">
-            React Native UI Kitten
+          <div class="header">
+            <div>
+              <h5 class="text-primary">{{product.description}}</h5>
+            </div>
           </div>
-          <div class="description">
-            React Native UI Kitten is a framework that contains a set of commonly used UI components styled in a
-            similar
-            way. The most awesome thing: you can change themes on the fly by just passing a different set of
-            variables. 100%
-            native. Give our kitten a try!
+          <hr>
+          <div class="row">
+            <div class="col-md-5">
+              <h5 class="text-danger">
+                {{product.price}} Birr
+              </h5>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-4 text-info">
+              <h5 class="text-info">
+                <ngb-rating [(rate)]="starRate" [readonly]="readonly" max=5>
+                </ngb-rating>
+                <span class="current-rate"> {{ starRate }}</span>
+              </h5>
+            </div>
           </div>
-
         </div>
       </nb-card-body>
-
       <nb-card-footer>
-
         <button nbButton fullWidth shape="rectangle" status="primary">Add to Cart</button>
         <button nbButton fullWidth shape="rectangle" status="success">Buy now</button>
       </nb-card-footer>
     </nb-card>
   </div>
   <div class="col-md-7">
-    <nb-card accent="primary" class="accent accent-primary pointer">
+    <nb-card accent="primary" class="accent accent-primary">
+      <nb-card-header>Product Detail</nb-card-header>
       <nb-card-body>
-        
+        <div class="col-md-12">
+          <div class="row">
+            <ng-container *ngFor="let key of attributeKey; let i=index">
+              <div class="details col-md-6">
+                <h6 class="text-heading">{{key}}</h6>
+                <section class="text-hint">
+                  {{attributeValue[i]}}
+                </section>
+              </div>
+            </ng-container>
+          </div>
+          <hr>
+          <div class="row">
+            <ng-container *ngFor="let key of productKey; let i=index">
+              <div class="details col-md-6">
+                <h6 class="text-heading">{{key}}</h6>
+                <section class="text-hint">
+                  {{productValue[i]}}
+                </section>
+              </div>
+            </ng-container>
+          </div>
+        </div>
       </nb-card-body>
+      <nb-card-footer>
+      </nb-card-footer>
     </nb-card>
   </div>
 </div>

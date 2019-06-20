@@ -18,6 +18,14 @@ export class PostProductService {
   }
 
   /**
+   * Search a product attribute by id.
+   * @param id : product attribute id.
+   */
+  public get(id) {
+    return this.http.get(this.actionUrl + id);
+  }
+
+  /**
    * Search a product attribute by category id.
    * @param categoryId : product attribute category id 
    */

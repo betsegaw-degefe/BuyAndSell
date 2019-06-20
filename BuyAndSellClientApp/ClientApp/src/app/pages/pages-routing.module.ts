@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { PostProductComponent } from './post-product/post-product.component';
 import { CartComponent } from './cart/cart.component';
+import { identifierModuleUrl } from '@angular/compiler';
 
 const routes: Routes = [{
   path: '',

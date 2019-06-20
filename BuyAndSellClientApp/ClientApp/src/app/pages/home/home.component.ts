@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
+import { SharedDataService } from 'src/app/service/shared-data.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,7 +15,11 @@ export class HomeComponent implements OnInit {
   public starRate = 2;
   public readonly = true;
 
-  constructor(private data: ProductService, private router: Router) {
+  constructor(private data: ProductService,
+    private router: Router,
+    private sharedData: SharedDataService
+  ) {
+
   }
 
   ngOnInit() {
@@ -30,7 +35,12 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  redirect(){
+  redirect(product: any) {
+    //console.log(product);
+    //this.sharedData.changeMessage.subscribe(message => this.message = message)
+    // this.sharedData.currentMessage.subscribe(message => productId = message)
+    this.sharedData.changeMessage(product)
+  
     this.router.navigate(['/pages/productdetail'])
   }
 }

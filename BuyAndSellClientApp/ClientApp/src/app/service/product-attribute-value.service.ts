@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProductAttributeValueModel } from '../models/product-attribute-value-model';
 import { Configuration } from '../app.constants';
 import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -11,10 +11,33 @@ import { HttpClient } from '@angular/common/http';
 export class ProductAttributeValueService {
   private actionUrl: string;
   public productAttributeValue: ProductAttributeValueModel[] = [];
+  public SearchByProductId: any = {};
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'productattributevalue/';
   }
+
+  public getByProductId(ProductId: any): Observable<any> {
+    this.SearchByProductId.ProductId = ProductId;
+    return this.http.post<any>(this.actionUrl + 'searchbyproductid', this.SearchByProductId)
+      // .pipe(map((data: any[]) => {
+      //   this.productAttributeValue = data;
+      //   return this.productAttributeValue;
+      // }));
+      .pipe(
+        tap(_ => this.log('searchbyproductid')),
+        catchError(this.handleError('searchbyproductid', []))
+      );
+  }
+
+
+  // public get(id: any) {
+  //   return this.http.get(this.actionUrl + id)
+  //     .pipe(map((data: any[]) => {
+  //       this.productAttributeValue = data;
+  //       return this.productAttributeValue;
+  //     }));
+  // }
 
   /**
    * Register product attribute value

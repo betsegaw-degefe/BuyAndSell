@@ -24,14 +24,14 @@ export class PostProductComponent implements OnInit {
   private actionUrl: string;
   public model: any;
   public productModel: any = {};
-  public propertyValue: any = {};
+  public propertyValue: any = {}; //Container for value of Product property form fields.
   public categories = [];
   public categoriesName = [];
   public categoriesParentId = [];
   private categoryNameCounter: number = 0;
   public searchCategory: String = "";
   public searchCategoryModel: any = {};
-  public productProperties: any = [];
+  public productProperties: any = []; // Container for product Attribute received from the db(productAttribute table).
   public props: any = [];
   public imageUrl: any;
 
@@ -155,7 +155,10 @@ export class PostProductComponent implements OnInit {
 
   // Save product to product attribute value and product table.
   saveProduct() {
-    var propertyValueModel: any = {}
+    console.log(this.propertyValue);
+    var propertyValueModel: any = []; // Container for product attrbute value to send to db.
+
+    //console.log(propertyValueModel);
     this.productModel.StatusId = 1;
     if (this.imageUrl != null)
       this.productModel.imageUrl = this.imageUrl.dbPath;
@@ -169,9 +172,13 @@ export class PostProductComponent implements OnInit {
             //console.log(propertyKey + " -> " + this.propertyValue[propertyKey]);
             for (let index = 0; index < this.productProperties.length; index++) {
               if (this.productProperties[index].name === propertyKey) {
-                propertyValueModel.ProductAttributeId = this.productProperties[index].id
-                propertyValueModel.Value = this.propertyValue[propertyKey]
-                propertyValueModel.ProductId = this.productModel.id
+                var tempPropertyValue = {
+                  ProductAttributeId: this.productProperties[index].id,
+                  Value: this.propertyValue[propertyKey],
+                  ProductId: this.productModel.id,
+                  Active: true
+                }
+                propertyValueModel.push(tempPropertyValue)
               }
             }
           }
