@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-md-5">
-    <nb-card size="" accent="primary" class="accent accent-primary pointer">
+    <nb-card size="small" accent="primary" class="accent accent-primary pointer">
       <nb-card-body>
         <label for="typeahead-format">Search for a category:</label>
         <input id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
-          [ngbTypeahead]="search" placeholder="Search category" />
+        (selectItem)="selectedItem($event)" [ngbTypeahead]="search" placeholder="Search category" />
         <hr>
-        <pre>Category:</pre>
+        <!-- <pre>Category:</pre>
         <section>{{ model }}</section>
         <button id="searchCategoryProperty" type="submit" class="btn" nbButton status="success" shape="rectangle"
-          (click)="searchProductProperty(model)">Search</button>
+          (click)="searchProductProperty(model)">Search</button> -->
       </nb-card-body>
     </nb-card>
   </div>

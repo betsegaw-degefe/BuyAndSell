@@ -91,30 +91,30 @@ export class PostProductComponent implements OnInit {
       })
   }
 
-  searchProductProperty(data: any) {
-    console.log(data);
-    for (let i = data.length - 1; i > 0; i--) {
-      if (data[i] === "|") {
-        this.searchCategory = data.substr(i + 2);
-        break;
-      }
-    }
-    this.searchCategoryModel.name = this.searchCategory;
-    console.log(this.searchCategory);
-    this.data.getCategory(this.searchCategoryModel)
-      .subscribe(res => {
-        if (res) {
-          this.postProductdata.getProductAttribute(res[0].id)
-            .subscribe(res => {
-              if (res) {
-                //this.props =Object.assign(res);
-                this.productProperties = res;
-                console.log(this.productProperties)
-              }
-            })
-        }
-      });
-  }
+  // searchProductProperty(data: any) {
+  //   console.log(data);
+  //   for (let i = data.length - 1; i > 0; i--) {
+  //     if (data[i] === "|") {
+  //       this.searchCategory = data.substr(i + 2);
+  //       break;
+  //     }
+  //   }
+  //   this.searchCategoryModel.name = this.searchCategory;
+  //   console.log(this.searchCategory);
+  //   this.data.getCategory(this.searchCategoryModel)
+  //     .subscribe(res => {
+  //       if (res) {
+  //         this.postProductdata.getProductAttribute(res[0].id)
+  //           .subscribe(res => {
+  //             if (res) {
+  //               //this.props =Object.assign(res);
+  //               this.productProperties = res;
+  //               console.log(this.productProperties)
+  //             }
+  //           })
+  //       }
+  //     });
+  // }
 
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -124,6 +124,31 @@ export class PostProductComponent implements OnInit {
         : this.categoriesName.filter(v => v.toLowerCase()
           .indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
+
+  // When ngbtypeahead selected item clicked, this function triggered.
+  selectedItem(item) {
+    var data = item.item;
+    // Extract the key word for searching.
+    for (let i = data.length - 1; i > 0; i--) {
+      if (data[i] === "|") {
+        this.searchCategory = data.substr(i + 2);
+        break;
+      }
+    }
+    this.searchCategoryModel.name = this.searchCategory;
+    // Search the key word from the database.
+    this.data.getCategory(this.searchCategoryModel)
+      .subscribe(res => {
+        if (res) {
+          this.postProductdata.getProductAttribute(res[0].id)
+            .subscribe(res => {
+              if (res) {
+                this.productProperties = res;
+              }
+            })
+        }
+      });
+  }
 
   // Upload image to the server
   public uploadFile = (files) => {
