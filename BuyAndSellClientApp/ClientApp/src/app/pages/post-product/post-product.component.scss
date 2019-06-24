@@ -21,3 +21,6 @@ nb-card-footer {
   margin-left: 15px;
   line-height: 36px;
 }
+::ng-deep nb-layout-column {
+  height: 80vw;
+}

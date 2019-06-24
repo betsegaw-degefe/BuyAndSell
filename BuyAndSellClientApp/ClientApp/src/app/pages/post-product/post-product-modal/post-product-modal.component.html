@@ -1,0 +1,23 @@
+<div class="col-md-12">
+  <nb-card accent="primary" class="accent accent-primary">
+    <nb-card-header>Add Product Property</nb-card-header>
+    <nb-card-body>
+      <div class="form-group">
+        <label for="name">Property name</label>
+        <input #name type="text" nbInput fullWidth shape="rectangle" placeholder="Name" />
+      </div>
+      <div class="form-group">
+        <label nbTooltip="The type of the data input to accept from the user." for="name">Property type</label>
+        <nb-select #dataType outline shape="rectangle" placeholder="Property type" [(selected)]="selectedItem">
+          <nb-option value="Text">Text</nb-option>
+          <nb-option value="Number">Number</nb-option>
+          <nb-option value="Date">Date</nb-option>
+        </nb-select>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton fullWidth shape="rectangle" status="danger" (click)="cancel()">Cancel</button>
+      <button nbButton fullWidth shape="rectangle" status="success" (click)="submit(name.value)">Save</button>
+    </nb-card-footer>
+  </nb-card>
+</div>

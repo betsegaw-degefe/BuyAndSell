@@ -4,12 +4,8 @@
       <nb-card-body>
         <label for="typeahead-format">Search for a category:</label>
         <input id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
-        (selectItem)="selectedItem($event)" [ngbTypeahead]="search" placeholder="Search category" />
+          (selectItem)="selectedItem($event)" [ngbTypeahead]="search" placeholder="Search category" />
         <hr>
-        <!-- <pre>Category:</pre>
-        <section>{{ model }}</section>
-        <button id="searchCategoryProperty" type="submit" class="btn" nbButton status="success" shape="rectangle"
-          (click)="searchProductProperty(model)">Search</button> -->
       </nb-card-body>
     </nb-card>
   </div>
@@ -95,7 +91,8 @@
           </div>
         </div>
         <div>
-          <button type="submit" class="btn" nbButton status="primary" shape="rectangle" float="Right">Add
+          <button type="submit" class="btn" nbButton status="primary" shape="rectangle" float="Right"
+            (click)="addProperty()">Add
             Property</button>
           <button *ngIf="productProperties.length != 0" type="submit" class="btn" nbButton status="success"
             shape="rectangle" float="Right" (click)="saveProduct()">Save

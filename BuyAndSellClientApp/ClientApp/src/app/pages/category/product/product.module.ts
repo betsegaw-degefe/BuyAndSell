@@ -40,6 +40,6 @@ const modules = [
   entryComponents: [
     ModalComponent,
   ],
-  exports: [ModalComponent],
+  //exports: [ModalComponent],
 })
 export class ProductModule { }

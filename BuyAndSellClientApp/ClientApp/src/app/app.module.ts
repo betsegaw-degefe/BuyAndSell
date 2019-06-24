@@ -42,10 +42,9 @@ import { UploadComponent } from './pages/post-product/upload/upload.component';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     NbMenuModule.forRoot(),
-    NbDialogModule.forRoot(),
     CoreModule.forRoot(),
     NbToastrModule.forRoot(),
-    NgxUploaderModule
+    NgxUploaderModule,
     
   ],
   bootstrap: [AppComponent],

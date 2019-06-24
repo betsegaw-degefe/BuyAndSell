@@ -1,18 +1,22 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, Input } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnInit, EventEmitter, Output, ViewChild, Input, HostBinding } from '@angular/core';
+import { Observable, of, interval } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
 import { PostProductService } from 'src/app/service/post-product.service';
 import { ProductService } from 'src/app/service/product.service';
 import { ProductAttributeValueService } from 'src/app/service/product-attribute-value.service';
 import { ProductModel } from 'src/app/models/product-model';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbDialogService, NbDialogRef, NbGlobalPosition, NbGlobalPhysicalPosition } from '@nebular/theme';
 import { Router } from '@angular/router';
 import { HttpClient, HttpEventType, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Configuration } from 'src/app/app.constants';
 import { RequestOptions } from '@angular/http';
 import { FileUploadService } from 'src/app/service/file-upload.service';
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
+import { PostProductModalComponent } from './post-product-modal/post-product-modal.component';
+import { ProductAttributeService } from 'src/app/service/product-attribute.service';
+import { NbToastStatus } from '@nebular/theme/components/toastr/model';
+
 
 @Component({
   selector: 'app-post-product',
@@ -34,10 +38,24 @@ export class PostProductComponent implements OnInit {
   public productProperties: any = []; // Container for product Attribute received from the db(productAttribute table).
   public props: any = [];
   public imageUrl: any;
+  public productAttribute: any = {}; // Container for product attribute cached from the post product modal.
+  public categoryModel: any = {}; // Container for Category after searching the category by name from db.
 
   public progress: number;
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
+
+
+  // Variables related with success toast.
+  //config: ToasterConfig;
+  destroyByClick = true;
+  duration = 4000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  status: NbToastStatus = NbToastStatus.PRIMARY;
+  title = 'Success!';
+  content = `The product property added successfully!`;
 
 
   constructor(private data: ProductCategoryService,
@@ -47,7 +65,10 @@ export class PostProductComponent implements OnInit {
     private productAttributeValuedata: ProductAttributeValueService,
     private fileService: FileUploadService,
     private router: Router,
-    private configuration: Configuration
+    private configuration: Configuration,
+    private dialogService: NbDialogService,
+    private attributeService: ProductAttributeService,
+    private toastrService: NbToastrService
   ) {
     this.actionUrl = configuration.serverWithApiUrl + 'upload/';
   }
@@ -56,12 +77,13 @@ export class PostProductComponent implements OnInit {
     return index;
   }
 
+
+
   ngOnInit() {
     this.data.get()
       .subscribe(success => {
         if (success) {
           this.categories = this.data.productCategory
-          console.log(this.categories);
           for (let i = 0; i < this.categories.length; i++) {
             if (this.categories[i].level === 3) {
               this.categoriesName[this.categoryNameCounter]
@@ -86,35 +108,9 @@ export class PostProductComponent implements OnInit {
               }
             }
           }
-          console.log(this.categoriesName);
         }
       })
   }
-
-  // searchProductProperty(data: any) {
-  //   console.log(data);
-  //   for (let i = data.length - 1; i > 0; i--) {
-  //     if (data[i] === "|") {
-  //       this.searchCategory = data.substr(i + 2);
-  //       break;
-  //     }
-  //   }
-  //   this.searchCategoryModel.name = this.searchCategory;
-  //   console.log(this.searchCategory);
-  //   this.data.getCategory(this.searchCategoryModel)
-  //     .subscribe(res => {
-  //       if (res) {
-  //         this.postProductdata.getProductAttribute(res[0].id)
-  //           .subscribe(res => {
-  //             if (res) {
-  //               //this.props =Object.assign(res);
-  //               this.productProperties = res;
-  //               console.log(this.productProperties)
-  //             }
-  //           })
-  //       }
-  //     });
-  // }
 
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -127,7 +123,10 @@ export class PostProductComponent implements OnInit {
 
   // When ngbtypeahead selected item clicked, this function triggered.
   selectedItem(item) {
-    var data = item.item;
+    if (item.item != null)
+      var data = item.item;
+    else
+      var data = item
     // Extract the key word for searching.
     for (let i = data.length - 1; i > 0; i--) {
       if (data[i] === "|") {
@@ -140,6 +139,7 @@ export class PostProductComponent implements OnInit {
     this.data.getCategory(this.searchCategoryModel)
       .subscribe(res => {
         if (res) {
+          this.categoryModel = res;
           this.postProductdata.getProductAttribute(res[0].id)
             .subscribe(res => {
               if (res) {
@@ -216,9 +216,55 @@ export class PostProductComponent implements OnInit {
                   this.router.navigate(["/pages/postproduct"]));
               }
             });
-          //this.productAttributeValueModel.ProductId = this.productModel.id
-          //this.productAttributeValueModel.ProductAttributeId = this.productProperties.id
         }
       });
+  }
+
+  // Add product property/attribute
+  addProperty() {
+
+
+    //console.log(this.model)
+    // this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    //   return false;
+    // };
+
+    // this.ngOnInit();
+    // this.selectedItem(this.model)
+    this.dialogService.open(PostProductModalComponent)
+      .onClose.subscribe(attribute => {
+        if (attribute != null && attribute[0] != "") {
+          this.productAttribute.CategoryId = this.categoryModel[0].id;
+          this.productAttribute.Name = attribute[0];
+          this.productAttribute.DataType = attribute[1];
+          this.attributeService.register(this.productAttribute)
+            .subscribe(success => {
+              if (success != null && success != []) {
+                console.log(success)
+                this.showToast(this.status, this.title, this.content);
+                this.selectedItem("")
+                this.selectedItem(this.model)
+
+              }
+            })
+        }
+      });
+  }
+
+  private showToast(type: NbToastStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: this.destroyByClick,
+      duration: this.duration,
+      hasIcon: this.hasIcon,
+      position: this.position,
+      preventDuplicates: this.preventDuplicates,
+    };
+    const titleContent = title ? `${title}` : '';
+
+    this.toastrService.show(
+      body,
+      `${titleContent}`,
+      config);
   }
 }

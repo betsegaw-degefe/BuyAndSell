@@ -1,44 +1,30 @@
 import { Injectable } from '@angular/core';
-import { ProductAttributeValueModel } from '../models/product-attribute-value-model';
+import { HttpClient } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { Observable, of } from 'rxjs';
-import { tap, catchError, map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductAttributeValueService {
+export class ProductAttributeService {
+
   private actionUrl: string;
-  public productAttributeValue: ProductAttributeValueModel[] = [];
-  public SearchByProductId: any = {};
 
   constructor(private http: HttpClient, private configuration: Configuration) {
-    this.actionUrl = configuration.serverWithApiUrl + 'productattributevalue/';
-  }
-
-  public getByProductId(ProductId: any): Observable<any> {
-    this.SearchByProductId.ProductId = ProductId;
-    return this.http.post<any>(this.actionUrl + 'searchbyproductid', this.SearchByProductId)
-      // .pipe(map((data: any[]) => {
-      //   this.productAttributeValue = data;
-      //   return this.productAttributeValue;
-      // }));
-      .pipe(
-        tap(_ => this.log('searchbyproductid')),
-        catchError(this.handleError('searchbyproductid', []))
-      );
+    this.actionUrl = configuration.serverWithApiUrl + 'productattribute/';
   }
 
   /**
-   * Register product attribute value
-   * @param model: productAttributeValue model
+   * Register product attribute
+   * @param model: productAttribute model
    */
   public register(model: any): Observable<any> {
     model.active = true;
+    model.unit = "none";
     return this.http.post<any>(this.actionUrl + 'register', model)
       .pipe(
-        tap(_ => this.log('register')),
+        tap(),
         catchError(this.handleError('register', []))
       );
   }
