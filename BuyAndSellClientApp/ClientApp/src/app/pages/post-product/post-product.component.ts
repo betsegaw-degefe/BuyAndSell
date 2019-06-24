@@ -241,6 +241,12 @@ export class PostProductComponent implements OnInit {
       });
   }
 
+  /**
+   * A toast for success message
+   * @param type : type of toast. eg. success, warning...
+   * @param title : title of the toast. 
+   * @param body : message for the toast.
+   */
   private showToast(type: NbToastStatus, title: string, body: string) {
     const config = {
       status: type,

@@ -1,0 +1,23 @@
+<div class="col-md-12">
+  <nb-card accent="primary" class="accent accent-primary">
+    <nb-card-header>Order Product</nb-card-header>
+    <nb-card-body>
+      <div *ngIf="product.quantity === 1 && product.negotiable != true">
+        <p>Please Confirm your order!</p>
+      </div>
+      <div class="form-group" *ngIf="product.quantity != 1">
+        <label nbTooltip="How much?" for="quantity">Quantity</label>
+        <input #quantity type="number" [(ngModel)]="order.quantity" nbInput fullWidth shape="rectangle"
+          placeholder="Quantity" />
+      </div>
+      <div class="form-group" *ngIf="product.negotiable">
+        <label nbTooltip="How much is your offer for the product?" for="name">Offer</label>
+        <input #offer type="number" [(ngModel)]="order.offer" nbInput fullWidth shape="rectangle" placeholder="Offer" />
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton fullWidth shape="rectangle" status="danger" (click)="cancel()">Cancel</button>
+      <button nbButton fullWidth shape="rectangle" status="success" (click)="submitOrder()">Order</button>
+    </nb-card-footer>
+  </nb-card>
+</div>

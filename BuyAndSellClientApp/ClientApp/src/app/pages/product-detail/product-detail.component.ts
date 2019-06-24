@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SharedDataService } from 'src/app/service/shared-data.service';
 import { ProductAttributeValueService } from 'src/app/service/product-attribute-value.service';
 import { PostProductService } from 'src/app/service/post-product.service';
+import { NbDialogService, NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { ProductDetailModalComponent } from './product-detail-modal/product-detail-modal.component';
+import { OrderService } from 'src/app/service/order.service';
+import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,10 +24,25 @@ export class ProductDetailComponent implements OnInit {
   public arrayCounter = 0;
   public starRate = 2;
   public readonly = true;
+  public orderModel: any = {} // Container for Order to send to Order table.
 
-  constructor(private sharedData: SharedDataService,
+  // Variables related with success toast.
+  destroyByClick = true;
+  duration = 4000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  status: NbToastStatus = NbToastStatus.SUCCESS;
+  title = 'Success!';
+  //content = `The Order sent successfully!`;
+
+  constructor(private dialogService: NbDialogService,
+    private sharedData: SharedDataService,
     private attributeValueService: ProductAttributeValueService,
-    private attributeService: PostProductService) { }
+    private attributeService: PostProductService,
+    private orderService: OrderService,
+    private toastrService: NbToastrService
+  ) { }
 
   ngOnInit() {
     var productAttributeIdArray = [];
@@ -69,5 +88,62 @@ export class ProductDetailComponent implements OnInit {
           this.arrayCounter++;
         }
     }
+  }
+
+  /**
+   * Order a product.
+   */
+  order() {
+    // open order modal.
+    this.dialogService.open(ProductDetailModalComponent)
+      .onClose.subscribe(res => {
+        if (res != null) {
+          // if the product is negotiable.
+          if (res.offer != null) {
+
+          } 
+          // if the product is not negotiable. The order saved to order table.
+          else {
+            this.orderModel.ProductId = this.product.id;
+            this.orderModel.SellerId = this.product.createdBy;
+            if (res.quantity == null)
+              this.orderModel.OrderedQuantity = 1;
+            else
+              this.orderModel.OrderedQuantity = res.quantity;
+            this.orderModel.Active = true;
+            this.orderService.register(this.orderModel)
+              .subscribe(res => {
+                if (res) {
+                  console.log(res)
+                  this.showToast(this.status, this.title, `Your Order sent successfully!`);
+                }
+              })
+            console.log(this.orderModel)
+          }
+        }
+      })
+  }
+
+  /**
+   * A toast for success message
+   * @param type : type of toast. eg. success, warning...
+   * @param title : title of the toast. 
+   * @param body : message for the toast.
+   */
+  private showToast(type: NbToastStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: this.destroyByClick,
+      duration: this.duration,
+      hasIcon: this.hasIcon,
+      position: this.position,
+      preventDuplicates: this.preventDuplicates,
+    };
+    const titleContent = title ? `${title}` : '';
+
+    this.toastrService.show(
+      body,
+      `${titleContent}`,
+      config);
   }
 }
