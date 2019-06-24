@@ -24,3 +24,8 @@ nb-card-footer {
 ::ng-deep nb-layout-column {
   height: 80vw;
 }
+.demo-radio {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}

@@ -47,17 +47,16 @@ export class PostProductComponent implements OnInit {
 
 
   // Variables related with success toast.
-  //config: ToasterConfig;
   destroyByClick = true;
   duration = 4000;
   hasIcon = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
-  status: NbToastStatus = NbToastStatus.PRIMARY;
+  status: NbToastStatus = NbToastStatus.SUCCESS;
   title = 'Success!';
   content = `The product property added successfully!`;
 
-
+  negotiable = true; // radio button value for negotiable.
   constructor(private data: ProductCategoryService,
     private http: HttpClient,
     private postProductdata: PostProductService,
@@ -180,11 +179,9 @@ export class PostProductComponent implements OnInit {
 
   // Save product to product attribute value and product table.
   saveProduct() {
-    console.log(this.propertyValue);
     var propertyValueModel: any = []; // Container for product attrbute value to send to db.
-
-    //console.log(propertyValueModel);
     this.productModel.StatusId = 1;
+    this.productModel.Negotiable = this.negotiable
     if (this.imageUrl != null)
       this.productModel.imageUrl = this.imageUrl.dbPath;
     this.productdata.register(this.productModel)
@@ -210,10 +207,12 @@ export class PostProductComponent implements OnInit {
           console.log(propertyValueModel);
           this.productAttributeValuedata.register(propertyValueModel)
             .subscribe(res => {
-              if (res) {
+              if (res != null && res != []) {
                 console.log(res);
-                this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-                  this.router.navigate(["/pages/postproduct"]));
+                this.showToast(this.status, this.title, `Product saved successfully!`);
+                this.selectedItem("");
+                // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+                //   this.router.navigate(["/pages/postproduct"]));
               }
             });
         }
@@ -222,15 +221,6 @@ export class PostProductComponent implements OnInit {
 
   // Add product property/attribute
   addProperty() {
-
-
-    //console.log(this.model)
-    // this.router.routeReuseStrategy.shouldReuseRoute = function () {
-    //   return false;
-    // };
-
-    // this.ngOnInit();
-    // this.selectedItem(this.model)
     this.dialogService.open(PostProductModalComponent)
       .onClose.subscribe(attribute => {
         if (attribute != null && attribute[0] != "") {

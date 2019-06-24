@@ -56,8 +56,18 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="inputNegotiation">Negotiation</label>
-                <input id="inputNegotiation" type="text" nbInput fullWidth shape="rectangle"
-                  [(ngModel)]="productModel.Negotiation" placeholder="Negotiation" />
+                <!-- <input id="inputNegotiation" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="productModel.Negotiation" placeholder="Negotiation" /> -->
+                <div class="demo-radio">
+                  <nb-radio-group class="row" [(value)]="negotiable">
+                    <nb-radio [value]="true" class="col-sm-5">
+                      Negotiable
+                    </nb-radio>
+                    <nb-radio [value]="false" class="col-sm-7">
+                      Not Negotiable
+                    </nb-radio>
+                  </nb-radio-group>
+                </div>
               </div>
             </div>
           </div>
