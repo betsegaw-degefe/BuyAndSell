@@ -38,6 +38,10 @@ const routes: Routes = [{
       path: 'category',
       loadChildren: './category/category.module#CategoryModule',
     },
+    {
+      path: 'order',
+      loadChildren: './order/order.module#OrderModule',
+    },
   ],
 }];
 

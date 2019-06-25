@@ -22,6 +22,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/cart',
     },
     {
+        title: 'Manage Orders',
+        icon: 'nb-list',
+        children: [
+            {
+                title: 'My Orders',
+                link: '/pages/order/myorders',
+            },
+            {
+                title: 'My Offers',
+                link: '/pages/order/myoffers',
+            },
+        ]
+    },
+    {
         title: 'Manage Category',
         icon: 'nb-list',
         children: [

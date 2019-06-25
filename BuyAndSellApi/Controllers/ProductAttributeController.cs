@@ -43,7 +43,7 @@ namespace BuyAndSellApi.Controllers {
             }
         }
 
-        // <summary>
+        /// <summary>
         /// Gets ProductAttribute by CategoryId.
         /// </summary>
         /// <param name="categoryId">The CategoryId of the ProductAttribute you want to get</param>

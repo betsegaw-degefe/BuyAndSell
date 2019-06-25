@@ -1,25 +1,24 @@
 using System;
+using System.Linq;
+using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace BuyAndSellApi.Controllers
-{
+namespace BuyAndSellApi.Controllers {
     [Produces ("application/json")]
     [Route ("api/[Controller]")]
     [ApiController]
-    public class OrderController: ControllerBase
-    {
+    public class OrderController : ControllerBase {
         private readonly IBuyAndSellRepository<OrderProduct> _repository;
         private readonly BuyAndSellContext _context;
 
-        public OrderController(IBuyAndSellRepository<OrderProduct> repository, BuyAndSellContext context)
-        {
+        public OrderController (IBuyAndSellRepository<OrderProduct> repository, BuyAndSellContext context) {
             _repository = repository;
             _context = context;
         }
-        
+
         /// <summary>
         /// Gets Order by id.
         /// </summary>
@@ -39,9 +38,28 @@ namespace BuyAndSellApi.Controllers
                 return BadRequest (new { message = ex.Message });
             }
         }
-        
-        
-        
+
+        /// <summary>
+        /// Get Orders by UserId/BuyerID.
+        /// </summary>
+        /// <returns>A list of Orders</returns>
+        [HttpPost ("myorder")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetOrders ([FromBody] SearchOrderByUserId searchOrderByUserId) {
+            try {
+                var orders = from s in _repository.GetAll () select s;
+                if (!String.IsNullOrEmpty (searchOrderByUserId.UserId.ToString ())) {
+                    orders = orders.Where (s => s.BuyerId == (searchOrderByUserId.UserId));
+                }
+                return Ok (orders);
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
         /// <summary>
         /// Creates Order.
         /// </summary>

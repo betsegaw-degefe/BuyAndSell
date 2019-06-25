@@ -30,6 +30,18 @@ export class ProductService {
       );
   }
 
+  /**
+   * Get product by product id.
+   * @param id : product id.
+   */
+  public getById(id: any): Observable<any> {
+    return this.http.get(this.actionUrl + id)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Get product by id', []))
+      )
+  }
+
 
   /**
    * Get all products

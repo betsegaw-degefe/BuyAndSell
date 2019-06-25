@@ -15,6 +15,14 @@ export class OrderService {
     this.actionUrl = configuration.serverWithApiUrl + 'order/';
   }
 
+  public getMyOrder(model: any): Observable<any> {
+    return this.http.post<any>(this.actionUrl + 'myorder', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Get Order: ', []))
+      );
+  }
+
   /**
    * Register Order
    * @param model: OrderModel
