@@ -3,66 +3,69 @@ using System.Linq;
 using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BuyAndSellApi.Controllers {
+namespace BuyAndSellApi.Controllers
+{
     [Produces ("application/json")]
     [Route ("api/[Controller]")]
     [ApiController]
-    public class OrderController : ControllerBase {
-        private readonly IBuyAndSellRepository<OrderProduct> _repository;
+    public class OfferController: ControllerBase
+    {
+        private readonly IBuyAndSellRepository<Offer> _repository;
         private readonly BuyAndSellContext _context;
 
-        public OrderController (IBuyAndSellRepository<OrderProduct> repository, BuyAndSellContext context) {
+        public OfferController(IBuyAndSellRepository<Offer> repository, BuyAndSellContext context)
+        {
             _repository = repository;
             _context = context;
         }
-
+        
         /// <summary>
-        /// Gets Order by id.
+        /// Gets Offer by id.
         /// </summary>
-        /// <param name="id">The id of the Order you want to get</param>
-        /// <returns>An ActionResult of Order</returns>
+        /// <param name="id">The id of the Offer you want to get</param>
+        /// <returns>An ActionResult of Offer</returns>
         [HttpGet ("{id:int}")]
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
         public IActionResult Get (int id) {
             try {
-                var order = _repository.Get (id);
-                if (order != null) return Ok (order);
+                var offer = _repository.Get (id);
+                if (offer != null) return Ok (offer);
                 return NotFound ();
             } catch (Exception ex) {
                 // return error message if there was an exception
                 return BadRequest (new { message = ex.Message });
             }
         }
-
+        
         /// <summary>
-        /// Get Orders by UserId/BuyerID.
+        /// Get Offers by UserId/CreatedBy.
         /// </summary>
-        /// <returns>A list of Orders</returns>
-        [HttpPost ("myorder")]
+        /// <returns>A list of Offers</returns>
+        [HttpPost ("myoffers")]
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
         public IActionResult GetOrders ([FromBody] SearchByUserId searchByUserId) {
             try {
-                var orders = from s in _repository.GetAll () select s;
+                var offers = from s in _repository.GetAll () select s;
                 if (!String.IsNullOrEmpty (searchByUserId.UserId.ToString ())) {
-                    orders = orders.Where (s => s.BuyerId == (searchByUserId.UserId));
+                    offers = offers.Where (s => s.CreatedBy == (searchByUserId.UserId));
                 }
-                return Ok (orders);
+                return Ok (offers);
             } catch (Exception ex) {
                 // return error message if there was an exception
                 return BadRequest (new { message = ex.Message });
             }
         }
-
+        
+        
         /// <summary>
-        /// Creates Order.
+        /// Creates Offer.
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -70,23 +73,22 @@ namespace BuyAndSellApi.Controllers {
         ///     POST /register
         ///     {
         ///        "ProductId": 18,
-        ///        "BuyerId": 10,
-        ///        "SellerId": 1,
-        ///        "OrderQuantity": 1,
+        ///        "Offer": 1000,
+        ///        "Status": "Waiting for approval",
         ///        "Active":"true"
         ///     }
         /// </remarks>
-        /// <returns>A newly created Order.</returns>
-        /// <response code="201">Returns the newly created Order.</response>
-        /// <response code="400">If the Order is null</response>
+        /// <returns>A newly created Offer.</returns>
+        /// <response code="201">Returns the newly created Offer.</response>
+        /// <response code="400">If the Offer is null</response>
         [HttpPost ("register")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
-        public IActionResult Register ([FromBody] OrderProduct order) {
+        public IActionResult Register ([FromBody] Offer offer) {
             try {
-                _repository.Insert (order);
+                _repository.Insert (offer);
                 if (_repository.SaveChanges ()) {
-                    return Created ($"/api/order/{order.Id}", order);
+                    return Created ($"/api/order/{offer.Id}", offer);
                 }
             } catch (Exception ex) {
                 // return error message if there was an exception

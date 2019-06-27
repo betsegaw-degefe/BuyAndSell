@@ -14,6 +14,9 @@ import { UploadComponent } from './post-product/upload/upload.component';
 import { PostProductModule } from './post-product/post-product.module';
 import { PostProductModalComponent } from './post-product/post-product-modal/post-product-modal.component';
 import { NbDialogModule } from '@nebular/theme';
+import { OrderDetailModule } from './order-detail/order-detail.module';
+import { MyOrdersModule } from './order/my-orders/my-orders.module';
+import { OrderModule } from './order/order.module';
 
 
 @NgModule({
@@ -24,6 +27,8 @@ import { NbDialogModule } from '@nebular/theme';
     ThemeModule,
     DashboardModule,
     HomeModule,
+    OrderModule,
+    OrderDetailModule,
     ProductDetailModule,
     AngularFontAwesomeModule,
     NgbModule,

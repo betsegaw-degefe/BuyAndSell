@@ -26,6 +26,7 @@ namespace BuyAndSellApi.Models.Entities {
 
         [ForeignKey ("StatusId")] public virtual LookupValue Status { get; set; }
         public virtual ICollection<OrderProduct> Order { get; set; }
+        public virtual ICollection<Offer> Offer { get; set; }
         public virtual ICollection<ProductAttributeValue> ProductAttributeValue { get; set; }
     }
 }

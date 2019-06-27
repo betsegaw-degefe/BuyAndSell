@@ -6,6 +6,7 @@ import { NbDialogService, NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrSe
 import { ProductDetailModalComponent } from './product-detail-modal/product-detail-modal.component';
 import { OrderService } from 'src/app/service/order.service';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
+import { OfferService } from 'src/app/service/offer.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -25,6 +26,7 @@ export class ProductDetailComponent implements OnInit {
   public starRate = 2;
   public readonly = true;
   public orderModel: any = {} // Container for Order to send to Order table.
+  public offerModel: any = {}; // Container for offer to send post request to /offer/register.
 
   // Variables related with success toast.
   destroyByClick = true;
@@ -41,7 +43,8 @@ export class ProductDetailComponent implements OnInit {
     private attributeValueService: ProductAttributeValueService,
     private attributeService: PostProductService,
     private orderService: OrderService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private offerService: OfferService,
   ) { }
 
   ngOnInit() {
@@ -100,8 +103,18 @@ export class ProductDetailComponent implements OnInit {
         if (res != null) {
           // if the product is negotiable.
           if (res.offer != null) {
-
-          } 
+            this.offerModel.ProductId = this.product.id;
+            this.offerModel.OfferPrice = res.offer;
+            this.offerModel.Status = "Waiting for Approval."
+            this.offerModel.Active = true;
+            //console.log(this.offerModel);
+            this.offerService.register(this.offerModel)
+              .subscribe(res => {
+                if (res) {
+                  this.showToast(this.status, this.title, `Your Offer sent successfully!`);
+                }
+              })
+          }
           // if the product is not negotiable. The order saved to order table.
           else {
             this.orderModel.ProductId = this.product.id;

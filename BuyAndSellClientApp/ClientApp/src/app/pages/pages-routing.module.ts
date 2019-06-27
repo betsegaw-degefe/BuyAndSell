@@ -8,6 +8,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { PostProductComponent } from './post-product/post-product.component';
 import { CartComponent } from './cart/cart.component';
 import { identifierModuleUrl } from '@angular/compiler';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 const routes: Routes = [{
   path: '',
@@ -24,6 +25,10 @@ const routes: Routes = [{
     {
       path: 'productdetail',
       component: ProductDetailComponent,
+    },
+    {
+      path: 'orderdetail',
+      component: OrderDetailComponent,
     },
     {
       path: 'cart',

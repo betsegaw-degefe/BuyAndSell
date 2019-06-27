@@ -1,20 +1,20 @@
 <div class="row">
-  <div class="col-md-3" *ngFor="let product of products">
+  <div class="col-md-3" *ngFor="let orderproduct of products">
     <div>
       <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
-        <nb-card-body (click)="redirect(product)">
-          <div class="picture" [style.background-image]="'url('+ product.imageUrl+')'"></div>
+        <nb-card-body (click)="redirectToOrderDetail(orderproduct)">
+          <div class="picture" [style.background-image]="'url('+ orderproduct.imageUrl+')'"></div>
           <div class="details">
             <div class="header">
               <div>
-                <h5 class="text-primary">{{product.description}}</h5>
+                <h6 class="text-primary text-justify">{{orderproduct.description}}</h6>
               </div>
             </div>
             <hr>
             <div class="row">
               <div class="col-md-5">
                 <h5 class="text-danger">
-                  {{product.price}} Birr
+                  {{orderproduct.price}} Birr
                 </h5>
               </div>
               <div class="col-md-7 text-info">

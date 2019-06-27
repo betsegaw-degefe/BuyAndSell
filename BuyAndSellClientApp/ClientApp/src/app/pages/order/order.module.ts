@@ -6,6 +6,7 @@ import { OrderComponent } from './order.component';
 import { ThemeModule } from 'src/app/@theme/theme.module';
 import { MyOffersModule } from './my-offers/my-offers.module';
 import { MyOrdersModule } from './my-orders/my-orders.module';
+import { SharedOrderDataService } from 'src/app/service/shared-order-data.service';
 
 @NgModule({
   declarations: [OrderComponent],
@@ -15,6 +16,7 @@ import { MyOrdersModule } from './my-orders/my-orders.module';
     OrderRoutingModule,
     MyOrdersModule,
     MyOffersModule
-  ]
+  ],
+ 
 })
 export class OrderModule { }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/service/order.service';
 import { ProductService } from 'src/app/service/product.service';
+import { Router } from '@angular/router';
+import { SharedOrderDataService } from 'src/app/service/shared-order-data.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -18,6 +20,8 @@ export class MyOrdersComponent implements OnInit {
 
   constructor(private orderService: OrderService,
     private productService: ProductService,
+    private sharedData: SharedOrderDataService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -37,5 +41,11 @@ export class MyOrdersComponent implements OnInit {
           });
         }
       })
+  }
+
+  redirectToOrderDetail(orderproduct: any) {
+    console.log(orderproduct);
+    this.sharedData.changeMessage(orderproduct)
+    this.router.navigate(['/pages/orderdetail'])
   }
 }

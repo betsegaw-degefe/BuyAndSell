@@ -1,4 +1,4 @@
-@import "../../../@theme/styles/themes";
+@import "../../@theme/styles/themes";
 
 @include nb-install-component() {
   nb-card-body {
@@ -14,10 +14,6 @@
     border-top-left-radius: nb-theme(card-border-radius);
     border-top-right-radius: nb-theme(card-border-radius);
     flex: 1;
-  }
-
-  .pointer {
-    cursor: pointer;
   }
 
   .details {
@@ -51,21 +47,10 @@
     justify-content: space-around;
     padding: 0.75rem 0;
     border: none;
-
-    a {
-      text-decoration: none;
-      color: nb-theme(color-fg);
-
-      &:hover {
-        color: nb-theme(color-fg-heading);
-      }
-
-      i {
-        font-size: 1.75rem;
-      }
-    }
   }
+
   button {
+    float: right;
     justify-content: space-around;
     padding: 0.75rem 10px;
     margin: 1rem 1rem;

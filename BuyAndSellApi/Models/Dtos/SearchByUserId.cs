@@ -1,6 +1,6 @@
 namespace BuyAndSellApi.Models.Dtos
 {
-    public class SearchOrderByUserId
+    public class SearchByUserId
     {
         public int UserId { get; set; }
     }

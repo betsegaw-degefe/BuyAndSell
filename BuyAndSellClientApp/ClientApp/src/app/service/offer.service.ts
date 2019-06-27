@@ -7,35 +7,34 @@ import { tap, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
-
+export class OfferService {
   private actionUrl: string;
 
   constructor(private http: HttpClient, private configuration: Configuration) {
-    this.actionUrl = configuration.serverWithApiUrl + 'order/';
+    this.actionUrl = configuration.serverWithApiUrl + 'offer/';
   }
 
   /**
-   * get order by using user id.
+   * get offer by using user id.
    * @param model: user id.
    */
-  public getMyOrder(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'myorder', model)
+  public getMyOffer(model: any): Observable<any> {
+    return this.http.post<any>(this.actionUrl + 'myoffers', model)
       .pipe(
         tap(),
-        catchError(this.handleError('Get Order: ', []))
+        catchError(this.handleError('Get Offer: ', []))
       );
   }
 
   /**
-   * Register Order
-   * @param model: OrderModel
+   * Register Offer
+   * @param model: Offer Model
    */
   public register(model: any): Observable<any> {
     return this.http.post<any>(this.actionUrl + 'register', model)
       .pipe(
         tap(),
-        catchError(this.handleError('Order Register', []))
+        catchError(this.handleError('Offer Register', []))
       );
   }
 

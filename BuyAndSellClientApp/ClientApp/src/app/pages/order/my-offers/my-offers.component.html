@@ -1,3 +1,43 @@
-<p>
-  my-offers works!
-</p>
+<div class="row">
+  <div class="col-md-4" *ngFor="let offerproduct of products; let index = index;trackBy:trackByIndex;">
+    <div>
+      <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
+        <nb-card-body>
+          <div class="picture" [style.background-image]="'url('+ offerproduct.imageUrl+')'"></div>
+          <div class="details">
+            <div class="header">
+              <div>
+                <h6 class="text-primary text-justify">{{offerproduct.description}}</h6>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-7">
+                <h6 class="text-hint">Price</h6>
+                <h6 class="text-danger">
+                  {{offerproduct.price}} Birr
+                </h6>
+              </div>
+              <div class="col-md-5">
+                <h6 class="text-hint">Your Offer</h6>
+                <h6 class="text-danger">
+                  {{offers[index].offerPrice}} Birr
+                </h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h6 class="text-hint">Status</h6>
+                <h6 class="text-info">
+                  {{offers[index].status}}
+                </h6>
+              </div>
+            </div>
+          </div>
+          <button nbButton shape="rectangle" status="danger">Cancel Offer</button>
+        </nb-card-body>
+        
+      </nb-card>
+    </div>
+  </div>
+</div>

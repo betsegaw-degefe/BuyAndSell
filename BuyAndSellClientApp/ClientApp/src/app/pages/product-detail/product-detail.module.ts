@@ -8,6 +8,7 @@ import { ProductAttributeValueService } from 'src/app/service/product-attribute-
 import { PostProductService } from 'src/app/service/post-product.service';
 import { ProductDetailModalComponent } from './product-detail-modal/product-detail-modal.component';
 import { OrderService } from 'src/app/service/order.service';
+import { OfferService } from 'src/app/service/offer.service';
 
 @NgModule({
   declarations: [ProductDetailComponent, ProductDetailModalComponent],
@@ -20,7 +21,9 @@ import { OrderService } from 'src/app/service/order.service';
   providers: [SharedDataService,
     ProductAttributeValueService,
     PostProductService,
-    OrderService],
+    OrderService,
+    OfferService],
+    
   entryComponents: [
     ProductDetailModalComponent
   ]
