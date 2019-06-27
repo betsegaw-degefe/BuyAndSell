@@ -234,7 +234,6 @@ export class PostProductComponent implements OnInit {
                 this.showToast(this.status, this.title, this.content);
                 this.selectedItem("")
                 this.selectedItem(this.model)
-
               }
             })
         }

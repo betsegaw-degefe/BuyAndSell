@@ -38,6 +38,18 @@ export class OfferService {
       );
   }
 
+  /**
+   * Delete offer
+   * @param model offer to delete.
+   */
+  public deleteOffer(model: any): Observable<any> {
+    return this.http.put<any>(this.actionUrl + 'deleteoffer', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Offer Deleted', []))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

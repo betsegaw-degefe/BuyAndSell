@@ -1,6 +1,7 @@
 using System;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,6 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.AspNetCore.Http.Features;
 
 namespace BuyAndSellApi {
     public class Startup {
@@ -72,9 +72,8 @@ namespace BuyAndSellApi {
                     .AllowAnyHeader ()
                     .AllowCredentials ());
             });
-            
-             services.Configure<FormOptions>(x =>
-            {
+
+            services.Configure<FormOptions> (x => {
                 x.MultipartHeadersLengthLimit = Int32.MaxValue;
                 x.MultipartBoundaryLengthLimit = Int32.MaxValue;
                 x.MultipartBodyLengthLimit = Int64.MaxValue;
@@ -89,7 +88,11 @@ namespace BuyAndSellApi {
                     IssuerSigningKey = new SymmetricSecurityKey (Encoding.ASCII
                     .GetBytes (Configuration.GetSection ("AppSettings:Token").Value)),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+
+                    // ValidIssuer = "http://localhost:5000",
+                    // ValidAudience = "http://localhost:5000",
+
                     };
                 });
         }

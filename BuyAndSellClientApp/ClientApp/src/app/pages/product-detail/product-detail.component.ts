@@ -7,6 +7,7 @@ import { ProductDetailModalComponent } from './product-detail-modal/product-deta
 import { OrderService } from 'src/app/service/order.service';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { OfferService } from 'src/app/service/offer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,6 +16,7 @@ import { OfferService } from 'src/app/service/offer.service';
 })
 export class ProductDetailComponent implements OnInit {
 
+  public user: any = {} // Container for UserId to send a request to /offer/myoffers endpoint
   public product: any;
   public productAttributeValue: any;
   public productAttributeName = []; // Container for product attribute name.
@@ -27,6 +29,7 @@ export class ProductDetailComponent implements OnInit {
   public readonly = true;
   public orderModel: any = {} // Container for Order to send to Order table.
   public offerModel: any = {}; // Container for offer to send post request to /offer/register.
+  public offered: boolean = false; // boolean value used to trace whether the product is offered by the current user or not.
 
   // Variables related with success toast.
   destroyByClick = true;
@@ -45,6 +48,7 @@ export class ProductDetailComponent implements OnInit {
     private orderService: OrderService,
     private toastrService: NbToastrService,
     private offerService: OfferService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -91,6 +95,16 @@ export class ProductDetailComponent implements OnInit {
           this.arrayCounter++;
         }
     }
+    this.user.UserId = 0;
+    this.offerService.getMyOffer(this.user)
+      .subscribe(res => {
+        console.log(res);
+        res.forEach(offer => {
+          if (this.product.id === offer.productId) {
+            this.offered = true;
+          }
+        });
+      });
   }
 
   /**
@@ -112,6 +126,8 @@ export class ProductDetailComponent implements OnInit {
               .subscribe(res => {
                 if (res) {
                   this.showToast(this.status, this.title, `Your Offer sent successfully!`);
+                  this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
+                  this.router.navigate(["/pages/productdetail"]));
                 }
               })
           }
