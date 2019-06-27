@@ -9,9 +9,11 @@ import { PostProductService } from 'src/app/service/post-product.service';
 import { ProductDetailModalComponent } from './product-detail-modal/product-detail-modal.component';
 import { OrderService } from 'src/app/service/order.service';
 import { OfferService } from 'src/app/service/offer.service';
+import { AddCartModalComponent } from './add-cart-modal/add-cart-modal.component';
+import { CartService } from 'src/app/service/cart.service';
 
 @NgModule({
-  declarations: [ProductDetailComponent, ProductDetailModalComponent],
+  declarations: [ProductDetailComponent, ProductDetailModalComponent, AddCartModalComponent],
   imports: [
     CommonModule,
     ThemeModule,
@@ -22,10 +24,12 @@ import { OfferService } from 'src/app/service/offer.service';
     ProductAttributeValueService,
     PostProductService,
     OrderService,
-    OfferService],
-    
+    OfferService,
+    CartService],
+
   entryComponents: [
-    ProductDetailModalComponent
+    ProductDetailModalComponent,
+    AddCartModalComponent
   ]
 })
 export class ProductDetailModule { }

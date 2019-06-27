@@ -60,6 +60,19 @@ namespace BuyAndSellApi.Models.Entities
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_address_address");
             });
+            modelBuilder.Entity<Cart>(entity =>
+            {
+                entity.HasIndex(e => e.ProductId)
+                    .HasName("fki_fk_cart_product");
+
+                entity.Property((e => e.Id))
+                    .HasDefaultValueSql("nextval('transaction.cart_id_seq'::regclass)");
+                
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Cart)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_cart_product");
+            });
 
             modelBuilder.Entity<Category>(entity =>
             {
@@ -105,13 +118,13 @@ namespace BuyAndSellApi.Models.Entities
             {
                 entity.HasIndex(e => e.ProductId)
                     .HasName("fki_fk_offer_product");
-                
+
                 entity.Property(e => e.Id)
                     .HasDefaultValueSql("nextval('transaction.offer_id_seq'::regclass)");
-                
+
                 entity.Property(e => e.OfferPrice)
                     .HasColumnType("money");
-                
+
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Offer)
                     .OnDelete(DeleteBehavior.ClientSetNull)

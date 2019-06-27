@@ -8,6 +8,8 @@ import { OrderService } from 'src/app/service/order.service';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { OfferService } from 'src/app/service/offer.service';
 import { Router } from '@angular/router';
+import { AddCartModalComponent } from './add-cart-modal/add-cart-modal.component';
+import { CartService } from 'src/app/service/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -28,8 +30,10 @@ export class ProductDetailComponent implements OnInit {
   public starRate = 2;
   public readonly = true;
   public orderModel: any = {} // Container for Order to send to Order table.
-  public offerModel: any = {}; // Container for offer to send post request to /offer/register.
+  public offerModel: any = {}; // Container for offer to send a post request to /offer/register.
+  public cartModel: any = {}; // Containers for cart to send a post request to /cart/register.
   public offered: boolean = false; // boolean value used to trace whether the product is offered by the current user or not.
+  public cartAdded: boolean = false; // boolean value used to trace whether the product is added to cart or not.
 
   // Variables related with success toast.
   destroyByClick = true;
@@ -48,6 +52,7 @@ export class ProductDetailComponent implements OnInit {
     private orderService: OrderService,
     private toastrService: NbToastrService,
     private offerService: OfferService,
+    private cartService: CartService,
     private router: Router,
   ) { }
 
@@ -81,7 +86,7 @@ export class ProductDetailComponent implements OnInit {
       if (key != "statusId" && key != "imageUrl" && key != "status" &&
         key != "order" && key != "createdAt" && key != "lastUpdated" &&
         key != "createdBy" && key != "active" && key != "productAttributeValue" &&
-        key != "id"
+        key != "id" && key != "cart"
       )
         // Checking the key value pair.
         if (this.product.hasOwnProperty(key)) {
@@ -105,10 +110,19 @@ export class ProductDetailComponent implements OnInit {
           }
         });
       });
+    this.cartService.getMyCart(this.user)
+      .subscribe(res => {
+        console.log(res);
+        res.forEach(cart => {
+          if (this.product.id === cart.productId) {
+            this.cartAdded = true;
+          }
+        });
+      });
   }
 
   /**
-   * Order a product.
+   * Order/offer for a product.
    */
   order() {
     // open order modal.
@@ -127,7 +141,7 @@ export class ProductDetailComponent implements OnInit {
                 if (res) {
                   this.showToast(this.status, this.title, `Your Offer sent successfully!`);
                   this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
-                  this.router.navigate(["/pages/productdetail"]));
+                    this.router.navigate(["/pages/productdetail"]));
                 }
               })
           }
@@ -145,12 +159,34 @@ export class ProductDetailComponent implements OnInit {
                 if (res) {
                   console.log(res)
                   this.showToast(this.status, this.title, `Your Order sent successfully!`);
+
                 }
               })
             console.log(this.orderModel)
           }
         }
       })
+  }
+
+  /**
+   * Add to cart.
+   */
+  addToCart() {
+    this.dialogService.open(AddCartModalComponent)
+      .onClose.subscribe(res => {
+        //console.log(res)
+        if (res) {
+          this.cartModel.ProductId = this.product.id;
+          this.cartModel.Active = true;
+          this.cartService.register(this.cartModel)
+            .subscribe(res => {
+              console.log(res);
+              this.showToast(this.status, this.title, `Your product added to your cart successfully!`);
+              this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
+                this.router.navigate(["/pages/productdetail"]));
+            });
+        }
+      });
   }
 
   /**

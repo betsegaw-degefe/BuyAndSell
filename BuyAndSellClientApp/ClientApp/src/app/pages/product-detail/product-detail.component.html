@@ -28,7 +28,7 @@
         </div>
       </nb-card-body>
       <nb-card-footer>
-        <button nbButton fullWidth shape="rectangle" status="primary">Add to Cart</button>
+        <button *ngIf="!cartAdded" nbButton fullWidth shape="rectangle" status="primary" (click)="addToCart()">Add to Cart</button>
         <button *ngIf="!offered" nbButton fullWidth shape="rectangle" status="success" (click)="order()">Order
           now</button>
       </nb-card-footer>
