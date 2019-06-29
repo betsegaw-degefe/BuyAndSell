@@ -1,52 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
+export class PaymentService {
   private actionUrl: string;
 
   constructor(private http: HttpClient, private configuration: Configuration) {
-    this.actionUrl = configuration.serverWithApiUrl + 'cart/';
+    this.actionUrl = configuration.serverWithApiUrl + 'paymentservice/';
   }
 
   /**
-   * get cart by user id.
-   * @param model: user id.
-   */
-  public getMyCart(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'mycarts', model)
-      .pipe(
-        tap(),
-        catchError(this.handleError('Get Cart: ', []))
-      );
-  }
-
-  /**
-   * Register Cart
-   * @param model: Cart Model
-   */
-  public register(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'register', model)
-      .pipe(
-        tap(),
-        catchError(this.handleError('Cart Register', []))
-      );
-  }
-
-  /**
-  * Delete cart
-  * @param model cart to delete.
+  * Pay for the order order
+  * @param model Payment address to pay.
   */
-  public deleteCart(model: any): Observable<any> {
-    return this.http.put<any>(this.actionUrl + 'deletecart', model)
+  public PayPayment(model: any): Observable<any> {
+    return this.http.put<any>(this.actionUrl + 'payment', model)
       .pipe(
         tap(),
-        catchError(this.handleError('Cart Deleted', []))
+        catchError(this.handleError('Payment Paid', []))
       );
   }
 

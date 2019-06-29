@@ -52,7 +52,7 @@ namespace BuyAndSellApi.Controllers
         ///
         ///     POST /register
         ///     {
-        ///        "UserId": 4,
+        ///        "UserId": 1,
         ///        "RoleId": 1,
         ///        "active":"true"
         ///     }

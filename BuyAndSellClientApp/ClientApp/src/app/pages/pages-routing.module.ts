@@ -9,6 +9,8 @@ import { PostProductComponent } from './post-product/post-product.component';
 import { CartComponent } from './cart/cart.component';
 import { identifierModuleUrl } from '@angular/compiler';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthGuard } from 'src/guards/auth-guard.service';
 
 const routes: Routes = [{
   path: '',
@@ -21,6 +23,7 @@ const routes: Routes = [{
     {
       path: 'postproduct',
       component: PostProductComponent,
+      canActivate: [AuthGuard]
     },
     {
       path: 'productdetail',
@@ -29,10 +32,12 @@ const routes: Routes = [{
     {
       path: 'orderdetail',
       component: OrderDetailComponent,
+      canActivate: [AuthGuard],
     },
     {
       path: 'cart',
       component: CartComponent,
+      canActivate: [AuthGuard],
     },
     {
       path: '',
@@ -42,10 +47,12 @@ const routes: Routes = [{
     {
       path: 'category',
       loadChildren: './category/category.module#CategoryModule',
+      canActivate: [AuthGuard]
     },
     {
       path: 'order',
       loadChildren: './order/order.module#OrderModule',
+      canActivate: [AuthGuard],
     },
   ],
 }];
@@ -53,6 +60,10 @@ const routes: Routes = [{
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [
+    JwtHelperService,
+    AuthGuard
+  ]
 })
 export class PagesRoutingModule {
 }

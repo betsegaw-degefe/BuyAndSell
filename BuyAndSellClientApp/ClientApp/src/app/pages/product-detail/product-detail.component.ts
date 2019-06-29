@@ -10,6 +10,7 @@ import { OfferService } from 'src/app/service/offer.service';
 import { Router } from '@angular/router';
 import { AddCartModalComponent } from './add-cart-modal/add-cart-modal.component';
 import { CartService } from 'src/app/service/cart.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-product-detail',
@@ -33,7 +34,9 @@ export class ProductDetailComponent implements OnInit {
   public offerModel: any = {}; // Container for offer to send a post request to /offer/register.
   public cartModel: any = {}; // Containers for cart to send a post request to /cart/register.
   public offered: boolean = false; // boolean value used to trace whether the product is offered by the current user or not.
+  public ordered: boolean = false; // boolean value used to trace whether the product is ordered by the current user or not.
   public cartAdded: boolean = false; // boolean value used to trace whether the product is added to cart or not.
+  public logged_in: boolean = false; // boolean value to track whether the user logged in or not logged in.
 
   // Variables related with success toast.
   destroyByClick = true;
@@ -54,9 +57,17 @@ export class ProductDetailComponent implements OnInit {
     private offerService: OfferService,
     private cartService: CartService,
     private router: Router,
+    private jwtHelper: JwtHelperService
   ) { }
 
   ngOnInit() {
+
+    // check whether the user is logged in or not.
+    var token = localStorage.getItem("token");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      this.logged_in = true;
+    }
+
     var productAttributeIdArray = [];
     this.sharedData.currentMessage.subscribe(message => {
       this.product = message
@@ -100,6 +111,7 @@ export class ProductDetailComponent implements OnInit {
           this.arrayCounter++;
         }
     }
+    // check whether there is an offer for the product or not.
     this.user.UserId = 0;
     this.offerService.getMyOffer(this.user)
       .subscribe(res => {
@@ -110,6 +122,8 @@ export class ProductDetailComponent implements OnInit {
           }
         });
       });
+
+    // check whether the product is added to cart or not.
     this.cartService.getMyCart(this.user)
       .subscribe(res => {
         console.log(res);
@@ -119,6 +133,18 @@ export class ProductDetailComponent implements OnInit {
           }
         });
       });
+
+    // check whether the product is ordered or not.
+    this.orderService.getMyOrder(this.user)
+      .subscribe(res => {
+        console.log(res);
+        res.forEach(element => {
+          if (this.product.id === element.productId) {
+            this.ordered = true;
+          }
+
+        });
+      })
   }
 
   /**
@@ -159,7 +185,8 @@ export class ProductDetailComponent implements OnInit {
                 if (res) {
                   console.log(res)
                   this.showToast(this.status, this.title, `Your Order sent successfully!`);
-
+                  this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
+                    this.router.navigate(["/pages/productdetail"]));
                 }
               })
             console.log(this.orderModel)

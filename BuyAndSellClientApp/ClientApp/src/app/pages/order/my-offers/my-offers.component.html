@@ -4,7 +4,7 @@
   </div>
   <div class="col-md-4" *ngFor="let offerproduct of products; let index = index;trackBy:trackByIndex;">
     <div>
-      <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
+      <nb-card size="large" accent="primary" class="accent accent-primary pointer">
         <nb-card-body>
           <div class="picture" [style.background-image]="'url('+ offerproduct.imageUrl+')'"></div>
           <div class="details">
@@ -39,7 +39,6 @@
           </div>
           <button nbButton shape="rectangle" status="danger" (click)="cancelOffer(offers[index])">Cancel Offer</button>
         </nb-card-body>
-
       </nb-card>
     </div>
   </div>

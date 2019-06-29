@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col-md-3" *ngFor="let orderproduct of products">
+  <div class="col-md-4" *ngFor="let orderproduct of products; let index = index;trackBy:trackByIndex;">
     <div>
-      <nb-card size="medium" accent="primary" class="accent accent-primary pointer">
+      <nb-card size="large" accent="primary" class="accent accent-primary pointer">
         <nb-card-body (click)="redirectToOrderDetail(orderproduct)">
           <div class="picture" [style.background-image]="'url('+ orderproduct.imageUrl+')'"></div>
           <div class="details">
@@ -28,6 +28,9 @@
           </div>
         </nb-card-body>
         <nb-card-footer>
+          <button nbButton fullWidth shape="rectangle" status="danger" (click)="cancelOrder(order[index])">Cancel
+            Order</button>
+          <button nbButton fullWidth shape="rectangle" status="success" (click)="buyNow(orderproduct)">Buy now</button>
         </nb-card-footer>
       </nb-card>
     </div>

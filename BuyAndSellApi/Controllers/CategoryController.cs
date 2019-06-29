@@ -3,6 +3,7 @@ using System.Linq;
 using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace BuyAndSellApi.Controllers {
     [Produces ("application/json")]
     [Route ("api/[Controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : ControllerBase {
         private readonly IBuyAndSellRepository<Category> _repository;
         private readonly BuyAndSellContext _context;

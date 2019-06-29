@@ -1,3 +1,36 @@
-<p>
-  cart works!
-</p>
+<div class="row">
+  <div class="col-md-4" *ngFor="let product of products">
+    <div>
+      <nb-card size="large" accent="primary" class="accent accent-primary pointer">
+        <nb-card-body (click)="redirect(product)">
+          <div class="picture" [style.background-image]="'url('+ product.imageUrl+')'"></div>
+          <div class="details">
+            <div class="header">
+              <div>
+                <h6 class="text-primary text-justify">{{product.description}}</h6>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-5">
+                <h5 class="text-danger">
+                  {{product.price}} Birr
+                </h5>
+              </div>
+              <div class="col-md-7 text-info">
+                <h5 class="text-info">
+                  <ngb-rating [(rate)]="starRate" [readonly]="readonly" max=5>
+                  </ngb-rating>
+                  <span class="current-rate"> {{ starRate }}</span>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <button nbButton shape="rectangle" status="danger" (click)="cancelCart(product)">Remove from cart</button>
+        </nb-card-body>
+        <nb-card-footer>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+  </div>
+</div>

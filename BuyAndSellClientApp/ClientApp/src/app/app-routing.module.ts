@@ -12,6 +12,8 @@ import {
 import { AuthComponent } from './auth/auth.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthGuard } from 'src/guards/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -47,6 +49,10 @@ const config: ExtraOptions = {
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
+  providers:[
+    JwtHelperService,
+    AuthGuard
+  ]
 })
 export class AppRoutingModule {
 }

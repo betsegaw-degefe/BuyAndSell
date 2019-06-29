@@ -50,10 +50,21 @@ namespace BuyAndSellApi.Models.Repository {
             return user;
         }
 
-        public async Task<bool> UserExists (string Username) {
-            if (await _context.User.AnyAsync (x => x.UserName == Username))
-                return true;
-            return false;
+        public async Task<bool> UserExists (string Username)
+        {
+            return await _context.User.AnyAsync (x => x.UserName == Username);
+        }
+
+        public async Task<UserRole> UserRoles(int userId)
+        {
+            var userRole = await _context.UserRole.FirstOrDefaultAsync(x => x.UserId == userId);
+            return userRole;
+        }
+
+        public async Task<Role> roles(int id)
+        {
+            var role = await _context.Role.FirstOrDefaultAsync(x => x.Id == id);
+            return role;
         }
     }
 }

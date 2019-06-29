@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -49,7 +50,11 @@ namespace BuyAndSellApi.Controllers {
         public IActionResult GetAll () {
             try {
                 var products = _repository.GetAll ();
-                if (products != null) return Ok (products);
+                if (products != null)
+                {
+                    products = products.OrderByDescending(s => s.LastUpdated);
+                    return Ok (products);
+                }
                 return NotFound ();
             } catch (Exception ex) {
                 // return error message if there was an exception

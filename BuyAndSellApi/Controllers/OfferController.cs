@@ -69,7 +69,7 @@ namespace BuyAndSellApi.Controllers {
         ///     POST /register
         ///     {
         ///        "ProductId": 18,
-        ///        "Offer": 1000,
+        ///        "OfferPrice": 1000,
         ///        "Status": "Waiting for approval",
         ///        "Active":"true"
         ///     }
@@ -85,7 +85,7 @@ namespace BuyAndSellApi.Controllers {
                 //offer.ProductId
                 _repository.Insert (offer);
                 if (_repository.SaveChanges ()) {
-                    return Created ($"/api/order/{offer.Id}", offer);
+                    return Created ($"/api/offer/{offer.Id}", offer);
                 }
             } catch (Exception ex) {
                 // return error message if there was an exception

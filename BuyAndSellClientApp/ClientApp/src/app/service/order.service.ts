@@ -39,6 +39,18 @@ export class OrderService {
       );
   }
 
+  /**
+   * Delete order
+   * @param model order to delete.
+   */
+  public deleteOrder(model: any): Observable<any> {
+    return this.http.put<any>(this.actionUrl + 'deleteorder', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Order Deleted', []))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

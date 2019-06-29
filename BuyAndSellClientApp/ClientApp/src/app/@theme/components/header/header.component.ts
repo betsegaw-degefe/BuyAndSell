@@ -18,9 +18,9 @@ export class HeaderComponent implements OnInit {
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private userService: UserData,
-              private analyticsService: AnalyticsService) {
+    private menuService: NbMenuService,
+    private userService: UserData,
+    private analyticsService: AnalyticsService) {
   }
 
   ngOnInit() {

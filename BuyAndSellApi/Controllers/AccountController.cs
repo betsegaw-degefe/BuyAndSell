@@ -9,6 +9,7 @@ using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -23,7 +24,8 @@ namespace BuyAndSellApi.Controllers {
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
 
-        public AccountController (IBuyAndSellRepository<User> buyandsellrepository, IMapper mapper, IAuthRepository authrepo, IConfiguration config) {
+        public AccountController (IBuyAndSellRepository<User> buyandsellrepository, IMapper mapper,
+            IAuthRepository authrepo, IConfiguration config) {
             _buyandsellrepository = buyandsellrepository;
             _mapper = mapper;
             _authrepo = authrepo;
@@ -57,13 +59,24 @@ namespace BuyAndSellApi.Controllers {
         [HttpPost ("login")]
         public async Task<IActionResult> Login (LoginDto loginDto) {
             var userFromRepo = await _authrepo.Login (loginDto.UserName, loginDto.Password);
-            Console.WriteLine ("User login object: " + userFromRepo);
+            //Console.WriteLine ("User login object: " + userFromRepo);
             if (userFromRepo == null)
                 return Unauthorized ();
 
+            // get role_id from user_role table.
+            var userRole = await _authrepo.UserRoles (userFromRepo.Id);
+
+            if (userRole == null)
+                return NotFound ();
+
+            // get role entity using the above role_id
+            var role = await _authrepo.roles (userRole.RoleId);
+
             var claims = new [] {
                 new Claim (ClaimTypes.NameIdentifier, userFromRepo.Id.ToString ()),
-                new Claim (ClaimTypes.Name, userFromRepo.UserName)
+                new Claim (ClaimTypes.Name, userFromRepo.UserName),
+                new Claim (ClaimTypes.Actor, userFromRepo.FirstName + " " + userFromRepo.MiddleName),
+                new Claim (ClaimTypes.Role, role.Name)
             };
 
             var key = new SymmetricSecurityKey (Encoding.UTF8.GetBytes (_config.GetSection ("AppSettings:Token").Value));
@@ -77,7 +90,8 @@ namespace BuyAndSellApi.Controllers {
             var tokenHandler = new JwtSecurityTokenHandler ();
             var token = tokenHandler.CreateToken (tokenDescriptor);
 
-            return Ok (new { token = tokenHandler.WriteToken (token), username = userFromRepo.UserName, fullname = userFromRepo.FirstName + " " + userFromRepo.LastName });
+            //return Ok (new { token = tokenHandler.WriteToken (token), username = userFromRepo.UserName, fullname = userFromRepo.FirstName + " " + userFromRepo.LastName });
+            return Ok (new { token = tokenHandler.WriteToken (token), user = userFromRepo, UserRole = userRole });
         }
 
         /// <summary>
@@ -133,7 +147,8 @@ namespace BuyAndSellApi.Controllers {
             Console.WriteLine ("Password " + userDto.Password);
             // System.Diagnostics.Debug.WriteLine(userDto.AddressId);
             var createdUser = await _authrepo.Register (userToCreate, userDto.Password);
-            return StatusCode (201, new { username = createdUser.UserName, fullname = createdUser.FirstName + " " + createdUser.LastName });
+            //return StatusCode (201, new { username = createdUser.UserName, fullname = createdUser.FirstName + " " + createdUser.LastName });
+            return StatusCode (201, new { user = createdUser });
         }
     }
 }

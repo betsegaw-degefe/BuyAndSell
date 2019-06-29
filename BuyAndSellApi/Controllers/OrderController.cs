@@ -52,7 +52,8 @@ namespace BuyAndSellApi.Controllers {
             try {
                 var orders = from s in _repository.GetAll () select s;
                 if (!String.IsNullOrEmpty (searchByUserId.UserId.ToString ())) {
-                    orders = orders.Where (s => s.BuyerId == (searchByUserId.UserId));
+                    orders = orders.Where (s => s.BuyerId == (searchByUserId.UserId) &&
+                        s.Active == true);
                 }
                 return Ok (orders);
             } catch (Exception ex) {
@@ -93,7 +94,29 @@ namespace BuyAndSellApi.Controllers {
                 return BadRequest (new { message = ex.Message });
             }
 
-            return BadRequest ("Failed to save Product.");
+            return BadRequest ("Failed to save Order.");
+        }
+
+        /// <summary>
+        /// Update Orders table, Active column to false.
+        /// </summary>
+        /// <returns>an updated order</returns>
+        [HttpPut ("deleteorder")]
+        [ProducesResponseType (StatusCodes.Status201Created)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult UpdateStatus ([FromBody] OrderProduct orderProduct) {
+            try {
+
+                _repository.Update (orderProduct);
+                if (_repository.SaveChanges ()) {
+                    return Ok (orderProduct);
+                }
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+
+            return BadRequest ("Failed to delete Order.");
         }
     }
 }

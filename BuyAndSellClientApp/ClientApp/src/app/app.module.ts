@@ -23,7 +23,13 @@ import { RouterModule } from '@angular/router';
 import { NgxUploaderModule } from 'ngx-uploader';
 import { FormsModule } from '@angular/forms';
 import { UploadComponent } from './pages/post-product/upload/upload.component';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from 'src/guards/auth-guard.service';
 
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,20 +50,27 @@ import { UploadComponent } from './pages/post-product/upload/upload.component';
     NbMenuModule.forRoot(),
     CoreModule.forRoot(),
     NbToastrModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        //whitelistedDomains: ['https://localhost:5001/'],
+      }
+    }),
     NgxUploaderModule,
-    
+
   ],
   bootstrap: [AppComponent],
   providers: [
     {
       provide: APP_BASE_HREF,
       useValue: '/',
-    } ,
+    },
     AddressService,
     ProductCategoryService,
     Configuration,
     Http,
-    
+    JwtHelperService,
+    AuthGuard
   ],
   exports: [],
 })

@@ -24,9 +24,12 @@ namespace BuyAndSellApi.Models.Entities
 
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Cart> Cart { get; set; }
         public virtual DbSet<LookupCategory> LookupCategory { get; set; }
         public virtual DbSet<LookupValue> LookupValue { get; set; }
+        public virtual DbSet<Offer> Offer { get; set; }
         public virtual DbSet<OrderProduct> Order { get; set; }
+        public virtual DbSet<PaymentService> PaymentService { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductAttribute> ProductAttribute { get; set; }
         public virtual DbSet<ProductAttributeValue> ProductAttributeValue { get; set; }
@@ -67,7 +70,7 @@ namespace BuyAndSellApi.Models.Entities
 
                 entity.Property((e => e.Id))
                     .HasDefaultValueSql("nextval('transaction.cart_id_seq'::regclass)");
-                
+
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Cart)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -161,6 +164,15 @@ namespace BuyAndSellApi.Models.Entities
                     .HasConstraintName("fk_order_seller");
             });
 
+            modelBuilder.Entity<PaymentService>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("nextval('finance.payment_service_id_seq'::regclass)");
+
+                entity.Property(e => e.Balance)
+                    .HasColumnType("money");
+            });
+
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasIndex(e => e.StatusId)
@@ -236,6 +248,9 @@ namespace BuyAndSellApi.Models.Entities
 
             modelBuilder.Entity<UserRole>(entity =>
             {
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("nextval('account.user_role_id_seq'::regclass)");
+
                 entity.HasKey(e => new {e.UserId, e.RoleId})
                     .HasName("user_role_pkey");
 

@@ -61,7 +61,7 @@ namespace BuyAndSellApi.Controllers {
             try {
                 _repository.Insert (cart);
                 if (_repository.SaveChanges ()) {
-                    return Created ($"/api/order/{cart.Id}", cart);
+                    return Created ($"/api/cart/{cart.Id}", cart);
                 }
             } catch (Exception ex) {
                 // return error message if there was an exception
@@ -100,7 +100,7 @@ namespace BuyAndSellApi.Controllers {
         [HttpPut ("deletecart")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateStatus ([FromBody] Cart cart) {
+        public IActionResult UpdateCartStatus ([FromBody] Cart cart) {
             try {
                 _repository.Update (cart);
                 if (_repository.SaveChanges ()) {

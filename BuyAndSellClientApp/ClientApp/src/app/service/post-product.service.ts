@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { ProductAttributeModel } from '../models/product-attribute-model';
 import { map } from 'rxjs/operators';
@@ -22,7 +22,12 @@ export class PostProductService {
    * @param id : product attribute id.
    */
   public get(id) {
-    return this.http.get(this.actionUrl + id);
+    let token = localStorage.getItem("token");
+    return this.http.get(this.actionUrl + id, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + token,
+      })
+    });
   }
 
   /**

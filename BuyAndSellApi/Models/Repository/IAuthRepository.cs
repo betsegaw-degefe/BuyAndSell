@@ -8,5 +8,9 @@ namespace BuyAndSellApi.Models.Repository
         Task<User> Login(string username, string password);
         Task<User> Register(User user, string password);
         Task<bool> UserExists(string username);
+
+        Task<UserRole> UserRoles(int userId);
+
+        Task<Role> roles(int id);
     }
 }

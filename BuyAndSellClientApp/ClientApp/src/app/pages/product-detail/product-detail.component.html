@@ -5,9 +5,9 @@
         <div class="picture" [style.background-image]="'url('+ product.imageUrl+')'"></div>
         <div class="details">
           <div class="header">
-            <div>
+            <!-- <div>
               <h5 class="text-primary">{{product.description}}</h5>
-            </div>
+            </div> -->
           </div>
           <hr>
           <div class="row">
@@ -27,9 +27,10 @@
           </div>
         </div>
       </nb-card-body>
-      <nb-card-footer>
-        <button *ngIf="!cartAdded" nbButton fullWidth shape="rectangle" status="primary" (click)="addToCart()">Add to Cart</button>
-        <button *ngIf="!offered" nbButton fullWidth shape="rectangle" status="success" (click)="order()">Order
+      <nb-card-footer *ngIf="logged_in && !ordered && !offered">
+        <button *ngIf="!cartAdded" nbButton fullWidth shape="rectangle" status="primary" (click)="addToCart()">Add to
+          Cart</button>
+        <button nbButton fullWidth shape="rectangle" status="success" (click)="order()">Order
           now</button>
       </nb-card-footer>
     </nb-card>
@@ -52,7 +53,7 @@
           <hr>
           <div class="row">
             <ng-container *ngFor="let key of productKey; let i=index">
-              <div class="details col-md-6">
+              <div class="details col-md-6" *ngIf="key !='offer'">
                 <h6 class="text-heading">{{key}}</h6>
                 <section class="text-hint">
                   {{productValue[i]}}

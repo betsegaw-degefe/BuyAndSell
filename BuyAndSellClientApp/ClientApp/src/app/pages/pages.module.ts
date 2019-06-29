@@ -17,10 +17,18 @@ import { NbDialogModule } from '@nebular/theme';
 import { OrderDetailModule } from './order-detail/order-detail.module';
 import { MyOrdersModule } from './order/my-orders/my-orders.module';
 import { OrderModule } from './order/order.module';
+import { CartModalComponent } from './cart/cart-modal/cart-modal.component';
 
 
 @NgModule({
-  declarations: [PagesComponent, PostProductComponent, CartComponent, UploadComponent, PostProductModalComponent],
+  declarations: [
+    PagesComponent,
+    PostProductComponent,
+    CartComponent,
+    UploadComponent,
+    PostProductModalComponent,
+    CartModalComponent
+  ],
   imports: [
     CommonModule,
     PagesRoutingModule,
@@ -36,7 +44,8 @@ import { OrderModule } from './order/order.module';
     //PostProductModule
   ],
   entryComponents: [
-    PostProductModalComponent
+    PostProductModalComponent,
+    CartModalComponent
   ]
 })
 export class PagesModule { }

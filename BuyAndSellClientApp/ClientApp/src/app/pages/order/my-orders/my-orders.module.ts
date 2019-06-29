@@ -3,13 +3,16 @@ import { CommonModule } from '@angular/common';
 import { MyOrdersComponent } from './my-orders.component';
 import { OrderService } from 'src/app/service/order.service';
 import { ProductService } from 'src/app/service/product.service';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbDialogService, NbToastrService } from '@nebular/theme';
 import { NgbModule, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedOrderDataService } from 'src/app/service/shared-order-data.service';
 import { ThemeModule } from 'src/app/@theme/theme.module';
+import { MyOffersModalComponent } from '../my-offers/my-offers-modal/my-offers-modal.component';
+import { PaymentService } from 'src/app/service/payment.service';
+import { PaymentOrderModalComponent } from './payment-order-modal/payment-order-modal.component';
 
 @NgModule({
-  declarations: [MyOrdersComponent],
+  declarations: [MyOrdersComponent, PaymentOrderModalComponent],
   imports: [
     ThemeModule,
     CommonModule,
@@ -21,12 +24,19 @@ import { ThemeModule } from 'src/app/@theme/theme.module';
     SharedOrderDataService,
     OrderService,
     ProductService,
+    NbDialogService,
+    NbToastrService,
+    PaymentService
   ],
   exports: [
     MyOrdersComponent
   ],
   bootstrap: [
     MyOrdersComponent
+  ],
+  entryComponents: [
+    MyOffersModalComponent,
+    PaymentOrderModalComponent
   ]
 })
 export class MyOrdersModule { }
