@@ -4,6 +4,6 @@ namespace BuyAndSellApi.Models.Dtos
     {
         public int PinCode { get; set; }
         public string Password { get; set; }
-        public decimal Balance { get; set; }
+        public decimal Withdraw { get; set; }
     }
 }

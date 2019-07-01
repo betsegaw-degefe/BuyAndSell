@@ -1,10 +1,12 @@
 using System;
 using System.Linq;
+using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuyAndSellApi.Controllers {
     [Produces ("application/json")]
@@ -49,12 +51,48 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
         public IActionResult GetAll () {
             try {
-                var products = _repository.GetAll ();
-                if (products != null)
-                {
-                    products = products.OrderByDescending(s => s.LastUpdated);
+                var products = from s in _repository.GetAll () select s;
+                if (products != null) {
+                    products = products.Where (s => s.Active == true); // Only active data (not deleted.)
+                    products = products.OrderByDescending (s => s.LastUpdated); // order by last modified DESC.
                     return Ok (products);
                 }
+
+                return NotFound ();
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Search Products by search key and category
+        /// </summary>
+        /// <returns>A list of Products</returns>
+        [HttpPost ("searchproductbykey")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult SearchProductByKey (SearchProduct searchProduct) {
+            try {
+                var products = from s in _repository.GetAll () select s;
+                if (products != null && searchProduct.MainCategoryId == 0) {
+                    products = products.Where (s =>
+                        s.Active == true &&
+                        EF.Functions.Like (s.Description.ToLower (), "%" + searchProduct.SearchKey.ToLower () + "%")
+                    );
+                    products = products.OrderByDescending (s => s.LastUpdated); // order by last modified DESC.
+                    return Ok (products);
+                } else if (products != null) {
+                    products = products.Where (s =>
+                        s.Active == true &&
+                        EF.Functions.Like (s.Description.ToLower (), "%" + searchProduct.SearchKey.ToLower () + "%") &&
+                        s.MainCategoryId == searchProduct.MainCategoryId
+                    );
+                    products = products.OrderByDescending (s => s.LastUpdated); // order by last modified DESC.
+                    return Ok (products);
+                }
+
                 return NotFound ();
             } catch (Exception ex) {
                 // return error message if there was an exception
@@ -97,6 +135,27 @@ namespace BuyAndSellApi.Controllers {
             }
 
             return BadRequest ("Failed to save Product.");
+        }
+
+        /// <summary>
+        /// Update Product table, Active column to false.
+        /// </summary>
+        /// <returns>an updated product</returns>
+        [HttpPut ("deleteproduct")]
+        [ProducesResponseType (StatusCodes.Status201Created)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult UpdateStatus ([FromBody] Product product) {
+            try {
+                _repository.Update (product);
+                if (_repository.SaveChanges ()) {
+                    return Ok (product);
+                }
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+
+            return BadRequest ("Failed to delete Product.");
         }
     }
 }

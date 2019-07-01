@@ -9,6 +9,7 @@ import { MyOffersModalComponent } from '../my-offers/my-offers-modal/my-offers-m
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { PaymentService } from 'src/app/service/payment.service';
 import { PaymentOrderModalComponent } from './payment-order-modal/payment-order-modal.component';
+import { CartService } from 'src/app/service/cart.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -17,9 +18,11 @@ import { PaymentOrderModalComponent } from './payment-order-modal/payment-order-
 })
 export class MyOrdersComponent implements OnInit {
 
-  public user: any = {} // Container for UserId to send a request to /order/myorder endpoint
-  public order: any = [] // Container for orders fetched from /order/myorder end point
-  public products: any = [] // Container for product fetched from /product/{id} end point filtering by order.productId
+  public user: any = {} // Container for UserId to send a request to /order/myorder endpoint.
+  public orders: any = [] // Container for orders fetched from /order/myorder end point.
+  public products: any = [] // Container for product fetched from /product/{id} end point filtering by order.productId.
+  public paymentModel: any = {} // Container for payment from payment order modal form to send an update request to /paymentservice/payment.
+  public cartsModel: any = [] //Container for list of carts fetched from /cart/mycarts.
   public starRate = 2; // Variable for storing the number of stars(rating).
   public readonly = true; // Variable to make the star(rating) readonly.
 
@@ -40,6 +43,7 @@ export class MyOrdersComponent implements OnInit {
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
     private paymentService: PaymentService,
+    private cartService: CartService,
   ) { }
 
   ngOnInit() {
@@ -48,8 +52,8 @@ export class MyOrdersComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log(res);
-          this.order = res;
-          this.order.forEach(product => {
+          this.orders = res;
+          this.orders.forEach(product => {
             this.productService.getById(product.productId)
               .subscribe(res => {
                 if (res) {
@@ -96,12 +100,71 @@ export class MyOrdersComponent implements OnInit {
 
   }
 
-  buyNow(orderproduct: any) {
-    console.log(orderproduct)
+  /**
+   * process payment for the ordered product.
+   * @param orderProduct : product model found on the my order page.
+   */
+  buyNow(orderProduct: any) {
+    console.log(orderProduct)
     this.dialogService.open(PaymentOrderModalComponent)
       .onClose.subscribe(res => {
         if (res) {
-          console.log(res);
+          this.paymentModel = res;
+          this.paymentModel.Withdraw = orderProduct.price;
+          console.log(this.paymentModel);
+          // send payment datas.
+          this.paymentService.PayPayment(this.paymentModel)
+            .subscribe(res => {
+              if (res) {
+                console.log(res);
+                this.user.UserId = 0;
+                //delete the product from my cart if any.
+                this.cartService.getMyCart(this.user)
+                  .subscribe(carts => {
+                    this.cartsModel = carts;
+                    console.log(carts)
+                    if (carts) {
+                      carts.forEach(cart => {
+
+                        if (cart.productId === orderProduct.id) {
+                          cart.active = false;
+                          this.cartService.deleteCart(cart).subscribe(res => {
+                            if (res) {
+                              console.log(res);
+                            }
+                          });
+                        }
+                      });
+                    }
+                  });
+                //delete the product from my order.
+                this.orders.forEach(order => {
+                  if (order.productId === orderProduct.id) {
+                    //this.cancelOrder(order);
+                    order.active = false
+                    this.orderService.deleteOrder(order)
+                      .subscribe(res => {
+                        if (res) {
+                          console.log(res);
+                          // this.showToast(this.status, this.title, `Your order canceled successfully!`);
+                          // this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
+                          //   this.router.navigate(["/pages/order/myorders"]));
+                        }
+                      })
+                  }
+                });
+                //delete from home page
+                orderProduct.active = false
+                this.productService.deleteProduct(orderProduct)
+                  .subscribe(res => {
+                    if (res) {
+                      this.showToast(this.status, this.title, `Your Payment is transfered successfully!`);
+                      this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
+                        this.router.navigate(["/pages/order/myorders"]));
+                    }
+                  })
+              }
+            });
         }
       });
   }

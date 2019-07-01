@@ -176,7 +176,10 @@ namespace BuyAndSellApi.Models.Entities
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasIndex(e => e.StatusId)
-                    .HasName("fki_fk_product_product_status");
+                    .HasName("fki_fk_product_lookup_value");
+
+                entity.HasIndex(e => e.MainCategoryId)
+                    .HasName("fki_fk_product_category");
 
                 entity.Property(e => e.Id)
                     .HasDefaultValueSql("nextval('product_id_seq'::regclass)");
@@ -188,6 +191,12 @@ namespace BuyAndSellApi.Models.Entities
                     .WithMany(p => p.Product)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_product_lookup_value");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Product)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_product_category");
+
             });
 
             modelBuilder.Entity<ProductAttribute>(entity =>

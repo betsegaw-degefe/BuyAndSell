@@ -10,6 +10,7 @@ import { ThemeModule } from 'src/app/@theme/theme.module';
 import { MyOffersModalComponent } from '../my-offers/my-offers-modal/my-offers-modal.component';
 import { PaymentService } from 'src/app/service/payment.service';
 import { PaymentOrderModalComponent } from './payment-order-modal/payment-order-modal.component';
+import { CartService } from 'src/app/service/cart.service';
 
 @NgModule({
   declarations: [MyOrdersComponent, PaymentOrderModalComponent],
@@ -26,7 +27,8 @@ import { PaymentOrderModalComponent } from './payment-order-modal/payment-order-
     ProductService,
     NbDialogService,
     NbToastrService,
-    PaymentService
+    PaymentService,
+    CartService
   ],
   exports: [
     MyOrdersComponent

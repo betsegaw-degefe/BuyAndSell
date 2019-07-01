@@ -6,6 +6,7 @@ import { ThemeModule } from 'src/app/@theme/theme.module';
 import { ProductService } from 'src/app/service/product.service';
 import { NgbButtonsModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedDataService } from 'src/app/service/shared-data.service';
+import { ProductCategoryService } from 'src/app/service/product-category.service';
 
 @NgModule({
   declarations: [HomeComponent,],
@@ -16,7 +17,10 @@ import { SharedDataService } from 'src/app/service/shared-data.service';
     NgbModule,
     NgbButtonsModule
   ],
-  providers: [ProductService,SharedDataService],
+  providers: [
+    ProductService,
+    SharedDataService,
+    ProductCategoryService],
   exports: [HomeComponent],
   bootstrap: [HomeComponent]
 })

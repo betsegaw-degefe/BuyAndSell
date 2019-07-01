@@ -97,7 +97,7 @@ export class ProductDetailComponent implements OnInit {
       if (key != "statusId" && key != "imageUrl" && key != "status" &&
         key != "order" && key != "createdAt" && key != "lastUpdated" &&
         key != "createdBy" && key != "active" && key != "productAttributeValue" &&
-        key != "id" && key != "cart"
+        key != "id" && key != "cart" && key != "category" && key != "mainCategoryId"
       )
         // Checking the key value pair.
         if (this.product.hasOwnProperty(key)) {

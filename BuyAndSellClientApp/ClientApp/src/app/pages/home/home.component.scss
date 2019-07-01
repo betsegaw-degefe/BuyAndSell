@@ -1,10 +1,13 @@
 @import "../../@theme/styles/themes";
+@import "~@nebular/theme/components/card/card.component.theme";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/breakpoints";
 
 @include nb-install-component() {
   nb-card-body {
     display: flex;
     flex-direction: column;
-    padding: 0;
+    //padding: 0;
   }
 
   .picture {
@@ -64,5 +67,42 @@
         font-size: 1.75rem;
       }
     }
+  }
+
+  .nb-actions {
+    flex-basis: 80%;
+  }
+
+  .image-card {
+    padding: 0;
+  }
+  // .input-group {
+  //   margin-bottom: 1rem;
+  // }
+
+  .form-inline > * {
+    @include nb-ltr(margin, 0 1.5rem 1.5rem 0);
+    @include nb-rtl(margin, 0 0 1.5rem 1.5rem);
+  }
+  .full-width {
+    flex: 1;
+    min-width: 220px;
+  }
+  .select-label {
+    padding-top: 1em;
+    margin-left: 1em;
+  }
+  .flex-centered {
+    margin: auto;
+  }
+  
+  .title {
+    text-align: center;
+  }
+  
+  .sub-title {
+    text-align: center;
+    display: block;
+    margin-bottom: 3rem;
   }
 }

@@ -88,10 +88,10 @@ namespace BuyAndSellApi.Controllers {
         ///     {
         ///        "PinCode": 18,
         ///        "Password":"password",
-        ///        "Balance": 100,
+        ///        "Withdraw": 100,
         ///     }
         /// </remarks>
-        /// <returns>A list of Carts</returns>
+        /// <returns>an updated paymentservice</returns>
         [HttpPut ("payment")]
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
@@ -110,10 +110,11 @@ namespace BuyAndSellApi.Controllers {
                 if (paymentDto.Password != paymentService.Password)
                     return Unauthorized ();
 
-                if (paymentService.Balance < paymentDto.Balance)
+                if (paymentService.Balance < paymentDto.Withdraw)
                     return Content ("message", "Balance Insufficient.");
 
-                paymentService.Balance = paymentService.Balance - paymentDto.Balance;
+
+                paymentService.Balance = paymentService.Balance - paymentDto.Withdraw;
 
                 _repository.Update (paymentService);
 

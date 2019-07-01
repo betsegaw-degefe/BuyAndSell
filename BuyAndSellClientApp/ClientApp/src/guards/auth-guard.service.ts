@@ -6,11 +6,14 @@ import { CanActivate, Router } from '@angular/router';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
+    public CURRENT_USER : any = {}
+
     canActivate() {
         var token = localStorage.getItem("token");
 
         if (token && !this.jwtHelper.isTokenExpired(token)) {
             console.log(this.jwtHelper.decodeToken(token));
+            this.CURRENT_USER = this.jwtHelper.decodeToken(token);
             return true;
         }
         this.router.navigate(["login"]);

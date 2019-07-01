@@ -55,6 +55,31 @@ export class ProductService {
       }));
   }
 
+  /**
+   * Search product by search key and category.
+   * @param model: Search product model
+   */
+  public SearchProductByKey(model: any): Observable<any> {
+
+    return this.http.post<any>(this.actionUrl + 'searchproductbykey', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('SearchProduct: ', []))
+      );
+  }
+
+  /**
+   * Delete product
+   * @param model product to delete.
+   */
+  public deleteProduct(model: any): Observable<any> {
+    return this.http.put<any>(this.actionUrl + 'deleteproduct', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Product Deleted', []))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

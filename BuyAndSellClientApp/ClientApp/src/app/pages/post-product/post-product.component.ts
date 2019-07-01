@@ -16,6 +16,8 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 import { PostProductModalComponent } from './post-product-modal/post-product-modal.component';
 import { ProductAttributeService } from 'src/app/service/product-attribute.service';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthGuard } from 'src/guards/auth-guard.service';
 
 
 @Component({
@@ -34,6 +36,7 @@ export class PostProductComponent implements OnInit {
   public categoriesParentId = [];
   private categoryNameCounter: number = 0;
   public searchCategory: String = "";
+  public searchMainCategory = "" // Container for Main category name to search the main category id.
   public searchCategoryModel: any = {};
   public productProperties: any = []; // Container for product Attribute received from the db(productAttribute table).
   public props: any = [];
@@ -44,6 +47,7 @@ export class PostProductComponent implements OnInit {
   public progress: number;
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
+  public user: any = {} //Container for holding the current user
 
 
   // Variables related with success toast.
@@ -67,7 +71,8 @@ export class PostProductComponent implements OnInit {
     private configuration: Configuration,
     private dialogService: NbDialogService,
     private attributeService: ProductAttributeService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private authGuard: AuthGuard,
   ) {
     this.actionUrl = configuration.serverWithApiUrl + 'upload/';
   }
@@ -79,6 +84,7 @@ export class PostProductComponent implements OnInit {
 
 
   ngOnInit() {
+    this.user = this.authGuard.CURRENT_USER;
     this.data.get()
       .subscribe(success => {
         if (success) {
@@ -133,7 +139,14 @@ export class PostProductComponent implements OnInit {
         break;
       }
     }
+    for (let i = 0; i < data.length; i++) {
+      if (data[i] === "|") {
+        this.searchMainCategory = data.substr(0, i - 1);
+        break;
+      }
+    }
     this.searchCategoryModel.name = this.searchCategory;
+
     // Search the key word from the database.
     this.data.getCategory(this.searchCategoryModel)
       .subscribe(res => {
@@ -147,6 +160,25 @@ export class PostProductComponent implements OnInit {
             })
         }
       });
+
+    this.searchCategoryModel.name = this.searchMainCategory;
+    // Search the Main category from the database.
+    this.data.getCategory(this.searchCategoryModel)
+      .subscribe(res => {
+        if (res) {
+
+          console.log(res[0].id)
+          this.productModel.MainCategoryId = res[0].id
+          // this.categoryModel = res;
+          // this.postProductdata.getProductAttribute(res[0].id)
+          //   .subscribe(res => {
+          //     if (res) {
+          //       this.productProperties = res;
+          //     }
+          //   })
+        }
+      });
+
   }
 
   // Upload image to the server
@@ -179,11 +211,14 @@ export class PostProductComponent implements OnInit {
 
   // Save product to product attribute value and product table.
   saveProduct() {
+
     var propertyValueModel: any = []; // Container for product attrbute value to send to db.
     this.productModel.StatusId = 1;
     this.productModel.Negotiable = this.negotiable
+    this.productModel.CreatedBy = +this.user.nameid
     if (this.imageUrl != null)
       this.productModel.imageUrl = this.imageUrl.dbPath;
+    console.log(this.productModel)
     this.productdata.register(this.productModel)
       .subscribe(res => {
         if (res) {
@@ -210,9 +245,9 @@ export class PostProductComponent implements OnInit {
               if (res != null && res != []) {
                 console.log(res);
                 this.showToast(this.status, this.title, `Product saved successfully!`);
-                this.selectedItem("");
-                // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-                //   this.router.navigate(["/pages/postproduct"]));
+                //this.selectedItem("");
+                this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
+                  this.router.navigate(["/pages/postproduct"]));
               }
             });
         }

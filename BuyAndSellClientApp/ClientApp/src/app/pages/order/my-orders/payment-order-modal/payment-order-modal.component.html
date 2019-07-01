@@ -1,3 +1,20 @@
-<p>
-  payment-order-modal works!
-</p>
+<div class="col-md-12">
+  <nb-card accent="primary" class="accent accent-primary">
+    <nb-card-header>Pay for your Order</nb-card-header>
+    <nb-card-body>
+      <div class="form-group">
+        <label for="pinCode">Pin Number</label>
+        <input #pinCode type="number" [(ngModel)]="paymentOrder.PinCode" nbInput fullWidth shape="rectangle"
+          placeholder="Pin Number" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input #password type="password" [(ngModel)]="paymentOrder.Password" nbInput fullWidth shape="rectangle" placeholder="Password" />
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton fullWidth shape="rectangle" status="danger" (click)="cancel()">Cancel</button>
+      <button nbButton fullWidth shape="rectangle" status="success" (click)="submit()">Pay</button>
+    </nb-card-footer>
+  </nb-card>
+</div>

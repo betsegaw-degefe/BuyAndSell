@@ -10,6 +10,7 @@ import { UploadComponent } from './upload/upload.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductAttributeService } from 'src/app/service/product-attribute.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 const modules = [
   CommonModule,
@@ -39,7 +40,8 @@ const modules = [
     ProductCategoryService,
     NbDialogService,
     FileUploadService,
-    ProductAttributeService
+    ProductAttributeService,
+    JwtHelperService
   ],
 })
 export class PostProductModule { }

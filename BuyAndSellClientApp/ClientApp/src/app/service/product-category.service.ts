@@ -67,6 +67,21 @@ export class ProductCategoryService {
       );
   }
 
+  /**
+   * Get Main product category.
+   */
+  public getMainCategory(): Observable<any> {
+
+    return this.http.get<any>(this.actionUrl + 'maincategory', {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    }).pipe(
+      tap(),
+      catchError(this.handleError('Get Main Category', []))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

@@ -11,7 +11,6 @@ namespace BuyAndSellApi.Controllers {
     [Produces ("application/json")]
     [Route ("api/[Controller]")]
     [ApiController]
-    [Authorize]
     public class CategoryController : ControllerBase {
         private readonly IBuyAndSellRepository<Category> _repository;
         private readonly BuyAndSellContext _context;
@@ -30,6 +29,8 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
+
         public IActionResult GetCategory ([FromBody] SearchByNameDto searchByName) {
             try {
                 var category = from s in _repository.GetAll () select s;
@@ -50,10 +51,39 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
+
         public IActionResult GetAll () {
             try {
                 var categories = _repository.GetAll ();
                 if (categories != null) return Ok (categories);
+                return NotFound ();
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Gets Main Categories.
+        /// </summary>
+        /// <returns>A list of Main Categories</returns>
+        [HttpGet ("maincategory")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetMainCategory () {
+            try {
+                var categories = from s in _repository.GetAll () select s;
+                // if (products != null) {
+                //     products = products.Where (s => s.Active == true); // Only active data (not deleted.)
+                //     products = products.OrderByDescending (s => s.LastUpdated); // order by last modified DESC.
+                //     return Ok (products);
+                // }
+                if (categories != null) {
+                    categories = categories.Where (s => s.Active == true && s.ParentId == null);
+                    return Ok (categories);
+                }
                 return NotFound ();
             } catch (Exception ex) {
                 // return error message if there was an exception
@@ -70,6 +100,8 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
+
         public IActionResult Get (int id) {
             try {
                 var category = _repository.Get (id);
@@ -101,6 +133,8 @@ namespace BuyAndSellApi.Controllers {
         [HttpPost ("register")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
+
         public IActionResult Register ([FromBody] Category category) {
             try {
                 _repository.Insert (category);

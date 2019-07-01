@@ -1,4 +1,5 @@
 <ngx-sample-layout>
-  <nb-menu [items]="menu"></nb-menu>
+  <nb-menu *ngIf="role != 'Admin'" [items]="menu"></nb-menu>
+  <nb-menu *ngIf="role === 'Admin'" [items]="adminMenu"></nb-menu>
   <router-outlet></router-outlet>
 </ngx-sample-layout>

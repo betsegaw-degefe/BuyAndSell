@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'app-payment-order-modal',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentOrderModalComponent implements OnInit {
 
-  constructor() { }
+  public paymentOrder: any = {};
+  constructor(protected dialogRef: NbDialogRef<PaymentOrderModalComponent>) { }
 
   ngOnInit() {
   }
+  cancel() {
+    this.dialogRef.close();
+  }
 
+  submit() {
+    this.dialogRef.close(this.paymentOrder);
+  }
 }
