@@ -3,6 +3,9 @@ import { ProductService } from 'src/app/service/product.service';
 import { AuthGuard } from 'src/guards/auth-guard.service';
 import { SharedDataService } from 'src/app/service/shared-data.service';
 import { Router } from '@angular/router';
+import { NbDialogService, NbToastrService, NbGlobalPosition, NbGlobalPhysicalPosition } from '@nebular/theme';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 
 @Component({
   selector: 'app-my-product',
@@ -16,13 +19,24 @@ export class MyProductComponent implements OnInit {
   public userId: any = {} // Variable to hold the current user id to send a rewuest to /product/myproducts end point.
   public starRate = 2; // Variable for storing the number of stars(rating).
   public readonly = true; // Variable to make the star(rating) readonly.
-  
+
+
+  // Variables related with success toast.
+  destroyByClick = true;
+  duration = 4000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  status: NbToastStatus = NbToastStatus.SUCCESS;
+  title = 'Success!';
 
   constructor(
     private productService: ProductService,
     private sharedData: SharedDataService,
-    private authGuard: AuthGuard, 
-    private router: Router,) { }
+    private authGuard: AuthGuard,
+    private router: Router,
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService, ) { }
 
   ngOnInit() {
     this.user = this.authGuard.CURRENT_USER;
@@ -48,4 +62,46 @@ export class MyProductComponent implements OnInit {
     this.router.navigate(['/pages/order/editmyproduct'])
   }
 
+  deleteProduct(product: any) {
+    product.active = false;
+    console.log(product);
+    this.dialogService.open(DeleteModalComponent)
+      .onClose.subscribe(res => {
+        if (res) {
+          console.log(res);
+          this.productService.deleteProduct(product)
+            .subscribe(res => {
+              if (res) {
+                console.log(res);
+                this.showToast(this.status, this.title, `Your Product canceled successfully!`);
+                this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
+                  this.router.navigate(["/pages/order/myproducts"]));
+              }
+            })
+        }
+      })
+  }
+
+  /**
+   * A toast for success message
+   * @param type : type of toast. eg. success, warning...
+   * @param title : title of the toast. 
+   * @param body : message for the toast.
+   */
+  private showToast(type: NbToastStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: this.destroyByClick,
+      duration: this.duration,
+      hasIcon: this.hasIcon,
+      position: this.position,
+      preventDuplicates: this.preventDuplicates,
+    };
+    const titleContent = title ? `${title}` : '';
+
+    this.toastrService.show(
+      body,
+      `${titleContent}`,
+      config);
+  }
 }
