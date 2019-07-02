@@ -56,6 +56,18 @@ export class ProductService {
   }
 
   /**
+   * get products by user id.
+   * @param model: user id.
+   */
+  public getMyProducts(model: any): Observable<any> {
+    return this.http.post<any>(this.actionUrl + 'myproducts', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Get My Products: ', []))
+      );
+  }
+
+  /**
    * Search product by search key and category.
    * @param model: Search product model
    */

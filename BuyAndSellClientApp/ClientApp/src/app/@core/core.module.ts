@@ -81,8 +81,11 @@ export const NB_CORE_PROVIDERS = [
         },
         Gender:{
         },
-        address:{
+        pincode:{
           required: true,
+        },
+        address:{
+          required: false,
         },
         userName: {
           required: true,

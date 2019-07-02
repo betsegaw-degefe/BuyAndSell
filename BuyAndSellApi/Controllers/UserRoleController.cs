@@ -54,7 +54,7 @@ namespace BuyAndSellApi.Controllers
         ///     {
         ///        "UserId": 1,
         ///        "RoleId": 1,
-        ///        "active":"true"
+        ///        "Active":"true"
         ///     }
         /// </remarks>
         /// <returns>A newly created UserRole.</returns>

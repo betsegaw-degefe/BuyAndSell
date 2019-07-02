@@ -15,7 +15,19 @@ export class PaymentService {
   }
 
   /**
-  * Pay for the order order
+   * Get payment service by pincode.
+   * @param pincode : pincode of the account to search.
+   */
+  public GetByPinCode(model: any) {
+    return this.http.post<any>(this.actionUrl + 'paymentpincode', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Get By Pincode: ', []))
+      );
+  }
+  
+  /**
+  * Pay for the order
   * @param model Payment address to pay.
   */
   public PayPayment(model: any): Observable<any> {
@@ -23,6 +35,18 @@ export class PaymentService {
       .pipe(
         tap(),
         catchError(this.handleError('Payment Paid', []))
+      );
+  }
+
+  /**
+   * Add the product price to the seller account balance.
+   * @param model : updated payment service.
+   */
+  public AddBalace(model: any): Observable<any> {
+    return this.http.put<any>(this.actionUrl + 'addbalance', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Add Balance', []))
       );
   }
 

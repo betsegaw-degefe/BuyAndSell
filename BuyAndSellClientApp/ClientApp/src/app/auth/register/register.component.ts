@@ -5,6 +5,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
 import { parse } from 'querystring';
+import { UserRoleService } from 'src/app/service/user-role.service';
 
 
 @Component({
@@ -15,8 +16,12 @@ import { parse } from 'querystring';
 export class RegisterComponent extends NbRegisterComponent implements OnInit {
 
     user: any = {};
+    public userRole: any = {};
 
-    constructor(private authService: AuthService, service: NbAuthService, @Inject(NB_AUTH_OPTIONS) protected options = {}, cd: ChangeDetectorRef, router: Router) {
+    constructor(private authService: AuthService,
+        service: NbAuthService,
+        private userRoleService: UserRoleService,
+        @Inject(NB_AUTH_OPTIONS) protected options = {}, cd: ChangeDetectorRef, router: Router) {
         super(service, options, cd, router)
     }
 
@@ -26,30 +31,26 @@ export class RegisterComponent extends NbRegisterComponent implements OnInit {
     register() {
         console.log(this.user.password);
         let address: Number = parseInt(<string>this.user.address);
-        this.user.address = address;
         this.authService.register(this.user)
             .subscribe(res => {
                 console.log(res);
                 if (res.token) {
                     localStorage.setItem("token", res.token);
-                    this.router.navigate(['auth/login']);
+
                 }
+                this.userRole.UserId = res.user.id;
+                this.userRole.RoleId = 2;
+                this.userRole.Active = true;
+                console.log(this.userRole);
+                this.userRoleService.register(this.userRole)
+                    .subscribe(res => {
+                        if (res) {
+                            console.log(res);
+                            this.router.navigate(['auth/login']);
+                        }
+                    })
             }, (err) => {
                 console.log(err);
             });
     }
-
-    // @Input()
-    // httpRequestHeaders: HttpHeaders | {
-    //     [header: string]: string | string[];
-    // } = new HttpHeaders().set("sampleHeader", "headerValue").set("sampleHeader1", "headerValue1");
-
-    // @Input()
-    // httpRequestParams: HttpParams | {
-    //     [param: string]: string | string[];
-    // } = new HttpParams().set("sampleRequestParam", "requestValue").set("sampleRequestParam1", "requestValue1");
-
-    // public uploadEvent($event: any) {
-    //     console.log('from client' + JSON.stringify($event));
-    // }
 }

@@ -11,6 +11,7 @@ import { MyOffersModalComponent } from '../my-offers/my-offers-modal/my-offers-m
 import { PaymentService } from 'src/app/service/payment.service';
 import { PaymentOrderModalComponent } from './payment-order-modal/payment-order-modal.component';
 import { CartService } from 'src/app/service/cart.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [MyOrdersComponent, PaymentOrderModalComponent],
@@ -28,7 +29,8 @@ import { CartService } from 'src/app/service/cart.service';
     NbDialogService,
     NbToastrService,
     PaymentService,
-    CartService
+    CartService,
+    JwtHelperService
   ],
   exports: [
     MyOrdersComponent

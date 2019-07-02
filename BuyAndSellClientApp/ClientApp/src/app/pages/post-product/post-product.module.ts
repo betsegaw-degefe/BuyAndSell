@@ -26,6 +26,7 @@ const modules = [
   NbActionsModule,
   NbSelectModule,
   NbTooltipModule,
+  
 ]
 
 @NgModule({

@@ -138,6 +138,27 @@
   </div>
 
   <div class="form-control-group">
+    <label class="label" for="input-pincode">Account Pin code:</label>
+    <input nbInput
+           type="number"
+           [(ngModel)]="user.pinCode"
+           #pincode="ngModel"
+           id="input-pincode"
+           name="pincode"
+           placeholder="Account Pin code"
+           autofocus
+           fullWidth
+           [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
+           [required]="getConfigValue('forms.validation.pincode.required')"
+           [attr.aria-invalid]="pincode.invalid && pincode.touched ? true : null">
+    <ng-container *ngIf="pincode.invalid && pincode.touched">
+      <p class="error-message" *ngIf="pincode.errors?.required">
+        Account Pin code is required!
+      </p>
+    </ng-container>
+  </div>
+
+  <div class="form-control-group">
       <label class="label" for="input-address">Address:</label>
       <input nbInput
              [(ngModel)]="user.address"

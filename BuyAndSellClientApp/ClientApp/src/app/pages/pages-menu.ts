@@ -40,6 +40,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             },
             {
                 title: 'My Product',
+                link:'/pages/order/myproducts'
             },
         ]
     },
@@ -80,6 +81,10 @@ export const ADMIN_MENU_ITEMS: NbMenuItem[] = [
                 title: 'My Offers',
                 link: '/pages/order/myoffers',
             },
+            {
+                title: 'My Product',
+                link:'/pages/order/myproducts'
+            }
         ]
     },
     {
@@ -97,7 +102,7 @@ export const ADMIN_MENU_ITEMS: NbMenuItem[] = [
             {
                 title: 'Lookup',
                 link: '',
-            },
+            }
         ]
     },
     {

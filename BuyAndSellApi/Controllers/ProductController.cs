@@ -66,6 +66,28 @@ namespace BuyAndSellApi.Controllers {
         }
 
         /// <summary>
+        /// Get Products by UserId/CreatedBy.
+        /// </summary>
+        /// <returns>A list of Products</returns>
+        [HttpPost ("myproducts")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetMyProducts ([FromBody] SearchByUserId searchByUserId) {
+            try {
+                var products = from s in _repository.GetAll () select s;
+                if (!String.IsNullOrEmpty (searchByUserId.UserId.ToString ())) {
+                    products = products.Where (s => s.CreatedBy == (searchByUserId.UserId) && s.Active == true);
+                }
+
+                return Ok (products);
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
         /// Search Products by search key and category
         /// </summary>
         /// <returns>A list of Products</returns>

@@ -7,6 +7,7 @@ import { RouterModule, } from '@angular/router';
 import { NbDatepickerModule } from '@nebular/theme';
 import { MatButtonModule, MatIconModule, MatProgressBarModule } from '@angular/material';
 import { MatFileUploadModule } from 'src/lib/matFileUpload';
+import { UserRoleService } from 'src/app/service/user-role.service';
 
 
 @NgModule({
@@ -24,5 +25,8 @@ import { MatFileUploadModule } from 'src/lib/matFileUpload';
     declarations: [
         RegisterComponent,
     ],
+    providers: [
+        UserRoleService,
+    ]
 })
 export class RegisterModule { }

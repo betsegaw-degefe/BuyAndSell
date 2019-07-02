@@ -10,6 +10,8 @@ import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { PaymentService } from 'src/app/service/payment.service';
 import { PaymentOrderModalComponent } from './payment-order-modal/payment-order-modal.component';
 import { CartService } from 'src/app/service/cart.service';
+import { AuthService } from 'src/app/service/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-my-orders',
@@ -25,6 +27,9 @@ export class MyOrdersComponent implements OnInit {
   public cartsModel: any = [] //Container for list of carts fetched from /cart/mycarts.
   public starRate = 2; // Variable for storing the number of stars(rating).
   public readonly = true; // Variable to make the star(rating) readonly.
+  public role: any; // Container for holding role of the current user.
+  public pinCode: any = {}
+  public updatePaymentService: any = {}
 
   // Variables related with success toast.
   destroyByClick = true;
@@ -44,10 +49,18 @@ export class MyOrdersComponent implements OnInit {
     private toastrService: NbToastrService,
     private paymentService: PaymentService,
     private cartService: CartService,
+    private authService: AuthService,
+    private jwtHelper: JwtHelperService,
   ) { }
 
   ngOnInit() {
-    this.user.UserId = 0;
+    var token = localStorage.getItem("token");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      console.log(this.jwtHelper.decodeToken(token));
+      this.user = this.jwtHelper.decodeToken(token);
+      this.role = this.user.role;
+    }
+    this.user.UserId = this.user.id;
     this.orderService.getMyOrder(this.user)
       .subscribe(res => {
         if (res) {
@@ -117,6 +130,25 @@ export class MyOrdersComponent implements OnInit {
             .subscribe(res => {
               if (res) {
                 console.log(res);
+                let UserId = orderProduct.createdBy;
+                // get user, get account and update account.
+                this.authService.getUserById(UserId)
+                  .subscribe(res => {
+                    console.log(res);
+                    //let PinCode = { "PinCode": res.pinCode }
+                    this.pinCode.PinCode = res.pinCode
+                    this.paymentService.GetByPinCode(this.pinCode)
+                      .subscribe(res => {
+                        console.log(res);
+                        this.updatePaymentService = res;
+                        this.updatePaymentService.balance = res.balance + orderProduct.price
+                        console.log(this.updatePaymentService);
+                        this.paymentService.AddBalace(this.updatePaymentService)
+                          .subscribe(res => {
+                            console.log(res);
+                          })
+                      })
+                  })
                 this.user.UserId = 0;
                 //delete the product from my cart if any.
                 this.cartService.getMyCart(this.user)

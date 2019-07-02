@@ -1,9 +1,7 @@
 using System;
 
-namespace BuyAndSellApi.Models.Dtos
-{
-    public class UserDto
-    {
+namespace BuyAndSellApi.Models.Dtos {
+    public class UserDto {
         public int Id { get; set; }
 
         public string FirstName { get; set; }
@@ -14,7 +12,9 @@ namespace BuyAndSellApi.Models.Dtos
 
         public DateTime DateOfBirth { get; set; }
         public string Gender { get; set; }
-        public int AddressId { get; set; }
+
+        public int PinCode { get; set; }
+        public string Address { get; set; }
         public string Email { get; set; }
 
         public string ProfilePicture { get; set; }
@@ -28,7 +28,6 @@ namespace BuyAndSellApi.Models.Dtos
         public DateTime LastOnline { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdated { get; set; }
-        
-       
+
     }
 }

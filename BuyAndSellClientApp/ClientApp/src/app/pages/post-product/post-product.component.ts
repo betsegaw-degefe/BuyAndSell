@@ -26,7 +26,6 @@ import { AuthGuard } from 'src/guards/auth-guard.service';
   styleUrls: ['./post-product.component.scss']
 })
 export class PostProductComponent implements OnInit {
-
   private actionUrl: string;
   public model: any;
   public productModel: any = {};
@@ -48,6 +47,7 @@ export class PostProductComponent implements OnInit {
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
   public user: any = {} //Container for holding the current user
+  public role: any; // Container for holding role of the current user.
 
 
   // Variables related with success toast.
@@ -80,8 +80,6 @@ export class PostProductComponent implements OnInit {
   trackByIndex(index: number, obj: any): any {
     return index;
   }
-
-
 
   ngOnInit() {
     this.user = this.authGuard.CURRENT_USER;
@@ -132,6 +130,7 @@ export class PostProductComponent implements OnInit {
       var data = item.item;
     else
       var data = item
+
     // Extract the key word for searching.
     for (let i = data.length - 1; i > 0; i--) {
       if (data[i] === "|") {
@@ -166,7 +165,6 @@ export class PostProductComponent implements OnInit {
     this.data.getCategory(this.searchCategoryModel)
       .subscribe(res => {
         if (res) {
-
           console.log(res[0].id)
           this.productModel.MainCategoryId = res[0].id
           // this.categoryModel = res;
@@ -178,7 +176,6 @@ export class PostProductComponent implements OnInit {
           //   })
         }
       });
-
   }
 
   // Upload image to the server
@@ -211,7 +208,6 @@ export class PostProductComponent implements OnInit {
 
   // Save product to product attribute value and product table.
   saveProduct() {
-
     var propertyValueModel: any = []; // Container for product attrbute value to send to db.
     this.productModel.StatusId = 1;
     this.productModel.Negotiable = this.negotiable

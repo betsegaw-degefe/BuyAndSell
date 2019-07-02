@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-5" *ngFor="let myProduct of myProducts; let index = index;trackBy:trackByIndex;">
+    <div>
+      <nb-card size="large" accent="primary" class="accent accent-primary pointer">
+        <nb-card-body>
+          <div class="picture" [style.background-image]="'url('+ myProduct.imageUrl+')'"></div>
+          <div class="details">
+            <div class="header">
+              <div>
+                <h6 class="text-primary text-justify">{{myProduct.description}}</h6>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-5">
+                <h5 class="text-danger">
+                  {{myProduct.price}} Birr
+                </h5>
+              </div>
+              <div class="col-md-3">
+
+              </div>
+              <div class="col-md-4 text-info">
+                <h5 class="text-info">
+                  <ngb-rating [(rate)]="starRate" [readonly]="readonly" max=5>
+                  </ngb-rating>
+                  <span class="current-rate"> {{ starRate }}</span>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button nbButton fullWidth shape="rectangle" status="danger">Delete
+          </button>
+          <button nbButton fullWidth shape="rectangle" status="success">Edit
+          </button>
+          <button nbButton fullWidth shape="rectangle" status="info">Offers</button>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+  </div>
+</div>

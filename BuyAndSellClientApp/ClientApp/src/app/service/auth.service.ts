@@ -34,6 +34,14 @@ export class AuthService {
             );
     }
 
+    getUserById(id: number) {
+        return this.http.get<any>(this.actionUrl + id)
+            .pipe(
+                tap(),
+                catchError(this.handleError('Get user by id', []))
+            )
+    }
+
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
 

@@ -11,8 +11,6 @@ namespace BuyAndSellApi.Models.Entities
     {
         public Address()
         {
-            InverseParent = new HashSet<Address>();
-            User = new HashSet<User>();
         }
 
 
@@ -25,7 +23,5 @@ namespace BuyAndSellApi.Models.Entities
         public short LastUpdatedBy { get; set; }
 
         [ForeignKey("ParentId")] public virtual Address Parent { get; set; }
-        public virtual ICollection<Address> InverseParent { get; set; }
-        public virtual ICollection<User> User { get; set; }
     }
 }

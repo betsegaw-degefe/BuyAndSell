@@ -11,7 +11,6 @@ namespace BuyAndSellApi.Controllers {
     [Produces ("application/json")]
     [Route ("api/[Controller]")]
     [ApiController]
-
     public class PaymentServiceController : ControllerBase {
         private readonly IBuyAndSellRepository<PaymentService> _repository;
         private readonly BuyAndSellContext _context;
@@ -36,6 +35,27 @@ namespace BuyAndSellApi.Controllers {
         public IActionResult Get (int id) {
             try {
                 var paymentService = _repository.Get (id);
+                if (paymentService != null) return Ok (paymentService);
+                return NotFound ();
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Gets Payment service by pin code.
+        /// </summary>
+        /// <param name="paymentPinCode">The pincode of the Payment service you want to get</param>
+        /// <returns>An ActionResult of Payment service</returns>
+        [HttpPost ("paymentpincode")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetPayment ([FromBody] PaymentPinCode paymentPinCode) {
+            try {
+                Console.WriteLine ("Pincode " + paymentPinCode);
+                var paymentService = _context.PaymentService.FirstOrDefault (x => x.PinCode == paymentPinCode.PinCode);
                 if (paymentService != null) return Ok (paymentService);
                 return NotFound ();
             } catch (Exception ex) {
@@ -113,7 +133,6 @@ namespace BuyAndSellApi.Controllers {
                 if (paymentService.Balance < paymentDto.Withdraw)
                     return Content ("message", "Balance Insufficient.");
 
-
                 paymentService.Balance = paymentService.Balance - paymentDto.Withdraw;
 
                 _repository.Update (paymentService);
@@ -127,6 +146,29 @@ namespace BuyAndSellApi.Controllers {
             }
 
             return BadRequest ("Failed to process your payment.");
+        }
+
+        /// <summary>
+        /// Update Payment service table, add a balace for the sold product.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// <returns>an updated payment service</returns>
+        [HttpPut ("addbalance")]
+        [ProducesResponseType (StatusCodes.Status201Created)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult AddBalance ([FromBody] PaymentService paymentService) {
+            try {
+                _repository.Update (paymentService);
+                if (_repository.SaveChanges ()) {
+                    return Ok (paymentService);
+                }
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+
+            return BadRequest ("Failed to delete Product.");
         }
 
         private bool VerifyPasswordHash (string password, byte[] passwordHash, byte[] salt) {
