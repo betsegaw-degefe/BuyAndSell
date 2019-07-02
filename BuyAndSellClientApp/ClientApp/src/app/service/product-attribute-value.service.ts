@@ -20,12 +20,8 @@ export class ProductAttributeValueService {
   public getByProductId(ProductId: any): Observable<any> {
     this.SearchByProductId.ProductId = ProductId;
     return this.http.post<any>(this.actionUrl + 'searchbyproductid', this.SearchByProductId)
-      // .pipe(map((data: any[]) => {
-      //   this.productAttributeValue = data;
-      //   return this.productAttributeValue;
-      // }));
       .pipe(
-        tap(_ => this.log('searchbyproductid')),
+        tap(),
         catchError(this.handleError('searchbyproductid', []))
       );
   }
@@ -40,6 +36,18 @@ export class ProductAttributeValueService {
       .pipe(
         tap(_ => this.log('register')),
         catchError(this.handleError('register', []))
+      );
+  }
+
+  /**
+   * update the product attribute value table.
+   * @param model : Updated ProductAttributeValue
+   */
+  public update(model: any) {
+    return this.http.put<any>(this.actionUrl + 'updateproduct', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Product Attribute Value Updated: ', []))
       );
   }
 

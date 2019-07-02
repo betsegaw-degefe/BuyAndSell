@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/service/product.service';
 import { AuthGuard } from 'src/guards/auth-guard.service';
+import { SharedDataService } from 'src/app/service/shared-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-product',
@@ -14,10 +16,13 @@ export class MyProductComponent implements OnInit {
   public userId: any = {} // Variable to hold the current user id to send a rewuest to /product/myproducts end point.
   public starRate = 2; // Variable for storing the number of stars(rating).
   public readonly = true; // Variable to make the star(rating) readonly.
+  
 
   constructor(
     private productService: ProductService,
-    private authGuard: AuthGuard, ) { }
+    private sharedData: SharedDataService,
+    private authGuard: AuthGuard, 
+    private router: Router,) { }
 
   ngOnInit() {
     this.user = this.authGuard.CURRENT_USER;
@@ -29,11 +34,18 @@ export class MyProductComponent implements OnInit {
             element.imageUrl = encodeURI('http://localhost:5000/' + element.imageUrl);
             this.myProducts.push(element);
           });
-          // resmyproducts.imageUrl = encodeURI('http://localhost:5000/' + resmyproducts.imageUrl);
-          // this.myProducts.push(resmyproducts);
         }
         console.log(this.myProducts)
       })
+  }
+
+  /**
+   * 
+   */
+  openEdit(product: any) {
+    console.log(product);
+    this.sharedData.changeMessage(product)
+    this.router.navigate(['/pages/order/editmyproduct'])
   }
 
 }

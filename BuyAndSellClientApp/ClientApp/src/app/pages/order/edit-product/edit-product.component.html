@@ -1,47 +1,68 @@
 <div class="row">
   <div class="col-md-5">
-    <nb-card size="small" accent="primary" class="accent accent-primary pointer">
-      <nb-card-body>
-        <label for="typeahead-format">Search for a category:</label>
-        <input id="typeahead-format" type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="model"
-          (selectItem)="selectedItem($event)" [ngbTypeahead]="search" placeholder="Search category" />
-        <hr>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <div class="col-md-7" *ngIf="searchCategory">
-    <nb-card accent="primary" class="accent accent-primary pointer">
-      <nb-card-header>{{searchCategory}}</nb-card-header>
-
-      <nb-card-body>
-        <div class="col-sm-12" *ngIf="productProperties.length === 0">
-          <pre>Product property not found.</pre>
-        </div>
-        <div class="row">
-          <div class="col-sm-6"
-            *ngFor="let productProperty of productProperties; let index = index;trackBy:trackByIndex;">
-            <div class="form-group">
-              <label for={{productProperty.name}}>{{productProperty.name}}</label>
-              <input id={{productProperty.name}} type="productProperty.dataType" nbInput fullWidth shape="rectangle"
-                [(ngModel)]="propertyValue[productProperty.name]" placeholder={{productProperty.name}} />
+    <nb-card size="large" accent="primary" class="accent accent-primary">
+      <nb-card-body class="image">
+        <div class="picture" [style.background-image]="'url('+ product.imageUrl+')'"></div>
+        <div class="details">
+          <div class="header">
+            <!-- <div>
+              <h5 class="text-primary">{{product.description}}</h5>
+            </div> -->
+          </div>
+          <hr>
+          <div class="row">
+            <!-- <div class="col-md-5">
+              <h5 class="text-danger">
+                {{product.price}} Birr
+              </h5>
+            </div> -->
+            <div class="col-md-3"></div>
+            <div class="col-md-4 text-info">
+              <!-- <h5 class="text-info">
+                <ngb-rating [(rate)]="starRate" [readonly]="readonly" max=5>
+                </ngb-rating>
+                <span class="current-rate"> {{ starRate }}</span>
+              </h5> -->
             </div>
           </div>
         </div>
-        <div *ngIf="productProperties.length != 0">
+      </nb-card-body>
+      <nb-card-footer *ngIf="logged_in && !ordered && !offered">
+        <button *ngIf="!cartAdded" nbButton fullWidth shape="rectangle" status="primary" (click)="addToCart()">Add to
+          Cart</button>
+        <button nbButton fullWidth shape="rectangle" status="success" (click)="order()">Order
+          now</button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+  <div class="col-md-7">
+    <nb-card accent="primary" class="accent accent-primary pointer">
+      <nb-card-header></nb-card-header>
+      <nb-card-body>
+        <div>
+          <div class="row">
+            <div class="col-sm-6" *ngFor="let key of productPropertyKey; let index = index;trackBy:trackByIndex;">
+              <div class="form-group">
+                <label for={{key}}>{{key}}</label>
+                <input id={{key}} type="type[index]" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="productPropertyValue[index]" placeholder={{key}} />
+              </div>
+            </div>
+          </div>
           <hr>
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="inputCondition">Condition</label>
                 <input id="inputCondition" type="text" nbInput fullWidth shape="rectangle"
-                  [(ngModel)]="productModel.Condition" placeholder="Condition" />
+                  [(ngModel)]="product.condition" placeholder="Condition" disabled />
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="inputQuantity">Quantity</label>
                 <input id="inputQuantity" type="number" nbInput fullWidth shape="rectangle"
-                  [(ngModel)]="productModel.Quantity" placeholder="Quantity" />
+                  [(ngModel)]="product.quantity" placeholder="Quantity" disabled />
               </div>
             </div>
           </div>
@@ -49,8 +70,8 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="inputPrice">Price</label>
-                <input id="inputPrice" type="number" nbInput fullWidth shape="rectangle" [(ngModel)]="productModel.Price"
-                  placeholder="Price" />
+                <input id="inputPrice" type="number" nbInput fullWidth shape="rectangle" [(ngModel)]="product.price"
+                  placeholder="Price" disabled />
               </div>
             </div>
             <div class="col-sm-6">
@@ -71,7 +92,7 @@
               </div>
             </div>
           </div>
-          <div class="row" style="margin-bottom:15px;">
+          <!-- <div class="row" style="margin-bottom:15px;">
             <div class="col-sm-12">
 
             </div>
@@ -89,24 +110,22 @@
                 {{message}}
               </span>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
                 <label for="inputDescription">Description</label>
-                <textarea id="inputDescription" class="form-control" [(ngModel)]="productModel.Description"
+                <textarea id="inputDescription" class="form-control" [(ngModel)]="product.description"
                   placeholder="Description"></textarea>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <button type="submit" class="btn" nbButton status="primary" shape="rectangle" float="Right"
-            (click)="addProperty()">Add
-            Property</button>
-          <button *ngIf="productProperties.length != 0" type="submit" class="btn" nbButton status="success"
-            shape="rectangle" float="Right" (click)="saveProduct()">Save
-            Property</button>
+          <button type="submit" class="btn" nbButton status="danger" shape="rectangle"
+            (click)="cancel()">Cancel Edit</button>
+          <button type="submit" class="btn" nbButton status="success" shape="rectangle" float="Right"
+            (click)="saveProduct()">Save Property</button>
         </div>
       </nb-card-body>
     </nb-card>

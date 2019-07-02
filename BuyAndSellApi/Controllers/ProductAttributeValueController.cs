@@ -43,11 +43,11 @@ namespace BuyAndSellApi.Controllers {
         }
 
         /// <summary>
-        /// Gets product attribute value by name.
+        /// Gets product attribute value by ProductId.
         /// </summary>
         /// <param name="searchByProductId">The product id of the product attribute value you want to get</param>
         /// <returns>An ActionResult of product attribute value</returns>
-        [HttpPost ("searchByProductId")]
+        [HttpPost ("searchbyproductid")]
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
@@ -107,6 +107,31 @@ namespace BuyAndSellApi.Controllers {
                 return BadRequest (new { message = ex.Message });
             }
             return BadRequest ("Failed to save Product Attribute Value.");
+        }
+
+        /// <summary>
+        /// Update ProductAttributeValue table.
+        /// </summary>
+        /// <returns>an updated ProductAttributeValue</returns>
+        [HttpPut ("updateproduct")]
+        [ProducesResponseType (StatusCodes.Status201Created)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult UpdateStatus ([FromBody] ProductAttributeValue[] productAttributeValue) {
+            try {
+
+                for (int i = 0; i < productAttributeValue.Length; i++) {
+                    _repository.Update (productAttributeValue[i]);
+                }
+
+                if (_repository.SaveChanges ()) {
+                    return Ok (productAttributeValue);
+                }
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+
+            return BadRequest ("Failed to save ProductAttributeValue.");
         }
     }
 }

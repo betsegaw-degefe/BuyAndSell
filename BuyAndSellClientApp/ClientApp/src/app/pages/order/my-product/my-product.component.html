@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-5" *ngFor="let myProduct of myProducts; let index = index;trackBy:trackByIndex;">
     <div>
-      <nb-card size="large" accent="primary" class="accent accent-primary pointer">
+      <nb-card size="large" accent="primary" class="accent accent-primary">
         <nb-card-body>
           <div class="picture" [style.background-image]="'url('+ myProduct.imageUrl+')'"></div>
           <div class="details">
@@ -31,9 +31,9 @@
           </div>
         </nb-card-body>
         <nb-card-footer>
-          <button nbButton fullWidth shape="rectangle" status="danger">Delete
+          <button nbButton fullWidth shape="rectangle" status="danger" (click)="cancelOrder(orders[index])">Delete
           </button>
-          <button nbButton fullWidth shape="rectangle" status="success">Edit
+          <button nbButton fullWidth shape="rectangle" status="success" (click)="openEdit(myProduct)">Edit
           </button>
           <button nbButton fullWidth shape="rectangle" status="info">Offers</button>
         </nb-card-footer>

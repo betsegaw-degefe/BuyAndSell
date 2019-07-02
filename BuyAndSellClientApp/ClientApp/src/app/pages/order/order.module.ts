@@ -8,6 +8,7 @@ import { MyOffersModule } from './my-offers/my-offers.module';
 import { MyOrdersModule } from './my-orders/my-orders.module';
 import { SharedOrderDataService } from 'src/app/service/shared-order-data.service';
 import { MyProductModule } from './my-product/my-product.module';
+import { EditProductModule } from './edit-product/edit-product.module';
 
 @NgModule({
   declarations: [OrderComponent],
@@ -17,7 +18,8 @@ import { MyProductModule } from './my-product/my-product.module';
     OrderRoutingModule,
     MyOrdersModule,
     MyOffersModule,
-    MyProductModule
+    MyProductModule,
+    EditProductModule
   ],
  
 })

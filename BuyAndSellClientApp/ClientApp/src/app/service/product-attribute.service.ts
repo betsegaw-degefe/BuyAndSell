@@ -16,6 +16,19 @@ export class ProductAttributeService {
   }
 
   /**
+  * Get ProductAttribute by id.
+  * @param id : ProductAttributeId.
+  */
+  public getById(id: any): Observable<any> {
+    return this.http.get(this.actionUrl + id)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Get ProductAttribute by id', []))
+      )
+  }
+
+
+  /**
    * Register product attribute
    * @param model: productAttribute model
    */
