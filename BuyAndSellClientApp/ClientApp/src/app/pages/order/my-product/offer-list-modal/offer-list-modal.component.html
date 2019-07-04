@@ -1,0 +1,51 @@
+<!-- <form class="form">
+  <label for="subject">Subject:</label>
+  <input nbInput id="subject" type="text">
+
+  <label class="text-label" for="text">Text:</label>
+  <textarea nbInput id="text"></textarea>
+</form> -->
+<!-- <code>Table is just a mapping of objects to table rows with <code>ngFor</code></p> -->
+<nb-card size="small" accent="primary" class="accent accent-primary">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">By</th>
+        <th scope="col">Offered Price</th>
+        <th scope="col">Status</th>
+        <th scope="col">Date Offered</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let offer of offers; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          {{ offer.createdBy }}
+        </td>
+        <td>{{ offer.offerPrice | currency }}</td>
+        <td>{{ offer.status }}</td>
+        <td>{{ offer.createdAt }}</td>
+      </tr>
+    </tbody>
+  </table>
+</nb-card>
+
+<div class="col-sm-8 containerfor">
+  <h6 for="category" class="select-label">Select Offer:</h6>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <nb-select id="category" size="small" shape="rectangle" status="success" placeholder="Select Offer" outline
+      [(selected)]="selectedOffer">
+      <nb-option *ngFor="let offer of offers" value={{offer.id}}>{{offer.createdBy}} - {{offer.offerPrice | currency}}
+      </nb-option>
+      <!-- <nb-option value="2">Option 2</nb-option>
+      <nb-option value="3">Option 3</nb-option>
+      <nb-option value="4">Option 4</nb-option> -->
+    </nb-select>
+  </div>
+  <button nbButton fullWidth shape="rectangle" class="col-md-3 small" status="success"
+    (click)="submit()">Accept
+  </button>
+</div>

@@ -19,7 +19,7 @@ import { EditProductModule } from './edit-product/edit-product.module';
     MyOrdersModule,
     MyOffersModule,
     MyProductModule,
-    EditProductModule
+    EditProductModule,
   ],
  
 })

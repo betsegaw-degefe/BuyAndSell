@@ -7,6 +7,7 @@ import { ProductService } from 'src/app/service/product.service';
 import { NgbButtonsModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedDataService } from 'src/app/service/shared-data.service';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
+import { AuthService } from 'src/app/service/auth.service';
 
 @NgModule({
   declarations: [HomeComponent,],
@@ -20,7 +21,9 @@ import { ProductCategoryService } from 'src/app/service/product-category.service
   providers: [
     ProductService,
     SharedDataService,
-    ProductCategoryService],
+    ProductCategoryService,
+    AuthService,
+  ],
   exports: [HomeComponent],
   bootstrap: [HomeComponent]
 })

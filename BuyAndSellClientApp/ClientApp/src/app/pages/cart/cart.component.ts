@@ -7,6 +7,8 @@ import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { Router } from '@angular/router';
 import { element } from '@angular/core/src/render3';
 import { SharedDataService } from 'src/app/service/shared-data.service';
+import { AuthGuard } from 'src/guards/auth-guard.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-cart',
@@ -19,7 +21,7 @@ export class CartComponent implements OnInit {
   //public imageUrl: any; // Container for holding the ima
   public cartsModel: any = [] //Container for list of carts fetched from /cart/mycarts.
   public user: any = {} // Container for UserId to send a request to /cart/mycarts endpoint
-
+  public current_user: any = {} // Container for holding the current user.
   public starRate = 2; // variable for the number of stars in the rating.
   public readonly = true; // variable to make the star/rating to readonly.
 
@@ -38,10 +40,17 @@ export class CartComponent implements OnInit {
     private toastrService: NbToastrService,
     private router: Router,
     private sharedData: SharedDataService,
-  ) { }
+    private jwtHelper: JwtHelperService,
+  ) {
+    var token = localStorage.getItem("token");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      this.current_user = this.jwtHelper.decodeToken(token);
+    }
+  }
 
   ngOnInit() {
-    this.user.UserId = 0;
+    this.user.UserId = this.current_user.nameid;
+    console.log(this.user);
     this.cartService.getMyCart(this.user)
       .subscribe(carts => {
         this.cartsModel = carts;
@@ -120,7 +129,7 @@ export class CartComponent implements OnInit {
     //this.sharedData.changeMessage.subscribe(message => this.message = message)
     // this.sharedData.currentMessage.subscribe(message => productId = message)
     this.sharedData.changeMessage(product)
-  
+
     this.router.navigate(['/pages/productdetail'])
   }
 }

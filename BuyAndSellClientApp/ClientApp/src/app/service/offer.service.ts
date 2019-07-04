@@ -9,9 +9,22 @@ import { tap, catchError } from 'rxjs/operators';
 })
 export class OfferService {
   private actionUrl: string;
+  public SearchByProductId: any = {};
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'offer/';
+  }
+
+  /**
+   * get an offer by id.
+   * @param id : offer id.
+   */
+  public get(id) {
+    return this.http.get(this.actionUrl + id)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Get Offer by id: ', []))
+      );
   }
 
   /**
@@ -23,6 +36,19 @@ export class OfferService {
       .pipe(
         tap(),
         catchError(this.handleError('Get Offer: ', []))
+      );
+  }
+
+  /**
+   * 
+   * @param ProductId : productid of the offer
+   */
+  public getByProductId(ProductId: any): Observable<any> {
+    this.SearchByProductId.ProductId = ProductId;
+    return this.http.post<any>(this.actionUrl + 'searchbyproductid', this.SearchByProductId)
+      .pipe(
+        tap(),
+        catchError(this.handleError('searchbyproductid', []))
       );
   }
 
@@ -39,14 +65,14 @@ export class OfferService {
   }
 
   /**
-   * Delete offer
-   * @param model offer to delete.
+   * Update offer
+   * @param model offer to update.
    */
-  public deleteOffer(model: any): Observable<any> {
-    return this.http.put<any>(this.actionUrl + 'deleteoffer', model)
+  public updateOffer(model: any): Observable<any> {
+    return this.http.put<any>(this.actionUrl + 'updateoffer', model)
       .pipe(
         tap(),
-        catchError(this.handleError('Offer Deleted', []))
+        catchError(this.handleError('Offer Updated', []))
       );
   }
 

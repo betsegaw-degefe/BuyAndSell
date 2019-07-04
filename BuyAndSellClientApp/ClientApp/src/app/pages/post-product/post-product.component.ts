@@ -26,6 +26,7 @@ import { AuthGuard } from 'src/guards/auth-guard.service';
   styleUrls: ['./post-product.component.scss']
 })
 export class PostProductComponent implements OnInit {
+  public current_user: any = {} // Container for holding the current user.
   private actionUrl: string;
   public model: any;
   public productModel: any = {};
@@ -66,15 +67,19 @@ export class PostProductComponent implements OnInit {
     private postProductdata: PostProductService,
     private productdata: ProductService,
     private productAttributeValuedata: ProductAttributeValueService,
-    private fileService: FileUploadService,
     private router: Router,
     private configuration: Configuration,
     private dialogService: NbDialogService,
     private attributeService: ProductAttributeService,
     private toastrService: NbToastrService,
     private authGuard: AuthGuard,
+    private jwtHelper: JwtHelperService,
   ) {
     this.actionUrl = configuration.serverWithApiUrl + 'upload/';
+    var token = localStorage.getItem("token");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      this.current_user = this.jwtHelper.decodeToken(token);
+    }
   }
 
   trackByIndex(index: number, obj: any): any {
@@ -82,7 +87,7 @@ export class PostProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.authGuard.CURRENT_USER;
+    //this.user = this.authGuard.CURRENT_USER;
     this.data.get()
       .subscribe(success => {
         if (success) {
@@ -211,7 +216,7 @@ export class PostProductComponent implements OnInit {
     var propertyValueModel: any = []; // Container for product attrbute value to send to db.
     this.productModel.StatusId = 1;
     this.productModel.Negotiable = this.negotiable
-    this.productModel.CreatedBy = +this.user.nameid
+    this.productModel.CreatedBy = +this.current_user.nameid
     if (this.imageUrl != null)
       this.productModel.imageUrl = this.imageUrl.dbPath;
     console.log(this.productModel)

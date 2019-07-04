@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-5" *ngFor="let myProduct of myProducts; let index = index;trackBy:trackByIndex;">
+  <div class="col-md-4" *ngFor="let myProduct of myProducts; let index = index;trackBy:trackByIndex;">
     <div>
       <nb-card size="large" accent="primary" class="accent accent-primary">
         <nb-card-body>
@@ -14,7 +14,7 @@
             <div class="row">
               <div class="col-md-5">
                 <h5 class="text-danger">
-                  {{myProduct.price}} Birr
+                  {{myProduct.price | currency}} Birr
                 </h5>
               </div>
               <div class="col-md-3">
@@ -35,7 +35,7 @@
           </button>
           <button nbButton fullWidth shape="rectangle" status="success" (click)="openEdit(myProduct)">Edit
           </button>
-          <button nbButton fullWidth shape="rectangle" status="info">Offers</button>
+          <button nbButton fullWidth shape="rectangle" status="success" (click)="openWindowOffer(myProduct)">Offers</button>
         </nb-card-footer>
       </nb-card>
     </div>

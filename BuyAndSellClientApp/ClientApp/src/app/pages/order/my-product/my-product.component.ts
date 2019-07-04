@@ -3,9 +3,11 @@ import { ProductService } from 'src/app/service/product.service';
 import { AuthGuard } from 'src/guards/auth-guard.service';
 import { SharedDataService } from 'src/app/service/shared-data.service';
 import { Router } from '@angular/router';
-import { NbDialogService, NbToastrService, NbGlobalPosition, NbGlobalPhysicalPosition } from '@nebular/theme';
+import { NbDialogService, NbToastrService, NbGlobalPosition, NbGlobalPhysicalPosition, NbWindowRef, NbWindowService } from '@nebular/theme';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
+import { OfferListModalComponent } from './offer-list-modal/offer-list-modal.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-my-product',
@@ -14,6 +16,7 @@ import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 })
 export class MyProductComponent implements OnInit {
 
+  public current_user: any = {} // Container for holding the current user.
   public myProducts: any = [] // Container for products fetched from /product/myproducts end point.
   public user: any = {} //Container for holding the current user.
   public userId: any = {} // Variable to hold the current user id to send a rewuest to /product/myproducts end point.
@@ -33,14 +36,20 @@ export class MyProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private sharedData: SharedDataService,
-    private authGuard: AuthGuard,
+    private jwtHelper: JwtHelperService,
     private router: Router,
     private dialogService: NbDialogService,
-    private toastrService: NbToastrService, ) { }
+    private toastrService: NbToastrService,
+    private windowService: NbWindowService,
+  ) {
+    var token = localStorage.getItem("token");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      this.current_user = this.jwtHelper.decodeToken(token);
+    }
+  }
 
   ngOnInit() {
-    this.user = this.authGuard.CURRENT_USER;
-    this.userId.UserId = this.user.nameid;
+    this.userId.UserId = this.current_user.nameid;
     this.productService.getMyProducts(this.userId)
       .subscribe(resmyproducts => {
         if (resmyproducts) {
@@ -62,6 +71,10 @@ export class MyProductComponent implements OnInit {
     this.router.navigate(['/pages/order/editmyproduct'])
   }
 
+  /**
+   * Delete a product that is alreday posted.
+   * @param product : product to delete. 
+   */
   deleteProduct(product: any) {
     product.active = false;
     console.log(product);
@@ -73,13 +86,18 @@ export class MyProductComponent implements OnInit {
             .subscribe(res => {
               if (res) {
                 console.log(res);
-                this.showToast(this.status, this.title, `Your Product canceled successfully!`);
+                this.showToast(this.status, this.title, `Your Product deleted successfully!`);
                 this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
                   this.router.navigate(["/pages/order/myproducts"]));
               }
             })
         }
       })
+  }
+
+  openWindowOffer(product: any) {
+    this.sharedData.changeMessage(product)
+    this.windowService.open(OfferListModalComponent, { title: `List of Offer` });
   }
 
   /**

@@ -5,15 +5,12 @@
         <div class="picture" [style.background-image]="'url('+ product.imageUrl+')'"></div>
         <div class="details">
           <div class="header">
-            <!-- <div>
-              <h5 class="text-primary">{{product.description}}</h5>
-            </div> -->
           </div>
           <hr>
           <div class="row">
             <div class="col-md-5">
               <h5 class="text-danger">
-                {{product.price}} Birr
+                {{product.price | currency}} Birr
               </h5>
             </div>
             <div class="col-md-3"></div>
@@ -27,7 +24,7 @@
           </div>
         </div>
       </nb-card-body>
-      <nb-card-footer *ngIf="logged_in && !ordered && !offered">
+      <nb-card-footer *ngIf="logged_in && !ordered && !offered && !productOwner">
         <button *ngIf="!cartAdded" nbButton fullWidth shape="rectangle" status="primary" (click)="addToCart()">Add to
           Cart</button>
         <button nbButton fullWidth shape="rectangle" status="success" (click)="order()">Order

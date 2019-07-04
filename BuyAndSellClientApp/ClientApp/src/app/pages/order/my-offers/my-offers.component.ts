@@ -5,6 +5,8 @@ import { NbDialogService, NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrSe
 import { MyOffersModalComponent } from './my-offers-modal/my-offers-modal.component';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { Router } from '@angular/router';
+import { AuthGuard } from 'src/guards/auth-guard.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-my-offers',
@@ -13,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class MyOffersComponent implements OnInit {
 
+  public current_user: any = {} // Container for holding the current user.
   public user: any = {} // Container for UserId to send a request to /order/myorder endpoint
   public products: any = [] // Container for product fetched from /product/{id} end point filtering by order.productId
   public offers: any = [] // Container for offers fetched from /offer/myoffer end point
@@ -32,10 +35,17 @@ export class MyOffersComponent implements OnInit {
     private productService: ProductService,
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
-    private router: Router, ) { }
+    private router: Router,
+    private jwtHelper: JwtHelperService,
+  ) {
+    var token = localStorage.getItem("token");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      this.current_user = this.jwtHelper.decodeToken(token);
+    }
+  }
 
   ngOnInit() {
-    this.user.UserId = 0;
+    this.user.UserId = this.current_user.nameid;
     this.offerService.getMyOffer(this.user)
       .subscribe(offers => {
         if (offers) {
@@ -48,7 +58,7 @@ export class MyOffersComponent implements OnInit {
                   res.imageUrl = encodeURI('http://localhost:5000/' + res.imageUrl);
                   this.products.push(res);
                 }
-              })
+              });
           });
           console.log(this.products)
         }
@@ -69,7 +79,7 @@ export class MyOffersComponent implements OnInit {
     this.dialogService.open(MyOffersModalComponent)
       .onClose.subscribe(res => {
         if (res) {
-          this.offerService.deleteOffer(model)
+          this.offerService.updateOffer(model)
             .subscribe(res => {
               if (res) {
                 //console.log(res);
@@ -81,6 +91,8 @@ export class MyOffersComponent implements OnInit {
         }
       })
   }
+
+  
 
   /**
    * A toast for success message

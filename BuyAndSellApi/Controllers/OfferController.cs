@@ -1,10 +1,12 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NpgsqlTypes;
 
 namespace BuyAndSellApi.Controllers {
     [Produces ("application/json")]
@@ -61,6 +63,33 @@ namespace BuyAndSellApi.Controllers {
         }
 
         /// <summary>
+        /// Gets offers by ProductId.
+        /// </summary>
+        /// <param name="searchByProductId">The product id of the offer you want to get</param>
+        /// <returns>An ActionResult of offers</returns>
+        [HttpPost ("searchbyproductid")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetOffersByProductId ([FromBody] SearchByProductId searchByProductId) {
+            try {
+                var offers = from s in _repository.GetAll () select s;
+                if (!String.IsNullOrEmpty (searchByProductId.ProductId.ToString ())) {
+                    offers = offers.Where (s => s.ProductId == (searchByProductId.ProductId) &&
+                        s.Active == true);
+                    DateTime date = new DateTime ();
+
+                    offers = offers.OrderByDescending (s => s.OfferPrice); // order by offer price DESC.
+                }
+
+                return Ok (offers);
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
         /// Register Offer.
         /// </summary>
         /// <remarks>
@@ -96,15 +125,14 @@ namespace BuyAndSellApi.Controllers {
         }
 
         /// <summary>
-        /// Update Offers table, Active column to false.
+        /// Update Offers table.
         /// </summary>
         /// <returns>an updated offer</returns>
-        [HttpPut ("deleteoffer")]
+        [HttpPut ("updateoffer")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
         public IActionResult UpdateStatus ([FromBody] Offer offer) {
             try {
-
                 _repository.Update (offer);
                 if (_repository.SaveChanges ()) {
                     return Ok (offer);

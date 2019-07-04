@@ -10,35 +10,47 @@
           <div class="details">
             <div class="header">
               <div>
-                <h6 class="text-primary text-justify">{{offerproduct.description}}</h6>
+                <h6 class="text-primary text-justify">{{offerproduct.description.slice(0,40) + '....'}}</h6>
               </div>
             </div>
             <hr>
             <div class="row">
-              <div class="col-md-7">
+              <div class="col-md-6">
                 <h6 class="text-hint">Price</h6>
                 <h6 class="text-danger">
                   {{offerproduct.price}} Birr
                 </h6>
               </div>
-              <div class="col-md-5">
-                <h6 class="text-hint">Your Offer</h6>
-                <h6 class="text-danger">
-                  {{offers[index].offerPrice}} Birr
-                </h6>
-              </div>
+              <section *ngFor="let offer of offers">
+                <div class="col-md-12" *ngIf="offer.productId === offerproduct.id">
+                  <h6 class="text-hint">Your Offer</h6>
+                  <h6 class="text-danger">
+                    {{offer.offerPrice}} Birr
+                  </h6>
+                </div>
+              </section>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <h6 class="text-hint">Status</h6>
-                <h6 class="text-info">
-                  {{offers[index].status}}
-                </h6>
+            <section *ngFor="let offer of offers">
+              <div class="row" *ngIf="offer.productId === offerproduct.id">
+                <div class="col-md-2">
+                  <h6 class="text-hint">Status</h6>
+                </div>
+                <div class="col-md-10">
+                  <h6 class="text-info">
+                    {{offer.status}}
+                  </h6>
+                </div>
               </div>
-            </div>
+            </section>
           </div>
-          <button nbButton shape="rectangle" status="danger" (click)="cancelOffer(offers[index])">Cancel Offer</button>
         </nb-card-body>
+        <nb-card-footer>
+          <button nbButton shape="rectangle" fullWidth status="danger" (click)="cancelOffer(offers[index])">Cancel
+            Offer</button>
+          <button *ngIf="offers[index].status === 'Accepted'" nbButton shape="rectangle" status="success" fullWidth
+            (click)="order()">Order
+            now</button>
+        </nb-card-footer>
       </nb-card>
     </div>
   </div>

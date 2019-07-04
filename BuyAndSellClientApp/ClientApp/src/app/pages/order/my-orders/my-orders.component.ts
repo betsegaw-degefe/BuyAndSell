@@ -20,6 +20,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class MyOrdersComponent implements OnInit {
 
+  public current_user: any = {} // Container for holding the current user.
   public user: any = {} // Container for UserId to send a request to /order/myorder endpoint.
   public orders: any = [] // Container for orders fetched from /order/myorder end point.
   public products: any = [] // Container for product fetched from /product/{id} end point filtering by order.productId.
@@ -51,16 +52,16 @@ export class MyOrdersComponent implements OnInit {
     private cartService: CartService,
     private authService: AuthService,
     private jwtHelper: JwtHelperService,
-  ) { }
-
-  ngOnInit() {
+  ) {
     var token = localStorage.getItem("token");
     if (token && !this.jwtHelper.isTokenExpired(token)) {
-      console.log(this.jwtHelper.decodeToken(token));
-      this.user = this.jwtHelper.decodeToken(token);
-      this.role = this.user.role;
+      this.current_user = this.jwtHelper.decodeToken(token);
+      this.role = this.current_user.role;
     }
-    this.user.UserId = this.user.id;
+  }
+
+  ngOnInit() {
+    this.user.UserId = this.current_user.nameid;
     this.orderService.getMyOrder(this.user)
       .subscribe(res => {
         if (res) {
@@ -110,7 +111,6 @@ export class MyOrdersComponent implements OnInit {
             })
         }
       })
-
   }
 
   /**
@@ -149,7 +149,7 @@ export class MyOrdersComponent implements OnInit {
                           })
                       })
                   })
-                this.user.UserId = 0;
+                this.user.UserId = this.user.id;;
                 //delete the product from my cart if any.
                 this.cartService.getMyCart(this.user)
                   .subscribe(carts => {

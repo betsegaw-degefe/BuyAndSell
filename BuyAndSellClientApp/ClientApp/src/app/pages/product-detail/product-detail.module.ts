@@ -12,6 +12,7 @@ import { OfferService } from 'src/app/service/offer.service';
 import { AddCartModalComponent } from './add-cart-modal/add-cart-modal.component';
 import { CartService } from 'src/app/service/cart.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ProductService } from 'src/app/service/product.service';
 
 @NgModule({
   declarations: [ProductDetailComponent, ProductDetailModalComponent, AddCartModalComponent],
@@ -27,7 +28,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     OrderService,
     OfferService,
     CartService,
-    JwtHelperService],
+    JwtHelperService,
+    ProductService],
     
 
   entryComponents: [

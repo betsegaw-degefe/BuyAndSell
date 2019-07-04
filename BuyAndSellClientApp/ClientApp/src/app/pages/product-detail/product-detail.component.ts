@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { AddCartModalComponent } from './add-cart-modal/add-cart-modal.component';
 import { CartService } from 'src/app/service/cart.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthGuard } from 'src/guards/auth-guard.service';
+import { ProductService } from 'src/app/service/product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,6 +21,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class ProductDetailComponent implements OnInit {
 
+  public current_user: any = {} // Container for holding the current user.
   public user: any = {} // Container for UserId to send a request to /offer/myoffers endpoint
   public product: any;
   public productAttributeValue: any;
@@ -37,7 +40,7 @@ export class ProductDetailComponent implements OnInit {
   public ordered: boolean = false; // boolean value used to trace whether the product is ordered by the current user or not.
   public cartAdded: boolean = false; // boolean value used to trace whether the product is added to cart or not.
   public logged_in: boolean = false; // boolean value to track whether the user logged in or not logged in.
-
+  public productOwner: boolean = false; // boolean value to track whether the product is owned by current user or not.
   // Variables related with success toast.
   destroyByClick = true;
   duration = 4000;
@@ -57,26 +60,35 @@ export class ProductDetailComponent implements OnInit {
     private offerService: OfferService,
     private cartService: CartService,
     private router: Router,
-    private jwtHelper: JwtHelperService
-  ) { }
-
-  ngOnInit() {
-
-    // check whether the user is logged in or not.
+    private jwtHelper: JwtHelperService,
+    private authGuard: AuthGuard,
+    private productService: ProductService,
+  ) {
     var token = localStorage.getItem("token");
     if (token && !this.jwtHelper.isTokenExpired(token)) {
+      this.current_user = this.jwtHelper.decodeToken(token);
       this.logged_in = true;
     }
+  }
 
+  ngOnInit() {
     var productAttributeIdArray = [];
     this.sharedData.currentMessage.subscribe(message => {
       this.product = message
+      this.productService.getById(this.product.id)
+        .subscribe(product_res => {
+          if (product_res) {
+            this.product.createdBy = product_res.createdBy;
+            if (this.product.createdBy === +this.current_user.nameid) {
+              this.productOwner = true;
+            }
+          }
+        })
     });
-    console.log(this.product);
+
     // get productattribute value of the selected product
     this.attributeValueService.getByProductId(this.product.id).subscribe(res => {
       this.productAttributeValue = res;
-      console.log(this.productAttributeValue);
       for (let index = 0; index < this.productAttributeValue.length; index++) {
         productAttributeIdArray[index] = this.productAttributeValue[index].productAttributeId;
         this.attributeValue[index] = this.productAttributeValue[index].value
@@ -112,10 +124,9 @@ export class ProductDetailComponent implements OnInit {
         }
     }
     // check whether there is an offer for the product or not.
-    this.user.UserId = 0;
+    this.user.UserId = this.current_user.nameid;
     this.offerService.getMyOffer(this.user)
       .subscribe(res => {
-        console.log(res);
         res.forEach(offer => {
           if (this.product.id === offer.productId) {
             this.offered = true;
@@ -126,7 +137,6 @@ export class ProductDetailComponent implements OnInit {
     // check whether the product is added to cart or not.
     this.cartService.getMyCart(this.user)
       .subscribe(res => {
-        console.log(res);
         res.forEach(cart => {
           if (this.product.id === cart.productId) {
             this.cartAdded = true;
@@ -137,7 +147,6 @@ export class ProductDetailComponent implements OnInit {
     // check whether the product is ordered or not.
     this.orderService.getMyOrder(this.user)
       .subscribe(res => {
-        console.log(res);
         res.forEach(element => {
           if (this.product.id === element.productId) {
             this.ordered = true;
@@ -160,6 +169,7 @@ export class ProductDetailComponent implements OnInit {
             this.offerModel.ProductId = this.product.id;
             this.offerModel.OfferPrice = res.offer;
             this.offerModel.Status = "Waiting for Approval."
+            this.offerModel.CreatedBy = this.current_user.nameid;
             this.offerModel.Active = true;
             //console.log(this.offerModel);
             this.offerService.register(this.offerModel)
@@ -175,6 +185,8 @@ export class ProductDetailComponent implements OnInit {
           else {
             this.orderModel.ProductId = this.product.id;
             this.orderModel.SellerId = this.product.createdBy;
+            this.orderModel.BuyerId = this.current_user.nameid;
+            this.orderModel.CreatedBy = this.current_user.nameid;
             if (res.quantity == null)
               this.orderModel.OrderedQuantity = 1;
             else
@@ -189,7 +201,6 @@ export class ProductDetailComponent implements OnInit {
                     this.router.navigate(["/pages/productdetail"]));
                 }
               })
-            console.log(this.orderModel)
           }
         }
       })
@@ -205,9 +216,9 @@ export class ProductDetailComponent implements OnInit {
         if (res) {
           this.cartModel.ProductId = this.product.id;
           this.cartModel.Active = true;
+          this.cartModel.CreatedBy = this.current_user.nameid;
           this.cartService.register(this.cartModel)
             .subscribe(res => {
-              console.log(res);
               this.showToast(this.status, this.title, `Your product added to your cart successfully!`);
               this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
                 this.router.navigate(["/pages/productdetail"]));

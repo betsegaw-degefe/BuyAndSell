@@ -1,0 +1,21 @@
+@import "../../../../@theme/styles/themes";
+
+@include nb-install-component() {
+  /deep/ .form {
+    display: flex;
+    flex-direction: column;
+
+    .text-label {
+      margin-top: 1.5rem;
+    }
+  }
+
+  button {
+    justify-content: space-around;
+    padding: 0.75rem 10px;
+    padding-bottom: 0.5rem;
+    margin: 1rem 1rem;
+    margin-top: 0rem;
+    cursor: pointer;
+  }
+}
