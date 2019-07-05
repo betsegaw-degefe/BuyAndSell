@@ -77,9 +77,7 @@ namespace BuyAndSellApi.Controllers {
                 if (!String.IsNullOrEmpty (searchByProductId.ProductId.ToString ())) {
                     offers = offers.Where (s => s.ProductId == (searchByProductId.ProductId) &&
                         s.Active == true);
-                    DateTime date = new DateTime ();
-
-                    offers = offers.OrderByDescending (s => s.OfferPrice); // order by offer price DESC.
+                    offers = offers.OrderByDescending (s => s.LastUpdated); // order by LastUpdated DESC.
                 }
 
                 return Ok (offers);

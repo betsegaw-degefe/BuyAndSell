@@ -8,9 +8,12 @@ import { NbCardModule, NbDialogService, NbDialogModule } from '@nebular/theme';
 import { NgbModule, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyOffersModalComponent } from './my-offers-modal/my-offers-modal.component';
 import { Router } from '@angular/router';
+import { OrderModalComponent } from './order-modal/order-modal.component';
+import { OrderService } from 'src/app/service/order.service';
+
 
 @NgModule({
-  declarations: [MyOffersComponent, MyOffersModalComponent],
+  declarations: [MyOffersComponent, MyOffersModalComponent, OrderModalComponent],
   imports: [
     ThemeModule,
     CommonModule,
@@ -22,10 +25,12 @@ import { Router } from '@angular/router';
   providers: [
     OfferService,
     ProductService,
-    NbDialogService
+    NbDialogService,
+    OrderService,
   ],
   entryComponents: [
-    MyOffersModalComponent
+    MyOffersModalComponent,
+    OrderModalComponent
   ]
 })
 export class MyOffersModule { }

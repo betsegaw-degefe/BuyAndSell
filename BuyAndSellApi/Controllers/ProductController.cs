@@ -78,6 +78,7 @@ namespace BuyAndSellApi.Controllers {
                 var products = from s in _repository.GetAll () select s;
                 if (!String.IsNullOrEmpty (searchByUserId.UserId.ToString ())) {
                     products = products.Where (s => s.CreatedBy == (searchByUserId.UserId) && s.Active == true);
+                    products = products.OrderByDescending (s => s.LastUpdated); // order by LastUpdated DESC.
                 }
 
                 return Ok (products);
@@ -160,10 +161,10 @@ namespace BuyAndSellApi.Controllers {
         }
 
         /// <summary>
-        /// Update Product table, Active column to false.
+        /// Update Product table.
         /// </summary>
         /// <returns>an updated product</returns>
-        [HttpPut ("deleteproduct")]
+        [HttpPut ("updateproduct")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
         public IActionResult UpdateStatus ([FromBody] Product product) {

@@ -81,11 +81,11 @@ export class ProductService {
   }
 
   /**
-   * Delete product
-   * @param model product to delete.
+   * Update product
+   * @param model product to update.
    */
-  public deleteProduct(model: any): Observable<any> {
-    return this.http.put<any>(this.actionUrl + 'deleteproduct', model)
+  public updateProduct(model: any): Observable<any> {
+    return this.http.put<any>(this.actionUrl + 'updateproduct', model)
       .pipe(
         tap(),
         catchError(this.handleError('Product Deleted', []))

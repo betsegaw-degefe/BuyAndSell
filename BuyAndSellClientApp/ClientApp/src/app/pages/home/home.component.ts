@@ -54,6 +54,8 @@ export class HomeComponent implements OnInit {
    * get all product
    */
   getAllProduct() {
+    //Date now = moment().unix();
+    console.log(new Date().toLocaleTimeString());
     this.productService.get()
       .subscribe(success => {
         if (success) {
@@ -61,7 +63,7 @@ export class HomeComponent implements OnInit {
           this.products = this.productService.product;
           this.products.forEach(element => {
             //element.createdAt = moment(element.createdAt).format('LLL')
-            element.createdAt = moment(element.createdAt, "YYYYMMDD").fromNow();
+            element.lastUpdated = moment(element.lastUpdated).fromNow();
             element.imageUrl = encodeURI('http://localhost:5000/' + element.imageUrl);
             this.authService.getUserById(element.createdBy)
               .subscribe(res => {

@@ -7,6 +7,8 @@ import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { Router } from '@angular/router';
 import { AuthGuard } from 'src/guards/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { OrderModalComponent } from './order-modal/order-modal.component';
+import { OrderService } from 'src/app/service/order.service';
 
 @Component({
   selector: 'app-my-offers',
@@ -21,6 +23,7 @@ export class MyOffersComponent implements OnInit {
   public offers: any = [] // Container for offers fetched from /offer/myoffer end point
   public starRate = 2; // Variable for storing the number of stars(rating).
   public readonly = true; // Variable to make the star(rating) readonly.
+  public orderModel: any = {} // Container for Order to send to Order table.
 
   // Variables related with success toast.
   destroyByClick = true;
@@ -34,6 +37,7 @@ export class MyOffersComponent implements OnInit {
   constructor(private offerService: OfferService,
     private productService: ProductService,
     private dialogService: NbDialogService,
+    private orderService: OrderService,
     private toastrService: NbToastrService,
     private router: Router,
     private jwtHelper: JwtHelperService,
@@ -92,7 +96,46 @@ export class MyOffersComponent implements OnInit {
       })
   }
 
-  
+  order(product: any) {
+    console.log(product);
+    this.dialogService.open(OrderModalComponent)
+      .onClose.subscribe(res => {
+        console.log(res);
+        if (res) {
+
+          this.orderModel.ProductId = product.id;
+          this.orderModel.SellerId = product.createdBy;
+          this.orderModel.BuyerId = +this.current_user.nameid;
+          this.orderModel.CreatedBy = +this.current_user.nameid;
+          this.orderModel.active = true;
+
+          // resgister an order from the offered product
+          this.orderService.register(this.orderModel)
+            .subscribe(res => {
+              if (res) {
+                this.offerService.getByProductId(product.id)
+                  .subscribe(offer_res => {
+                    if (offer_res) {
+                      offer_res[0].active = false
+                      console.log(offer_res[0]);
+                      // set offer active to false. i.e. delete the offer.
+                      this.offerService.updateOffer(offer_res[0])
+                        .subscribe(res => {
+                          console.log(res);
+                          if (res) {
+                            console.log(res)
+                            this.showToast(this.status, this.title, `Your Order sent successfully!`);
+                            this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
+                              this.router.navigate(["/pages/order/myorders"]));
+                          }
+                        })
+                    }
+                  })
+              }
+            })
+        }
+      })
+  }
 
   /**
    * A toast for success message

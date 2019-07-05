@@ -44,12 +44,14 @@
             </section>
           </div>
         </nb-card-body>
-        <nb-card-footer>
+        <nb-card-footer >
           <button nbButton shape="rectangle" fullWidth status="danger" (click)="cancelOffer(offers[index])">Cancel
             Offer</button>
-          <button *ngIf="offers[index].status === 'Accepted'" nbButton shape="rectangle" status="success" fullWidth
-            (click)="order()">Order
+            <ng-container *ngFor="let offer of offers">
+          <button *ngIf="offer.productId === offerproduct.id && offer.status === 'Accepted'" nbButton shape="rectangle" status="success" fullWidth
+            (click)="order(offerproduct)">Order
             now</button>
+            </ng-container>
         </nb-card-footer>
       </nb-card>
     </div>

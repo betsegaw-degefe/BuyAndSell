@@ -82,7 +82,7 @@ export class MyProductComponent implements OnInit {
       .onClose.subscribe(res => {
         if (res) {
           console.log(res);
-          this.productService.deleteProduct(product)
+          this.productService.updateProduct(product)
             .subscribe(res => {
               if (res) {
                 console.log(res);

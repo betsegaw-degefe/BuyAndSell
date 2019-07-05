@@ -13,6 +13,8 @@ import { CartService } from 'src/app/service/cart.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthGuard } from 'src/guards/auth-guard.service';
 import { ProductService } from 'src/app/service/product.service';
+import { getLocaleDateTimeFormat } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-product-detail',
@@ -160,6 +162,7 @@ export class ProductDetailComponent implements OnInit {
    * Order/offer for a product.
    */
   order() {
+
     // open order modal.
     this.dialogService.open(ProductDetailModalComponent)
       .onClose.subscribe(res => {
@@ -175,9 +178,21 @@ export class ProductDetailComponent implements OnInit {
             this.offerService.register(this.offerModel)
               .subscribe(res => {
                 if (res) {
-                  this.showToast(this.status, this.title, `Your Offer sent successfully!`);
-                  this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
-                    this.router.navigate(["/pages/productdetail"]));
+                  this.productService.getById(this.product.id)
+                    .subscribe(product_res => {
+                      if (product_res) {
+                        product_res.lastUpdated = moment().unix();
+                        console.log(product_res);
+                        this.productService.updateProduct(product_res)
+                          .subscribe(update_res => {
+                            console.log(update_res);
+                            this.showToast(this.status, this.title, `Your Offer sent successfully!`);
+                            this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
+                              this.router.navigate(["/pages/productdetail"]));
+                          })
+                      }
+                    })
+                  //this.product.astUpdated = moment().toISOString();
                 }
               })
           }

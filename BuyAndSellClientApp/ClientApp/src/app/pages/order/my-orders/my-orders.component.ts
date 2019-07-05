@@ -187,7 +187,7 @@ export class MyOrdersComponent implements OnInit {
                 });
                 //delete from home page
                 orderProduct.active = false
-                this.productService.deleteProduct(orderProduct)
+                this.productService.updateProduct(orderProduct)
                   .subscribe(res => {
                     if (res) {
                       this.showToast(this.status, this.title, `Your Payment is transfered successfully!`);
