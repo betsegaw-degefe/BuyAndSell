@@ -8,6 +8,7 @@ import { NgbModule, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { OfferListModalComponent } from './offer-list-modal/offer-list-modal.component';
 import { AuthService } from 'src/app/service/auth.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [MyProductComponent, DeleteModalComponent, OfferListModalComponent],
@@ -20,6 +21,7 @@ import { AuthService } from 'src/app/service/auth.service';
     NbDialogModule.forChild(),
     NbWindowModule.forChild(),
     NbTreeGridModule,
+    NgxPaginationModule
   ],
   providers:[
     ProductService,

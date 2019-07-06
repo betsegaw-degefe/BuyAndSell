@@ -1,5 +1,6 @@
 <div class="row">
-  <div class="col-md-4" *ngFor="let myProduct of myProducts; let index = index;trackBy:trackByIndex;">
+  <div class="col-md-4"
+    *ngFor="let myProduct of myProducts | paginate: { itemsPerPage: 6, currentPage: p }; let index = index;trackBy:trackByIndex;">
     <div>
       <nb-card size="large" accent="primary" class="accent accent-primary">
         <nb-card-body>
@@ -35,9 +36,11 @@
           </button>
           <button nbButton fullWidth shape="rectangle" status="success" (click)="openEdit(myProduct)">Edit
           </button>
-          <button nbButton fullWidth shape="rectangle" status="success" (click)="openWindowOffer(myProduct)">Offers</button>
+          <button nbButton fullWidth shape="rectangle" status="success"
+            (click)="openWindowOffer(myProduct)">Offers</button>
         </nb-card-footer>
       </nb-card>
     </div>
   </div>
 </div>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>

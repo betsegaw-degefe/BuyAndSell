@@ -108,4 +108,21 @@
   .text_right {
     float: right;
   }
+
+  :host {
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .list {
+    max-width: 550px;
+    margin: auto;
+  }
+
+  li {
+    margin-bottom: 5px;
+  }
 }

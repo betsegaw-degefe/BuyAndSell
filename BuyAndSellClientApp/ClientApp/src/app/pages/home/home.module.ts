@@ -8,6 +8,7 @@ import { NgbButtonsModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedDataService } from 'src/app/service/shared-data.service';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
 import { AuthService } from 'src/app/service/auth.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [HomeComponent,],
@@ -16,7 +17,8 @@ import { AuthService } from 'src/app/service/auth.service';
     CommonModule,
     NbCardModule,
     NgbModule,
-    NgbButtonsModule
+    NgbButtonsModule,
+    NgxPaginationModule
   ],
   providers: [
     ProductService,

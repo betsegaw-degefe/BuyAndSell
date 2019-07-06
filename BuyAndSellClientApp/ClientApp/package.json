@@ -38,6 +38,7 @@
     "moment": "^2.24.0",
     "nebular-icons": "^1.1.0",
     "ng-eva-icon": "0.0.6",
+    "ngx-pagination": "^4.0.0",
     "ngx-toggle-switch": "^2.0.5",
     "ngx-uploader": "^7.1.0",
     "node-sass": "^4.12.0",
