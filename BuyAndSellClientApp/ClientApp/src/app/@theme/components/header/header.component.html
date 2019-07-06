@@ -1,23 +1,28 @@
-<div class="header-container"
-     [class.left]="position === 'normal'"
-     [class.right]="position === 'inverse'">
+<div class="header-container" [class.left]="position === 'normal'" [class.right]="position === 'inverse'">
   <div class="logo-containter">
     <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
-    <div class="logo" (click)="goToHome()">Buy &<span>Sell</span></div>
+    <div class="logo" (click)="goToHome()">Dagu Buy &<span>Sell</span></div>
   </div>
 </div>
 
 <div class="header-container">
-  <nb-actions
-    size="medium"
-    [class.right]="position === 'normal'"
-    [class.left]="position === 'inverse'">
-    <nb-action *nbIsGranted="['view', 'user']" >
-      <nb-user [nbContextMenu]="userMenu" [name]="user?.actor" [picture]="user?.picture">
+  <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'"
+    *ngIf="logged_in">
+    <nb-action *nbIsGranted="['view', 'user']">
+      <nb-user [nbContextMenu]="userMenu" [name]="user?.actort" [picture]="user?.picture">
       </nb-user>
+      <!-- <nb-user>{{user.actor}}
+      </nb-user> -->
     </nb-action>
-    <nb-action class="control-item">
+    <!-- <nb-action class="control-item">
       <nb-search type="rotate-layout" (click)="startSearch()"></nb-search>
-    </nb-action>
+    </nb-action> -->
+    <!-- <nb-action>
+      <nb-user>{{user.actort}}
+      </nb-user>
+    </nb-action>-->
   </nb-actions>
+  <div *ngIf="!logged_in">
+    <a href="/auth">Login</a>
+  </div>
 </div>

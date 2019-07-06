@@ -151,8 +151,6 @@ namespace BuyAndSellApi.Controllers {
         /// <summary>
         /// Update Payment service table, add a balace for the sold product.
         /// </summary>
-        /// <remarks>
-        /// Sample request:
         /// <returns>an updated payment service</returns>
         [HttpPut ("addbalance")]
         [ProducesResponseType (StatusCodes.Status201Created)]

@@ -5,6 +5,7 @@ import { UserData } from '../../../@core/data/users';
 import { AnalyticsService } from '../../../@core/utils';
 import { AuthService } from 'src/app/service/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -15,8 +16,9 @@ export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
 
-  user: any;
+  public user: any = {};
   public current_user: any = {} // Container for holding the current user.
+  public logged_in: boolean = false;
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
@@ -26,11 +28,13 @@ export class HeaderComponent implements OnInit {
     private analyticsService: AnalyticsService,
     private authService: AuthService,
     private jwtHelper: JwtHelperService,
+    private router: Router
 
   ) {
     var token = localStorage.getItem("token");
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       this.current_user = this.jwtHelper.decodeToken(token);
+      this.logged_in = true;
     }
   }
 
@@ -52,7 +56,13 @@ export class HeaderComponent implements OnInit {
     this.menuService.navigateHome();
   }
 
+  goToLogin() {
+    this.router.navigateByUrl('/auth');
+  }
+
   startSearch() {
     this.analyticsService.trackEvent('startSearch');
   }
+
+
 }
