@@ -65,6 +65,8 @@ import {
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
+import { AuthService } from '../service/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -142,6 +144,8 @@ const NB_THEME_PROVIDERS = [
   ...NbDialogModule.forRoot().providers,
   ...NbWindowModule.forRoot().providers,
   ...NbToastrModule.forRoot().providers,
+  AuthService,
+  JwtHelperService
 ];
 
 @NgModule({

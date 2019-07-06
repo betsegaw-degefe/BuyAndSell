@@ -106,6 +106,14 @@ export class HomeComponent implements OnInit {
           this.products = res;
           this.products.forEach(element => {
             element.imageUrl = encodeURI('http://localhost:5000/' + element.imageUrl);
+            element.lastUpdated = moment(element.lastUpdated).fromNow();
+            this.authService.getUserById(element.createdBy)
+              .subscribe(res => {
+                if (res) {
+                  element.createdBy = res.firstName;
+                  //element.createdAt = moment(element.createdAt, "YYYYMMDD h:mm:ss a").fromNow();
+                }
+              })
           });
           this.searchProduct = {}
         }

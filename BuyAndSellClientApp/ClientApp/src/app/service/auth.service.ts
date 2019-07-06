@@ -42,6 +42,14 @@ export class AuthService {
             )
     }
 
+    public updateUser(model: any): Observable<any> {
+        return this.http.put<any>(this.actionUrl + 'updateprofile', model)
+            .pipe(
+                tap(),
+                catchError(this.handleError('Update user', []))
+            );
+    }
+
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
 

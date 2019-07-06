@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using BuyAndSellApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +66,18 @@ namespace BuyAndSellApi.Models.Repository {
         {
             var role = await _context.Role.FirstOrDefaultAsync(x => x.Id == id);
             return role;
+        }
+
+        public async Task<User> Update(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var updatedUser =  _context.User.Update(user);
+            await _context.SaveChangesAsync ();
+            return user;
         }
     }
 }

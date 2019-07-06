@@ -14,6 +14,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthGuard } from 'src/guards/auth-guard.service';
+import { ProfileComponent } from './auth/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent,
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
       },
     ],
   },

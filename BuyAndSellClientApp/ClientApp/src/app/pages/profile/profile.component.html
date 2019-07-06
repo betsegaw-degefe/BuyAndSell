@@ -1,0 +1,162 @@
+<div class="row">
+  <div class="col-md-6">
+    <nb-card accent="primary" class="accent accent-primary">
+      <nb-card-header>Profile page</nb-card-header>
+      <nb-card-body>
+        <div class="col-md-12">
+          <div class="row">
+            <ng-container>
+              <div class="details col-md-6">
+                <h6 class="text-heading">First Name</h6>
+                <section class="text-hint">
+                  {{user.firstName}}
+                </section>
+              </div>
+            </ng-container>
+            <ng-container>
+              <div class="details col-md-6">
+                <h6 class="text-heading">Middle Name</h6>
+                <section class="text-hint">
+                  {{user.middleName}}
+                </section>
+              </div>
+            </ng-container>
+          </div>
+          <div class="row">
+            <div class="details col-md-6" *ngIf="user.lastName">
+              <h6 class="text-heading">Last Name</h6>
+              <section class="text-hint">
+                {{user.lastName}}
+              </section>
+            </div>
+            <div class="details col-md-6" *ngIf="user.address">
+              <h6 class="text-heading">Address</h6>
+              <section class="text-hint">
+                {{user.address}}
+              </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="details col-md-6" *ngIf="user.dateOfBirth">
+              <h6 class="text-heading">Date of Birth</h6>
+              <section class="text-hint">
+                {{user.dateOfBirth}}
+              </section>
+            </div>
+            <div class="details col-md-6">
+              <h6 class="text-heading">Registered</h6>
+              <section class="text-hint">
+                {{changeTimeFormat(user.createdAt)}}
+              </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="details col-md-6" *ngIf="user.gender">
+              <h6 class="text-heading">Gender</h6>
+              <section class="text-hint">
+                {{user.gender}}
+              </section>
+            </div>
+            <div class="details col-md-6">
+              <h6 class="text-heading">User name</h6>
+              <section class="text-hint">
+                {{user.userName}}
+              </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="details col-md-6" *ngIf="user.email">
+              <h6 class="text-heading">Email</h6>
+              <section class="text-hint">
+                {{user.email}}
+              </section>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton fullWidth shape="rectangle" status="success" (click)="openEdit()">Edit
+        </button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+  <div class="col-md-6" *ngIf="editPage">
+    <nb-card accent="primary" class="accent accent-primary">
+      <nb-card-header>Edit Profile</nb-card-header>
+      <nb-card-body>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="inputFirstName">First Name</label>
+                <input id="inputFirstName" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="updatedUserModel.firstName" placeholder="First Name" autofocus />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputMiddleName">Middle Name</label>
+                <input id="inputMiddleName" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="updatedUserModel.middleName" placeholder="Middle Name" autofocus />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputLastName">Last Name</label>
+                <input id="inputLastName" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="updatedUserModel.lastName" placeholder="Last Name" autofocus />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input id="inputAddress" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="updatedUserModel.address" placeholder="Address" autofocus />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputDateOfBirth">Date of Birth</label>
+                 <input nbInput [(ngModel)]="updatedUserModel.dateOfBirth" [nbDatepicker]="dateOfBirth"
+                  id="input-birth-date" name="dateOfBirth" placeholder="Date of birth" autofocus> 
+                <input id="inputDateOfBirth" fullWidth shape="rectangle" [nbDatepicker]="dateOfBirth"
+                  [(ngModel)]="updatedUserModel.dateOfBirth" placeholder="Date of birth" autofocus/>
+              </div>
+            </div> -->
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputGender">Gender</label>
+                <input id="inputGender" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="updatedUserModel.gender" placeholder="Gender" autofocus />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input id="inputEmail" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="updatedUserModel.email" placeholder="Email" autofocus />
+              </div>
+            </div>
+            <!-- <div class="col-sm-6" *ngIf="user.address">
+              <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input id="inputAddress" type="text" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="updatedUserModel.address" placeholder="Address" autofocus />
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton fullWidth shape="rectangle" status="success" (click)="updateProfile()">Update</button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

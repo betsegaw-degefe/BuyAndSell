@@ -23,11 +23,17 @@ export class AppComponent implements OnInit {
     //console.log('click', title);
     if (title === "Log out") {
       this.logOut();
+    } else if (title === "Profile") {
+      this.profile();
     }
   }
 
   logOut() {
     localStorage.removeItem("token");
     this.router.navigateByUrl('/auth');
+  }
+
+  profile() {
+    this.router.navigateByUrl('/pages/profile')
   }
 }

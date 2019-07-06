@@ -18,6 +18,8 @@ import { OrderDetailModule } from './order-detail/order-detail.module';
 import { MyOrdersModule } from './order/my-orders/my-orders.module';
 import { OrderModule } from './order/order.module';
 import { CartModalComponent } from './cart/cart-modal/cart-modal.component';
+import { ProfileModule } from '../auth/profile/profile.module';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { CartModalComponent } from './cart/cart-modal/cart-modal.component';
     CartComponent,
     UploadComponent,
     PostProductModalComponent,
-    CartModalComponent
+    CartModalComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ import { CartModalComponent } from './cart/cart-modal/cart-modal.component';
     ProductDetailModule,
     AngularFontAwesomeModule,
     NgbModule,
+    ProfileModule,
     NbDialogModule.forChild(),
     //PostProductModule
   ],

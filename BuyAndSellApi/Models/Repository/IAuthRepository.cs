@@ -12,5 +12,7 @@ namespace BuyAndSellApi.Models.Repository
         Task<UserRole> UserRoles(int userId);
 
         Task<Role> roles(int id);
+
+        Task<User> Update(User user);
     }
 }

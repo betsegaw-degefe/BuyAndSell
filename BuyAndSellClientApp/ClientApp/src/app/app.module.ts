@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { UploadComponent } from './pages/post-product/upload/upload.component';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from 'src/guards/auth-guard.service';
+import { ProfileModule } from './auth/profile/profile.module';
 
 
 export function tokenGetter() {
@@ -42,6 +43,7 @@ export function tokenGetter() {
     RegisterModule,
     FormsModule,
     LoginModule,
+    ProfileModule,
     NbTreeGridModule,
     TreeModule.forRoot(),
     NbLayoutModule,

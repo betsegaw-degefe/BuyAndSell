@@ -11,6 +11,7 @@ import { identifierModuleUrl } from '@angular/compiler';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthGuard } from 'src/guards/auth-guard.service';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [{
   path: '',
@@ -37,6 +38,11 @@ const routes: Routes = [{
     {
       path: 'cart',
       component: CartComponent,
+      canActivate: [AuthGuard],
+    },
+    {
+      path: 'profile',
+      component: ProfileComponent,
       canActivate: [AuthGuard],
     },
     {
