@@ -8,9 +8,9 @@ nb-card-footer {
 }
 .btn {
   float: left;
-  justify-content: space-around;
-  margin-top: 1.5em;
-  margin-right: 2em;
+  //justify-content: space-around;
+  //margin-top: 1.5em;
+  //margin-right: 2em;
 }
 ::ng-deep nb-layout-column {
   height: 80vw;
@@ -28,4 +28,7 @@ nb-card-footer {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+}
+.text-left {
+  float: left;
 }

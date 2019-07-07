@@ -41,4 +41,16 @@ export class PostProductService {
         return this.productAttribute;
       }));
   }
+
+  /**
+   * Search a unapproved product attribute by category id.
+   * @param categoryId : product attribute category id 
+   */
+  public getUnApprovedProductAttribute(categoryId: number): Observable<any> {
+    return this.http.get(this.actionUrl + "searchunapprovedbycategoryid/" + categoryId)
+      .pipe(map((data: any[]) => {
+        this.productAttribute = data;
+        return this.productAttribute;
+      }));
+  }
 }

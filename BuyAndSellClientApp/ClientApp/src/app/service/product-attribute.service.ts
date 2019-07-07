@@ -42,6 +42,18 @@ export class ProductAttributeService {
       );
   }
 
+  /**
+   * Update product attribute
+   * @param model product attribute to update.
+   */
+  public updateProductAttribute(model: any): Observable<any> {
+    return this.http.put<any>(this.actionUrl + 'updateproductattribute', model)
+      .pipe(
+        tap(),
+        catchError(this.handleError('Product Updated', []))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

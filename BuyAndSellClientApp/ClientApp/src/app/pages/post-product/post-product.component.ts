@@ -27,14 +27,14 @@ import { AuthGuard } from 'src/guards/auth-guard.service';
 })
 export class PostProductComponent implements OnInit {
   public current_user: any = {} // Container for holding the current user.
-  private actionUrl: string;
+  public actionUrl: string;
   public model: any;
   public productModel: any = {};
   public propertyValue: any = {}; //Container for value of Product property form fields.
   public categories = [];
   public categoriesName = [];
   public categoriesParentId = [];
-  private categoryNameCounter: number = 0;
+  public categoryNameCounter: number = 0;
   public searchCategory: String = "";
   public searchMainCategory = "" // Container for Main category name to search the main category id.
   public searchCategoryModel: any = {};
@@ -43,12 +43,13 @@ export class PostProductComponent implements OnInit {
   public imageUrl: any;
   public productAttribute: any = {}; // Container for product attribute cached from the post product modal.
   public categoryModel: any = {}; // Container for Category after searching the category by name from db.
+  public unApprovedProperties: any = [] // Container for unapproved product property fetched from /productattribute/
 
   public progress: number;
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
   public user: any = {} //Container for holding the current user
-  public role: any; // Container for holding role of the current user.
+  public role: any = {}; // Container for holding role of the current user.
 
 
   // Variables related with success toast.
@@ -79,6 +80,7 @@ export class PostProductComponent implements OnInit {
     var token = localStorage.getItem("token");
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       this.current_user = this.jwtHelper.decodeToken(token);
+      this.role = this.current_user.role;
     }
   }
 
@@ -88,6 +90,7 @@ export class PostProductComponent implements OnInit {
 
   ngOnInit() {
     //this.user = this.authGuard.CURRENT_USER;
+    console.log(this.role);
     this.data.get()
       .subscribe(success => {
         if (success) {
@@ -153,13 +156,20 @@ export class PostProductComponent implements OnInit {
 
     // Search the key word from the database.
     this.data.getCategory(this.searchCategoryModel)
-      .subscribe(res => {
-        if (res) {
-          this.categoryModel = res;
-          this.postProductdata.getProductAttribute(res[0].id)
-            .subscribe(res => {
-              if (res) {
-                this.productProperties = res;
+      .subscribe(category_res => {
+        if (category_res) {
+          this.categoryModel = category_res;
+          this.postProductdata.getProductAttribute(category_res[0].id)
+            .subscribe(attribute_res => {
+              if (attribute_res) {
+                console.log(attribute_res)
+                this.productProperties = attribute_res;
+              }
+            })
+          this.postProductdata.getUnApprovedProductAttribute(category_res[0].id)
+            .subscribe(unApproved_res => {
+              if (unApproved_res) {
+                this.unApprovedProperties = unApproved_res;
               }
             })
         }
@@ -170,7 +180,6 @@ export class PostProductComponent implements OnInit {
     this.data.getCategory(this.searchCategoryModel)
       .subscribe(res => {
         if (res) {
-          console.log(res[0].id)
           this.productModel.MainCategoryId = res[0].id
           // this.categoryModel = res;
           // this.postProductdata.getProductAttribute(res[0].id)
@@ -181,6 +190,34 @@ export class PostProductComponent implements OnInit {
           //   })
         }
       });
+  }
+
+  /**
+   * Approve button trigger this function.
+   */
+  approvePrroductAttribute(unApprovedProperty: any) {
+    console.log(unApprovedProperty)
+    unApprovedProperty.approved = true
+    this.attributeService.updateProductAttribute(unApprovedProperty)
+      .subscribe((attribute_res: any) => {
+        this.showToast(this.status, this.title, `Product property approved successfully!`);
+        this.selectedItem("")
+        this.selectedItem(this.model)
+      })
+  }
+
+  /**
+   * cancel product attribiute button trigger this function.
+   * @param unApprovedProperty 
+   */
+  cancelPrroductAttribute(unApprovedProperty: any) {
+    unApprovedProperty.active = false;
+    this.attributeService.updateProductAttribute(unApprovedProperty)
+      .subscribe((attribute_res: any) => {
+        this.showToast(this.status, this.title, `Product property canceled successfully!`);
+        this.selectedItem("")
+        this.selectedItem(this.model)
+      })
   }
 
   // Upload image to the server
@@ -225,7 +262,6 @@ export class PostProductComponent implements OnInit {
         if (res) {
           this.productModel = {}
           this.productModel = res;
-          console.log(this.productModel)
           for (var propertyKey in this.propertyValue) {
             //console.log(propertyKey + " -> " + this.propertyValue[propertyKey]);
             for (let index = 0; index < this.productProperties.length; index++) {
@@ -244,11 +280,10 @@ export class PostProductComponent implements OnInit {
           this.productAttributeValuedata.register(propertyValueModel)
             .subscribe(res => {
               if (res != null && res != []) {
-                console.log(res);
                 this.showToast(this.status, this.title, `Product saved successfully!`);
                 //this.selectedItem("");
                 this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
-                  this.router.navigate(["/pages/postproduct"]));
+                  this.router.navigate(["/pages/home"]));
               }
             });
         }
@@ -260,18 +295,37 @@ export class PostProductComponent implements OnInit {
     this.dialogService.open(PostProductModalComponent)
       .onClose.subscribe(attribute => {
         if (attribute != null && attribute[0] != "") {
-          this.productAttribute.CategoryId = this.categoryModel[0].id;
-          this.productAttribute.Name = attribute[0];
-          this.productAttribute.DataType = attribute[1];
-          this.attributeService.register(this.productAttribute)
-            .subscribe(success => {
-              if (success != null && success != []) {
-                console.log(success)
-                this.showToast(this.status, this.title, this.content);
-                this.selectedItem("")
-                this.selectedItem(this.model)
-              }
-            })
+          if (this.role === 'Admin') {
+            this.productAttribute.CategoryId = this.categoryModel[0].id;
+            this.productAttribute.Name = attribute[0];
+            this.productAttribute.DataType = attribute[1];
+            this.productAttribute.CreatedBy = +this.current_user.nameid;
+            this.productAttribute.LastUpdatedBy = +this.current_user.nameid;
+            this.productAttribute.Approved = true;
+            this.attributeService.register(this.productAttribute)
+              .subscribe(success => {
+                if (success != null && success != []) {
+                  this.showToast(this.status, this.title, this.content);
+                  this.selectedItem("")
+                  this.selectedItem(this.model)
+                }
+              })
+          } else if (this.role === 'User') {
+            this.productAttribute.CategoryId = this.categoryModel[0].id;
+            this.productAttribute.Name = attribute[0];
+            this.productAttribute.DataType = attribute[1];
+            this.productAttribute.CreatedBy = +this.current_user.nameid;
+            this.productAttribute.LastUpdatedBy = +this.current_user.nameid;
+            this.productAttribute.Approved = false;
+            this.attributeService.register(this.productAttribute)
+              .subscribe(success => {
+                if (success != null && success != []) {
+                  this.showToast(this.status, this.title, `Product property suggested successfully!`);
+                  this.selectedItem("")
+                  this.selectedItem(this.model)
+                }
+              })
+          }
         }
       });
   }

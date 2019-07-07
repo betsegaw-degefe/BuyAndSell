@@ -34,8 +34,35 @@ namespace BuyAndSellApi.Controllers {
             try {
                 var productAttribute = from s in _repository.GetAll () select s;
                 if (!String.IsNullOrEmpty (searchByName.Name)) {
-                    productAttribute = productAttribute.Where (s => s.Name.ToUpper ().Contains (searchByName.Name.ToUpper ()));
+                    productAttribute =
+                        productAttribute.Where (s => s.Name.ToUpper ().Contains (searchByName.Name.ToUpper ()));
                 }
+
+                return Ok (productAttribute);
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Gets unapproved ProductAttribute by CategoryId.
+        /// </summary>
+        /// <param name="categoryId">The CategoryId of the unapproved ProductAttribute you want to get</param>
+        /// <returns>An ActionResult of unapproved ProductAttribute</returns>
+        [HttpGet ("searchunapprovedbycategoryid/{categoryId:int}")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetUnapprovedByCategoryId (int categoryId) {
+            try {
+                var productAttribute = from s in _repository.GetAll () select s;
+                if (!String.IsNullOrEmpty (categoryId.ToString ())) {
+                    productAttribute = productAttribute.Where (s => s.CategoryId.Equals (categoryId) &&
+                        s.Approved.Equals (false) &&
+                        s.Active == true);
+                }
+
                 return Ok (productAttribute);
             } catch (Exception ex) {
                 // return error message if there was an exception
@@ -56,8 +83,11 @@ namespace BuyAndSellApi.Controllers {
             try {
                 var productAttribute = from s in _repository.GetAll () select s;
                 if (!String.IsNullOrEmpty (categoryId.ToString ())) {
-                    productAttribute = productAttribute.Where (s => s.CategoryId.Equals (categoryId));
+                    productAttribute = productAttribute.Where (s => s.CategoryId.Equals (categoryId) &&
+                        s.Approved.Equals (true) &&
+                        s.Active == true);
                 }
+
                 return Ok (productAttribute);
             } catch (Exception ex) {
                 // return error message if there was an exception
@@ -118,6 +148,27 @@ namespace BuyAndSellApi.Controllers {
             }
 
             return BadRequest ("Failed to save Address.");
+        }
+
+        /// <summary>
+        /// Update Product attribute table.
+        /// </summary>
+        /// <returns>an updated product attribute</returns>
+        [HttpPut ("updateproductattribute")]
+        [ProducesResponseType (StatusCodes.Status201Created)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult UpdateStatus ([FromBody] ProductAttribute productAttribute) {
+            try {
+                _repository.Update (productAttribute);
+                if (_repository.SaveChanges ()) {
+                    return Ok (productAttribute);
+                }
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+
+            return BadRequest ("Failed to update Product attribute.");
         }
     }
 }

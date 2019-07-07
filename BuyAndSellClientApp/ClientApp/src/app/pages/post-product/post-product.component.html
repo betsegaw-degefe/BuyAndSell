@@ -49,8 +49,8 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="inputPrice">Price</label>
-                <input id="inputPrice" type="number" nbInput fullWidth shape="rectangle" [(ngModel)]="productModel.Price"
-                  placeholder="Price" />
+                <input id="inputPrice" type="number" nbInput fullWidth shape="rectangle"
+                  [(ngModel)]="productModel.Price" placeholder="Price" />
               </div>
             </div>
             <div class="col-sm-6">
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
               <div class="form-group">
                 <label for="inputDescription">Description</label>
                 <textarea id="inputDescription" class="form-control" [(ngModel)]="productModel.Description"
@@ -99,16 +99,62 @@
               </div>
             </div>
           </div>
+
+          <!-- <ng-container>
+            <div class="row col-md-3" *ngFor="let unApprovedProperty of unApprovedProperties">
+              {{unApprovedProperty.name}}
+              <button type="submit" class="btn btn-primary btn-xs" shape="rectangle"
+                (click)="approvePrroductAttribute(unApprovedProperty)">Approve</button>
+            </div>
+          </ng-container> -->
+          <ng-container *ngIf="unApprovedProperties.length > 0 && role === 'Admin'">
+            <hr>
+            <div class="row">
+              <div class="col-sm-12">
+                <h6 class="text-warning"><strong>
+                    List of unapproved product property
+                  </strong>
+                </h6>
+              </div>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Property</th>
+                  <th scope="col">Approve</th>
+                  <th scope="col">Cancel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let unApprovedProperty of unApprovedProperties; index as i">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>
+                    {{unApprovedProperty.name}}
+                  </td>
+                  <td><button type="submit" class="btn btn-primary btn-xs" shape="rectangle"
+                      (click)="approvePrroductAttribute(unApprovedProperty)">Approve</button></td>
+                  <td><button type="submit" class="btn btn-danger btn-xs" shape="rectangle"
+                      (click)="cancelPrroductAttribute(unApprovedProperty)">Cancel</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <hr>
+          </ng-container>
         </div>
-        <div>
-          <button type="submit" class="btn" nbButton status="primary" shape="rectangle" float="Right"
-            (click)="addProperty()">Add
-            Property</button>
-          <button *ngIf="productProperties.length != 0" type="submit" class="btn" nbButton status="success"
-            shape="rectangle" float="Right" (click)="saveProduct()">Save
-            Property</button>
-        </div>
+
       </nb-card-body>
+      <nb-card-footer>
+        <button type="submit" class="btn" nbButton status="primary" shape="rectangle" (click)="addProperty()"
+          *ngIf="role === 'Admin'">Add
+          Property</button>
+        <button type="submit" class="btn" nbButton status="primary" shape="rectangle" (click)="addProperty()"
+          *ngIf="role === 'User'">Suggest
+          Property</button>
+        <button *ngIf="productProperties.length != 0" type="submit" class="btn" nbButton status="success"
+          shape="rectangle" float="Right" (click)="saveProduct()">Save
+          Property</button>
+      </nb-card-footer>
     </nb-card>
   </div>
 </div>
