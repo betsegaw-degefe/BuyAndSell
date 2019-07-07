@@ -10,13 +10,13 @@ namespace BuyAndSellApi.Models.Entities
 
         public PaymentService()
         {
-            UserPinCode = new User();
+            //UserPinCode = new User();
         }
         
         [Required] public int PinCode { get; set; }
         [Required, StringLength(100)] public string Password { get; set; }
         [Required] public decimal Balance { get; set; }
         
-        public virtual User UserPinCode { get; set; }
+        //public virtual User UserPinCode { get; set; }
     }
 }

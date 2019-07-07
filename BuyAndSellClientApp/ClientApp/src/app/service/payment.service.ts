@@ -20,10 +20,10 @@ export class PaymentService {
    */
   public GetByPinCode(model: any) {
     return this.http.post<any>(this.actionUrl + 'paymentpincode', model)
-      .pipe(
-        tap(),
-        catchError(this.handleError('Get By Pincode: ', []))
-      );
+      // .pipe(
+      //   tap(),
+      //   catchError(this.handleError('Get By Pincode: ', []))
+      // );
   }
   
   /**
@@ -32,10 +32,10 @@ export class PaymentService {
   */
   public PayPayment(model: any): Observable<any> {
     return this.http.put<any>(this.actionUrl + 'payment', model)
-      .pipe(
-        tap(),
-        catchError(this.handleError('Payment Paid', []))
-      );
+      // .pipe(
+      //   tap(),
+      //   catchError(this.handleError('Payment Paid', []))
+      // );
   }
 
   /**

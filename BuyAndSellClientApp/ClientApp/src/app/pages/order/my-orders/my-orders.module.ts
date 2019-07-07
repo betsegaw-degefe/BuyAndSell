@@ -12,6 +12,7 @@ import { PaymentService } from 'src/app/service/payment.service';
 import { PaymentOrderModalComponent } from './payment-order-modal/payment-order-modal.component';
 import { CartService } from 'src/app/service/cart.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [MyOrdersComponent, PaymentOrderModalComponent],
@@ -20,7 +21,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     CommonModule,
     NbCardModule,
     NgbModule,
-    NgbButtonsModule
+    NgbButtonsModule,
+    NgxLoadingModule
   ],
   providers: [
     SharedOrderDataService,

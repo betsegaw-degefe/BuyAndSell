@@ -215,16 +215,16 @@ namespace BuyAndSellApi.Models.Entities {
             });
 
             modelBuilder.Entity<User> (entity => {
-                entity.HasIndex (e => e.PinCode)
-                    .HasName ("pin_code_unique");
+                // entity.HasIndex (e => e.PinCode)
+                //     .HasName ("pin_code_unique");
 
                 entity.Property (e => e.Id)
                     .HasDefaultValueSql ("nextval('user_id_seq'::regclass)");
 
-                entity.HasOne (d => d.PaymentService)
-                    .WithOne (p => p.UserPinCode)
-                    .OnDelete (DeleteBehavior.ClientSetNull)
-                    .HasConstraintName ("fk_user_payment_service");
+                // entity.HasOne (d => d.PaymentService)
+                //     .WithOne (p => p.UserPinCode)
+                //     .OnDelete (DeleteBehavior.ClientSetNull)
+                //     .HasConstraintName ("fk_user_payment_service");
             });
 
             modelBuilder.Entity<UserRole> (entity => {

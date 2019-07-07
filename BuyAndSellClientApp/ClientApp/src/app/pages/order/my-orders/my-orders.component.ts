@@ -119,84 +119,68 @@ export class MyOrdersComponent implements OnInit {
    */
   buyNow(orderProduct: any) {
     console.log(orderProduct)
+    this.sharedData.changeMessage(orderProduct)
     this.dialogService.open(PaymentOrderModalComponent)
       .onClose.subscribe(res => {
         if (res) {
-          this.paymentModel = res;
-          this.paymentModel.Withdraw = orderProduct.price;
-          console.log(this.paymentModel);
-          // send payment datas.
-          this.paymentService.PayPayment(this.paymentModel)
-            .subscribe(res => {
-              if (res) {
-                console.log(res);
-                let UserId = orderProduct.createdBy;
-                // get user, get account and update account.
-                this.authService.getUserById(UserId)
-                  .subscribe(res => {
-                    console.log(res);
-                    //let PinCode = { "PinCode": res.pinCode }
-                    this.pinCode.PinCode = res.pinCode
-                    this.paymentService.GetByPinCode(this.pinCode)
-                      .subscribe(res => {
-                        console.log(res);
-                        this.updatePaymentService = res;
-                        this.updatePaymentService.balance = res.balance + orderProduct.price
-                        console.log(this.updatePaymentService);
-                        this.paymentService.AddBalace(this.updatePaymentService)
-                          .subscribe(res => {
-                            console.log(res);
-                          })
-                      })
-                  })
-                this.user.UserId = this.user.id;;
-                //delete the product from my cart if any.
-                this.cartService.getMyCart(this.user)
-                  .subscribe(carts => {
-                    this.cartsModel = carts;
-                    console.log(carts)
-                    if (carts) {
-                      carts.forEach(cart => {
+          // delete the product from my cart if any.
+          this.cartService.getMyCart(this.user)
+            .subscribe(carts => {
+              this.cartsModel = carts;
+              console.log(carts)
+              if (carts) {
+                carts.forEach(cart => {
 
-                        if (cart.productId === orderProduct.id) {
-                          cart.active = false;
-                          this.cartService.deleteCart(cart).subscribe(res => {
-                            if (res) {
-                              console.log(res);
-                            }
-                          });
-                        }
-                      });
-                    }
-                  });
-                //delete the product from my order.
-                this.orders.forEach(order => {
-                  if (order.productId === orderProduct.id) {
-                    //this.cancelOrder(order);
-                    order.active = false
-                    this.orderService.deleteOrder(order)
-                      .subscribe(res => {
-                        if (res) {
-                          console.log(res);
-                          // this.showToast(this.status, this.title, `Your order canceled successfully!`);
-                          // this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
-                          //   this.router.navigate(["/pages/order/myorders"]));
-                        }
-                      })
+                  if (cart.productId === orderProduct.id) {
+                    cart.active = false;
+                    this.cartService.deleteCart(cart).subscribe(res => {
+                      if (res) {
+                        console.log(res);
+                      }
+                    });
                   }
                 });
-                //delete from home page
-                orderProduct.active = false
-                this.productService.updateProduct(orderProduct)
-                  .subscribe(res => {
-                    if (res) {
-                      this.showToast(this.status, this.title, `Your Payment is transfered successfully!`);
-                      this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
-                        this.router.navigate(["/pages/order/myorders"]));
-                    }
-                  })
               }
             });
+          //delete the product from my order.
+          this.orders.forEach(order => {
+            if (order.productId === orderProduct.id) {
+              //this.cancelOrder(order);
+              order.active = false
+              this.orderService.deleteOrder(order)
+                .subscribe(res => {
+                  if (res) {
+                    console.log(res);
+                    // this.showToast(this.status, this.title, `Your order canceled successfully!`);
+                    // this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
+                    //   this.router.navigate(["/pages/order/myorders"]));
+                  }
+                })
+            }
+          });
+          if (orderProduct.quantity == 1) {
+            //delete from home page
+            orderProduct.active = false
+            this.productService.updateProduct(orderProduct)
+              .subscribe(res => {
+                if (res) {
+                  this.showToast(this.status, this.title, `Your Payment is transfered successfully!`);
+                  this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
+                    this.router.navigate(["/pages/order/myorders"]));
+                }
+              })
+          } else if (orderProduct.quantity > 1) {
+            this.productService.getById(orderProduct.id)
+              .subscribe((product_res: any) => {
+                product_res.quantity = product_res.quantity - 1;
+                this.productService.updateProduct(product_res)
+                  .subscribe(res => {
+                    this.showToast(this.status, this.title, `Your Payment is transfered successfully!`);
+                    this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
+                      this.router.navigate(["/pages/order/myorders"]));
+                  })
+              })
+          }
         }
       });
   }

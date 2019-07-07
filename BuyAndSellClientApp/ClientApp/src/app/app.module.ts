@@ -26,6 +26,7 @@ import { UploadComponent } from './pages/post-product/upload/upload.component';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from 'src/guards/auth-guard.service';
 import { ProfileModule } from './auth/profile/profile.module';
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 export function tokenGetter() {
@@ -59,6 +60,7 @@ export function tokenGetter() {
       }
     }),
     NgxUploaderModule,
+    NgxLoadingModule.forRoot({})
 
   ],
   bootstrap: [AppComponent],

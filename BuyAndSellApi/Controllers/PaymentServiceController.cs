@@ -131,7 +131,7 @@ namespace BuyAndSellApi.Controllers {
                     return Unauthorized ();
 
                 if (paymentService.Balance < paymentDto.Withdraw)
-                    return Content ("message", "Balance Insufficient.");
+                    return BadRequest (new { message = "Balance Insufficient." });
 
                 paymentService.Balance = paymentService.Balance - paymentDto.Withdraw;
 

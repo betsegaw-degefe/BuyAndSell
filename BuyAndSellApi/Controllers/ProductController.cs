@@ -169,6 +169,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
         public IActionResult UpdateStatus ([FromBody] Product product) {
             try {
+                product.LastUpdated = DateTime.Now;
                 _repository.Update (product);
                 if (_repository.SaveChanges ()) {
                     return Ok (product);
