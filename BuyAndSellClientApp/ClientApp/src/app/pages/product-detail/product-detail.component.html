@@ -59,15 +59,21 @@
             </ng-container>
           </div>
           <hr>
+          <h6 class="text-heading text-justify">Seller Information</h6>
+          <hr>
           <div class="row">
-            <ng-container *ngFor="let key of productKey; let i=index">
-              <div class="details col-md-6" *ngIf="key !='offer'">
-                <h6 class="text-heading">{{key}}</h6>
-                <section class="text-hint">
-                  {{productValue[i]}}
-                </section>
-              </div>
-            </ng-container>
+            <div class="details col-md-6">
+              <h6 class="text-heading">Name</h6>
+              <section class="text-hint">
+                {{seller.firstName }} {{ seller.middleName}}
+              </section>
+            </div>
+            <div class="details col-md-6">
+              <h6 class="text-heading">Contact</h6>
+              <section class="text-hint">
+                {{product.contact}}
+              </section>
+            </div>
           </div>
         </div>
       </nb-card-body>

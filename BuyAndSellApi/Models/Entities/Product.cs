@@ -28,6 +28,8 @@ namespace BuyAndSellApi.Models.Entities {
 
         [Required] public int MainCategoryId { get; set; }
 
+        [StringLength (20)] public string Contact { get; set; }
+
         [ForeignKey ("StatusId")] public virtual LookupValue Status { get; set; }
 
         [ForeignKey ("MainCategoryId")] public virtual Category Category { get; set; }

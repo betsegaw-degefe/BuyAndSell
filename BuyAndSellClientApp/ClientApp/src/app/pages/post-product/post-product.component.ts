@@ -50,6 +50,7 @@ export class PostProductComponent implements OnInit {
   @Output() public onUploadFinished = new EventEmitter();
   public user: any = {} //Container for holding the current user
   public role: any = {}; // Container for holding role of the current user.
+  public loading = false;
 
 
   // Variables related with success toast.
@@ -250,6 +251,7 @@ export class PostProductComponent implements OnInit {
 
   // Save product to product attribute value and product table.
   saveProduct() {
+    this.loading = true;
     var propertyValueModel: any = []; // Container for product attrbute value to send to db.
     this.productModel.StatusId = 1;
     this.productModel.Negotiable = this.negotiable
@@ -280,6 +282,7 @@ export class PostProductComponent implements OnInit {
           this.productAttributeValuedata.register(propertyValueModel)
             .subscribe(res => {
               if (res != null && res != []) {
+                this.loading = false;
                 this.showToast(this.status, this.title, `Product saved successfully!`);
                 //this.selectedItem("");
                 this.router.navigateByUrl('/pages', { skipLocationChange: true }).then(() =>
@@ -292,6 +295,7 @@ export class PostProductComponent implements OnInit {
 
   // Add product property/attribute
   addProperty() {
+    this.loading = true;
     this.dialogService.open(PostProductModalComponent)
       .onClose.subscribe(attribute => {
         if (attribute != null && attribute[0] != "") {
@@ -320,12 +324,14 @@ export class PostProductComponent implements OnInit {
             this.attributeService.register(this.productAttribute)
               .subscribe(success => {
                 if (success != null && success != []) {
+
                   this.showToast(this.status, this.title, `Product property suggested successfully!`);
                   this.selectedItem("")
                   this.selectedItem(this.model)
                 }
               })
           }
+          this.loading = false;
         }
       });
   }

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductAttributeService } from 'src/app/service/product-attribute.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { NgxLoadingModule } from 'ngx-loading';
 
 const modules = [
   CommonModule,
@@ -26,7 +27,7 @@ const modules = [
   NbActionsModule,
   NbSelectModule,
   NbTooltipModule,
-  
+  NgxLoadingModule
 ]
 
 @NgModule({

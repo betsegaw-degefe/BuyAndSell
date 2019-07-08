@@ -20,6 +20,7 @@ import { OrderModule } from './order/order.module';
 import { CartModalComponent } from './cart/cart-modal/cart-modal.component';
 import { ProfileModule } from '../auth/profile/profile.module';
 import { ProfileComponent } from './profile/profile.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { ProfileComponent } from './profile/profile.component';
     NgbModule,
     ProfileModule,
     NbDialogModule.forChild(),
+    NgxLoadingModule,
     //PostProductModule
   ],
   entryComponents: [

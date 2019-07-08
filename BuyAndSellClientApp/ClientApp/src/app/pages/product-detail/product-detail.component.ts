@@ -44,6 +44,7 @@ export class ProductDetailComponent implements OnInit {
   public cartAdded: boolean = false; // boolean value used to trace whether the product is added to cart or not.
   public logged_in: boolean = false; // boolean value to track whether the user logged in or not logged in.
   public productOwner: boolean = false; // boolean value to track whether the product is owned by current user or not.
+  public seller: any = {}
 
   // Variables related with success toast.
   destroyByClick = true;
@@ -91,6 +92,7 @@ export class ProductDetailComponent implements OnInit {
             this.authService.getUserById(product_res.createdBy)
               .subscribe((user_res) => {
                 console.log(user_res);
+                this.seller = user_res
               })
           }
         })
@@ -124,6 +126,7 @@ export class ProductDetailComponent implements OnInit {
         key != "order" && key != "createdAt" && key != "lastUpdated" &&
         key != "createdBy" && key != "active" && key != "productAttributeValue" &&
         key != "id" && key != "cart" && key != "category" && key != "mainCategoryId"
+        && key != "contact"
       )
         // Checking the key value pair.
         if (this.product.hasOwnProperty(key)) {

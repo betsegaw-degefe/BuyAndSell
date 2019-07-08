@@ -10,6 +10,7 @@ import { SharedOrderDataService } from 'src/app/service/shared-order-data.servic
 import { MyProductModule } from './my-product/my-product.module';
 import { EditProductModule } from './edit-product/edit-product.module';
 import { MyProductOrderModule } from './my-product-order/my-product-order.module';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [OrderComponent],
@@ -21,7 +22,7 @@ import { MyProductOrderModule } from './my-product-order/my-product-order.module
     MyOffersModule,
     MyProductModule,
     EditProductModule,
-    MyProductOrderModule
+    MyProductOrderModule,
   ],
  
 })
