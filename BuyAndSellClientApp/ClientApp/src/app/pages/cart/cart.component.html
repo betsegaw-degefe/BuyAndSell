@@ -1,3 +1,7 @@
+<div *ngIf="products.length === 0" class="flex-centered col-xl-6 col-lg-6 col-md-8 col-sm-12">
+  <h2 class="title-no text-danger">Your Cart is Empty!</h2>
+  <small class="sub-title">You didn't add any product to your cart. Please add a product to your cart to see in this page. </small>
+</div>
 <div class="row">
   <div class="col-md-4" *ngFor="let product of products">
     <div>
@@ -28,7 +32,8 @@
           </div>
         </nb-card-body>
         <nb-card-footer>
-          <button nbButton shape="rectangle" status="danger" fullWidth (click)="cancelCart(product)">Remove from cart</button>
+          <button nbButton shape="rectangle" status="danger" fullWidth (click)="cancelCart(product)">Remove from
+            cart</button>
         </nb-card-footer>
       </nb-card>
     </div>

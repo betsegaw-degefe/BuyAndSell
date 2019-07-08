@@ -95,6 +95,14 @@ export class MyOrdersComponent implements OnInit {
    * @param model : {product}
    */
   cancelOrder(model: any) {
+    this.productService.getById(model.productId)
+      .subscribe(product_res => {
+        product_res.statusId = 1
+        this.productService.updateProduct(product_res)
+          .subscribe(updated_res => {
+            console.log(updated_res);
+          })
+      })
     model.active = false;
     console.log(model)
     this.dialogService.open(MyOffersModalComponent)

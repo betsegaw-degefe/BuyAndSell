@@ -1,7 +1,11 @@
+<div *ngIf="offers.length === 0" class="flex-centered col-xl-6 col-lg-6 col-md-8 col-sm-12">
+  <h2 class="title-no text-danger">Your Offer List is Empty!</h2>
+  <small class="sub-title">You don't have Any offer for any product! please make an offer for a product. </small>
+</div>
 <div class="row">
-  <div *ngIf="offers[0]==null">
+  <!-- <div *ngIf="offers[0]==null">
     <p>You don't have Any offer for any product!</p>
-  </div>
+  </div> -->
   <div class="col-md-4" *ngFor="let offerproduct of products; let index = index;trackBy:trackByIndex;">
     <div>
       <nb-card size="large" accent="primary" class="accent accent-primary pointer">
@@ -44,14 +48,14 @@
             </section>
           </div>
         </nb-card-body>
-        <nb-card-footer >
+        <nb-card-footer>
           <button nbButton shape="rectangle" fullWidth status="danger" (click)="cancelOffer(offers[index])">Cancel
             Offer</button>
-            <ng-container *ngFor="let offer of offers">
-          <button *ngIf="offer.productId === offerproduct.id && offer.status === 'Accepted'" nbButton shape="rectangle" status="success" fullWidth
-            (click)="order(offerproduct)">Order
-            now</button>
-            </ng-container>
+          <ng-container *ngFor="let offer of offers">
+            <button *ngIf="offer.productId === offerproduct.id && offer.status === 'Accepted'" nbButton
+              shape="rectangle" status="success" fullWidth (click)="order(offerproduct)">Order
+              now</button>
+          </ng-container>
         </nb-card-footer>
       </nb-card>
     </div>

@@ -29,20 +29,9 @@
   </nb-card-body>
 </nb-card>
 
-<div *ngIf="products.length === 0" class="row">
-  <div class="col-md-12">
-    <nb-card>
-      <nb-card-body>
-        <div class="flex-centered col-xl-4 col-lg-6 col-md-8 col-sm-12">
-          <h2 class="title text-danger">Products Not Found!</h2>
-          <small class="sub-title">Please try again with another search key or change the Category. </small>
-          <!-- <button (click)="goToHome()" type="button" class="btn btn-block btn-hero-primary">
-            Take me home
-          </button> -->
-        </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
+<div *ngIf="products.length === 0" class="flex-centered col-xl-4 col-lg-6 col-md-8 col-sm-12">
+  <h2 class="title text-danger">Products Not Found!</h2>
+  <small class="sub-title">Please try again with another search key or change the Category. </small>
 </div>
 <div class="row">
   <div class="col-md-3" *ngFor="let product of products | paginate: { itemsPerPage: 8, currentPage: p }">
@@ -63,13 +52,23 @@
                   {{product.price | currency}}
                 </h6>
               </div>
-              <div class="col-md-6 text-info">
+              <div class="col-md-6" *ngIf="product.statusId==='Available'">
+                <h6 class="text-info text-justify text_right">
+                  {{product.statusId}}
+                </h6>
+              </div>
+              <div class="col-md-6" *ngIf="product.statusId==='Ordered'">
+                <h6 class="text-warning text-justify text_right">
+                  {{product.statusId}}
+                </h6>
+              </div>
+              <!-- <div class="col-md-6 text-info">
                 <h6 class="text-info text_right">
                   <ngb-rating [(rate)]="starRate" [readonly]="readonly" max=5>
                   </ngb-rating>
                   <span class="current-rate "> {{ starRate }}</span>
                 </h6>
-              </div>
+              </div> -->
             </div>
             <div class="row">
               <div class="col-md-6">

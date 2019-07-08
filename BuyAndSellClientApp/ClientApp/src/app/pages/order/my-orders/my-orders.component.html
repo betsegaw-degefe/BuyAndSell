@@ -1,3 +1,7 @@
+<div *ngIf="products.length === 0" class="flex-centered col-xl-6 col-lg-6 col-md-8 col-sm-12">
+  <h2 class="title-no text-danger">Your Order List is Empty!</h2>
+  <small class="sub-title">You don't have Any order for any product! please make an order for a product. </small>
+</div>
 <div class="row">
   <div class="col-md-4" *ngFor="let orderproduct of products; let index = index;trackBy:trackByIndex;">
     <div>

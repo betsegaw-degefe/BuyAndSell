@@ -1,3 +1,7 @@
+<div *ngIf="myProducts.length === 0" class="flex-centered col-xl-6 col-lg-6 col-md-8 col-sm-12">
+  <h2 class="title-no text-danger">Your Product List is Empty!!</h2>
+  <small class="sub-title">You don't have Any product sold! please sell a product to see here. </small>
+</div>
 <div class="row">
   <div class="col-md-4"
     *ngFor="let myProduct of myProducts | paginate: { itemsPerPage: 6, currentPage: p }; let index = index;trackBy:trackByIndex;">

@@ -44,6 +44,7 @@ export class ProductDetailComponent implements OnInit {
   public cartAdded: boolean = false; // boolean value used to trace whether the product is added to cart or not.
   public logged_in: boolean = false; // boolean value to track whether the user logged in or not logged in.
   public productOwner: boolean = false; // boolean value to track whether the product is owned by current user or not.
+
   // Variables related with success toast.
   destroyByClick = true;
   duration = 4000;
@@ -178,6 +179,7 @@ export class ProductDetailComponent implements OnInit {
    * Order/offer for a product.
    */
   order() {
+    console.log(this.product);
     // open order modal.
     this.dialogService.open(ProductDetailModalComponent)
       .onClose.subscribe(res => {
@@ -213,6 +215,14 @@ export class ProductDetailComponent implements OnInit {
           }
           // if the product is not negotiable. The order saved to order table.
           else {
+            this.productService.getById(this.product.id)
+              .subscribe(product_res => {
+                product_res.statusId = 3
+                this.productService.updateProduct(product_res)
+                  .subscribe(updated_res => {
+                    console.log(updated_res);
+                  })
+              })
             this.orderModel.ProductId = this.product.id;
             this.orderModel.SellerId = this.product.createdBy;
             this.orderModel.BuyerId = this.current_user.nameid;
