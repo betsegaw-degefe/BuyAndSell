@@ -15,6 +15,7 @@ import { AuthGuard } from 'src/guards/auth-guard.service';
 import { ProductService } from 'src/app/service/product.service';
 import { getLocaleDateTimeFormat } from '@angular/common';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -65,6 +66,7 @@ export class ProductDetailComponent implements OnInit {
     private jwtHelper: JwtHelperService,
     private authGuard: AuthGuard,
     private productService: ProductService,
+    private authService: AuthService,
   ) {
     var token = localStorage.getItem("token");
     if (token && !this.jwtHelper.isTokenExpired(token)) {
@@ -77,6 +79,7 @@ export class ProductDetailComponent implements OnInit {
     var productAttributeIdArray = [];
     this.sharedData.currentMessage.subscribe(message => {
       this.product = message
+      console.log(this.product);
       this.productService.getById(this.product.id)
         .subscribe(product_res => {
           if (product_res) {
@@ -84,8 +87,16 @@ export class ProductDetailComponent implements OnInit {
             if (this.product.createdBy === +this.current_user.nameid) {
               this.productOwner = true;
             }
+            this.authService.getUserById(product_res.createdBy)
+              .subscribe((user_res) => {
+                console.log(user_res);
+              })
           }
         })
+      // this.authService.getUserById(this.product.createdBy)
+      //   .subscribe((user_res) => {
+      //     console.log(user_res);
+      //   })
     });
 
     // get productattribute value of the selected product
@@ -119,6 +130,12 @@ export class ProductDetailComponent implements OnInit {
           this.productKey[this.arrayCounter] = key;
           if (key === "price") {
             this.productValue[this.arrayCounter] = this.product[key] + " birr"
+          } else if (key === "negotiable") {
+            if (this.product[key]) {
+              this.productValue[this.arrayCounter] = "Negotiable"
+            } else if (!this.product[key]) {
+              this.productValue[this.arrayCounter] = "Not Negotiable"
+            }
           } else {
             this.productValue[this.arrayCounter] = this.product[key]
           }
@@ -153,7 +170,6 @@ export class ProductDetailComponent implements OnInit {
           if (this.product.id === element.productId) {
             this.ordered = true;
           }
-
         });
       })
   }
@@ -162,7 +178,6 @@ export class ProductDetailComponent implements OnInit {
    * Order/offer for a product.
    */
   order() {
-
     // open order modal.
     this.dialogService.open(ProductDetailModalComponent)
       .onClose.subscribe(res => {
@@ -206,6 +221,7 @@ export class ProductDetailComponent implements OnInit {
               this.orderModel.OrderedQuantity = 1;
             else
               this.orderModel.OrderedQuantity = res.quantity;
+            this.orderModel.Contact = res.contact;
             this.orderModel.Active = true;
             this.orderService.register(this.orderModel)
               .subscribe(res => {

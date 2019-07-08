@@ -4,6 +4,7 @@ import { SharedDataService } from 'src/app/service/shared-data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PaymentService } from 'src/app/service/payment.service';
 import { AuthService } from 'src/app/service/auth.service';
+import { OrderService } from 'src/app/service/order.service';
 
 @Component({
   selector: 'app-payment-order-modal',
@@ -17,6 +18,8 @@ export class PaymentOrderModalComponent implements OnInit {
   public orderProduct: any = {}; // Container for a product passed from my-order-component through shared service.
   public pinCode: any = {}; // Container for a pincode to send a request to /paymentservice/paymentpincode
   public sellerPaymentService: any = {} // Seller paymentService table fetched from /paymentservice/paymentpincode
+  public order: any = [] // Container for order fetched from /order/myorder end point.
+  public totalprice: any;
   private buyer_acc_error: any;
   private seller_acc_error: any;
   public disableBtn: boolean = true;
@@ -27,12 +30,20 @@ export class PaymentOrderModalComponent implements OnInit {
     private sharedData: SharedDataService,
     private formBuilder: FormBuilder,
     private paymentService: PaymentService,
-    private authService: AuthService, ) { }
+    private authService: AuthService,
+    private orderService: OrderService, ) { }
 
   ngOnInit() {
     this.sharedData.currentMessage.subscribe(message => {
       this.orderProduct = message;
-      console.log(this.orderProduct);
+      console.log(this.orderProduct)
+      // fetching the order by it's id.
+      this.orderService.getByProductId(this.orderProduct.id)
+        .subscribe((order_res) => {
+          this.order = order_res;
+          console.log(this.order);
+          this.totalprice = this.orderProduct.price * this.order[0].orderedQuantity;
+        })
     })
 
     this.form = this.formBuilder.group({
@@ -40,6 +51,8 @@ export class PaymentOrderModalComponent implements OnInit {
       password: [null, Validators.required],
       receiverPinCode: [null, Validators.required],
     });
+
+
   }
   cancel() {
     this.dialogRef.close();
@@ -47,7 +60,7 @@ export class PaymentOrderModalComponent implements OnInit {
 
   submit() {
     this.loading = true;
-    this.paymentOrder.Withdraw = this.orderProduct.price;
+    this.paymentOrder.Withdraw = this.totalprice;
 
     this.paymentService.PayPayment(this.paymentOrder)
       .subscribe(payment_res => {
@@ -57,7 +70,7 @@ export class PaymentOrderModalComponent implements OnInit {
               console.log(seller_acc)
               if (seller_acc) {
                 this.sellerPaymentService = seller_acc
-                this.sellerPaymentService.balance = seller_acc.balance + this.orderProduct.price;
+                this.sellerPaymentService.balance = seller_acc.balance + this.totalprice;
                 this.paymentService.AddBalace(this.sellerPaymentService)
                   .subscribe(added_res => {
                     console.log(added_res)

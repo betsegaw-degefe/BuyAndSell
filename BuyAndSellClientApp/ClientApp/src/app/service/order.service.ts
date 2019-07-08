@@ -15,6 +15,18 @@ export class OrderService {
     this.actionUrl = configuration.serverWithApiUrl + 'order/';
   }
 
+
+  /**
+   * get order by id.
+   * @param id: order id.
+   */
+  public get(id: number): Observable<any> {
+    return this.http.get<any>(this.actionUrl + id)
+    // .pipe(
+    //   tap(),
+    //   catchError(this.handleError('Get Order by id : ', []))
+    // );
+  }
   /**
    * get order by using user id.
    * @param model: user id.
@@ -25,6 +37,29 @@ export class OrderService {
         tap(),
         catchError(this.handleError('Get Order: ', []))
       );
+  }
+
+  /**
+   * get order by using seller id.
+   * @param model: user/seller id.
+   */
+  public getMyProductOrder(model: any): Observable<any> {
+    return this.http.post<any>(this.actionUrl + 'myproductorder', model)
+  }
+
+
+  /**
+   * get order by using product id.
+   * @param model: user id.
+   */
+  public getByProductId(productId: any): Observable<any> {
+    let SearchByProductId: any = {}
+    SearchByProductId.ProductId = productId;
+    return this.http.post<any>(this.actionUrl + 'byproductid', SearchByProductId)
+    // .pipe(
+    //   tap(),
+    //   catchError(this.handleError('Get Order: ', []))
+    // );
   }
 
   /**

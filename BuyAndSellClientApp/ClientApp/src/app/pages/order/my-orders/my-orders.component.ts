@@ -170,14 +170,17 @@ export class MyOrdersComponent implements OnInit {
                 }
               })
           } else if (orderProduct.quantity > 1) {
-            this.productService.getById(orderProduct.id)
-              .subscribe((product_res: any) => {
-                product_res.quantity = product_res.quantity - 1;
-                this.productService.updateProduct(product_res)
-                  .subscribe(res => {
-                    this.showToast(this.status, this.title, `Your Payment is transfered successfully!`);
-                    this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
-                      this.router.navigate(["/pages/order/myorders"]));
+            this.orderService.getByProductId(orderProduct.id)
+              .subscribe((order_res) => {
+                this.productService.getById(orderProduct.id)
+                  .subscribe((product_res: any) => {
+                    product_res.quantity = product_res.quantity - order_res[0].orderedQuantity;
+                    this.productService.updateProduct(product_res)
+                      .subscribe(res => {
+                        this.showToast(this.status, this.title, `Your Payment is transfered successfully!`);
+                        this.router.navigateByUrl('/pages/order', { skipLocationChange: true }).then(() =>
+                          this.router.navigate(["/pages/order/myorders"]));
+                      })
                   })
               })
           }

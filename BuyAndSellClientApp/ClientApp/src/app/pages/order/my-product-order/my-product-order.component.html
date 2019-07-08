@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-4" *ngFor="let orderproduct of products; let index = index;trackBy:trackByIndex;">
+    <div>
+      <nb-card size="large" accent="primary" class="accent accent-primary">
+        <nb-card-body>
+          <div class="picture" [style.background-image]="'url('+ orderproduct.imageUrl+')'"></div>
+          <div class="details">
+            <div class="header">
+              <div>
+                <h6 class="text-primary text-justify">{{orderproduct.description.slice(0,40) + '....'}}</h6>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="text-danger">
+                  {{orderproduct.price | currency}} Birr
+                </h6>
+              </div>
+              <div class="col-md-6">
+                <h6 class="text-danger">
+                  Ordered qty: {{myProductOrders[index].orderedQuantity}} Pcs.
+                </h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="text-primary">
+                  Ordered by: {{orderproduct.createdBy}}
+                </h6>
+              </div>
+              <div class="col-md-5">
+                <h6 class="text-primary">
+                  Contact: {{orderproduct.contact}}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button nbButton fullWidth shape="rectangle" status="danger"
+            (click)="cancelOrder(myProductOrders[index])">Cancel
+            Product Order</button>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+  </div>
+</div>

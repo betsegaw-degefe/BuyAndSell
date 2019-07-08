@@ -25,7 +25,7 @@
     <nb-card-footer>
       <button nbButton fullWidth shape="rectangle" status="danger" (click)="cancel()">Cancel</button>
       <button nbButton fullWidth shape="rectangle" status="success" (click)="submit()" [disabled]="!form.valid">Pay
-        {{orderProduct.price}} birr</button>
+        {{totalprice | currency}} birr</button>
     </nb-card-footer>
   </nb-card>
   <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">

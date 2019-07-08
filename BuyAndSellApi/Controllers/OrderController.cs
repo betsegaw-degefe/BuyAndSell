@@ -31,7 +31,9 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
         public IActionResult Get (int id) {
             try {
-                var order = _repository.Get (id);
+                var orders = from s in _repository.GetAll () select s;
+                var order = orders.Where (s => s.Id == id &&
+                    s.Active == true);
                 if (order != null) return Ok (order);
                 return NotFound ();
             } catch (Exception ex) {
@@ -53,6 +55,50 @@ namespace BuyAndSellApi.Controllers {
                 var orders = from s in _repository.GetAll () select s;
                 if (!String.IsNullOrEmpty (searchByUserId.UserId.ToString ())) {
                     orders = orders.Where (s => s.BuyerId == (searchByUserId.UserId) &&
+                        s.Active == true);
+                }
+                return Ok (orders);
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get Orders by UserId/SellerID.
+        /// </summary>
+        /// <returns>A list of Orders</returns>
+        [HttpPost ("myproductorder")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetProductOrders ([FromBody] SearchByUserId searchByUserId) {
+            try {
+                var orders = from s in _repository.GetAll () select s;
+                if (!String.IsNullOrEmpty (searchByUserId.UserId.ToString ())) {
+                    orders = orders.Where (s => s.SellerId == (searchByUserId.UserId) &&
+                        s.Active == true);
+                }
+                return Ok (orders);
+            } catch (Exception ex) {
+                // return error message if there was an exception
+                return BadRequest (new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get Orders by ProductID.
+        /// </summary>
+        /// <returns>A list of Orders</returns>
+        [HttpPost ("byproductid")]
+        [ProducesResponseType (StatusCodes.Status200OK)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public IActionResult GetOrderByProductId ([FromBody] SearchByProductId searchByProductId) {
+            try {
+                var orders = from s in _repository.GetAll () select s;
+                if (!String.IsNullOrEmpty (searchByProductId.ProductId.ToString ())) {
+                    orders = orders.Where (s => s.ProductId == (searchByProductId.ProductId) &&
                         s.Active == true);
                 }
                 return Ok (orders);

@@ -40,8 +40,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
             },
             {
                 title: 'My Product',
-                link:'/pages/order/myproducts'
+                link: '/pages/order/myproducts'
             },
+            {
+                title: 'My Product Order',
+                link: '/pages/order/myproductorders'
+            }
         ]
     },
 ]
@@ -83,7 +87,11 @@ export const ADMIN_MENU_ITEMS: NbMenuItem[] = [
             },
             {
                 title: 'My Product',
-                link:'/pages/order/myproducts'
+                link: '/pages/order/myproducts'
+            },
+            {
+                title: 'My Product Order',
+                link: '/pages/order/myproductorders'
             }
         ]
     },
@@ -91,17 +99,10 @@ export const ADMIN_MENU_ITEMS: NbMenuItem[] = [
         title: 'Manage Category',
         icon: 'nb-list',
         children: [
-            {
-                title: 'Address',
-                link: '/pages/category/address',
-            },
+
             {
                 title: 'Product',
                 link: '/pages/category/product',
-            },
-            {
-                title: 'Lookup',
-                link: '',
             }
         ]
     },

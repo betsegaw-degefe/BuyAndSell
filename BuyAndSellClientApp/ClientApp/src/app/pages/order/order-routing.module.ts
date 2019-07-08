@@ -5,6 +5,7 @@ import { MyOffersComponent } from './my-offers/my-offers.component';
 import { OrderComponent } from './order.component';
 import { MyProductComponent } from './my-product/my-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { MyProductOrderComponent } from './my-product-order/my-product-order.component';
 
 const routes: Routes = [{
   path: '',
@@ -21,6 +22,10 @@ const routes: Routes = [{
     {
       path: 'myproducts',
       component: MyProductComponent,
+    },
+    {
+      path: 'myproductorders',
+      component: MyProductOrderComponent,
     },
     {
       path: 'editmyproduct',

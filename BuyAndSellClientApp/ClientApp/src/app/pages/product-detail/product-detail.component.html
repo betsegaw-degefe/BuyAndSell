@@ -58,6 +58,17 @@
               </div>
             </ng-container>
           </div>
+          <hr>
+          <div class="row">
+            <ng-container *ngFor="let key of productKey; let i=index">
+              <div class="details col-md-6" *ngIf="key !='offer'">
+                <h6 class="text-heading">{{key}}</h6>
+                <section class="text-hint">
+                  {{productValue[i]}}
+                </section>
+              </div>
+            </ng-container>
+          </div>
         </div>
       </nb-card-body>
       <nb-card-footer>
