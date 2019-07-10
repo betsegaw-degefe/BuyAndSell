@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { tap, catchError } from 'rxjs/operators';
 export class OrderService {
 
   private actionUrl: string;
+  private token = localStorage.getItem("token");
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'order/';
@@ -21,7 +22,11 @@ export class OrderService {
    * @param id: order id.
    */
   public get(id: number): Observable<any> {
-    return this.http.get<any>(this.actionUrl + id)
+    return this.http.get<any>(this.actionUrl + id, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
     // .pipe(
     //   tap(),
     //   catchError(this.handleError('Get Order by id : ', []))
@@ -32,7 +37,11 @@ export class OrderService {
    * @param model: user id.
    */
   public getMyOrder(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'myorder', model)
+    return this.http.post<any>(this.actionUrl + 'myorder', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Get Order: ', []))
@@ -44,7 +53,11 @@ export class OrderService {
    * @param model: user/seller id.
    */
   public getMyProductOrder(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'myproductorder', model)
+    return this.http.post<any>(this.actionUrl + 'myproductorder', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
   }
 
 
@@ -55,7 +68,11 @@ export class OrderService {
   public getByProductId(productId: any): Observable<any> {
     let SearchByProductId: any = {}
     SearchByProductId.ProductId = productId;
-    return this.http.post<any>(this.actionUrl + 'byproductid', SearchByProductId)
+    return this.http.post<any>(this.actionUrl + 'byproductid', SearchByProductId, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
     // .pipe(
     //   tap(),
     //   catchError(this.handleError('Get Order: ', []))
@@ -67,7 +84,11 @@ export class OrderService {
    * @param model: OrderModel
    */
   public register(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'register', model)
+    return this.http.post<any>(this.actionUrl + 'register', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Order Register', []))
@@ -79,7 +100,12 @@ export class OrderService {
    * @param model order to delete.
    */
   public deleteOrder(model: any): Observable<any> {
-    return this.http.put<any>(this.actionUrl + 'deleteorder', model)
+    return this.http.put<any>(this.actionUrl + 'deleteorder', model,
+      {
+        headers: new HttpHeaders({
+          "Authorization": "Bearer " + this.token,
+        })
+      })
       .pipe(
         tap(),
         catchError(this.handleError('Order Deleted', []))

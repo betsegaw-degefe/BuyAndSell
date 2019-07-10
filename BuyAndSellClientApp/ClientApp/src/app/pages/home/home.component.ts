@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   public searchProduct: any = {} // Container for searchProduct by key to send a search request to /product/searchproductbykey.
   public postedBy: any;
   public productStatus;
+  public loading = false;
 
   // Variables related with success toast.
   destroyByClick = true;
@@ -44,8 +45,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.getMainCategory();
     this.getAllProduct();
+   
   }
 
   /**
@@ -57,6 +60,7 @@ export class HomeComponent implements OnInit {
         if (res) {
           console.log(res);
           this.mainCategories = res
+          this.loading = false;
         }
       })
   }
@@ -86,6 +90,7 @@ export class HomeComponent implements OnInit {
                 if (res) {
                   element.createdBy = res.firstName;
                   //element.createdAt = moment(element.createdAt, "YYYYMMDD h:mm:ss a").fromNow();
+                  this.loading = false;
                 }
               })
           });

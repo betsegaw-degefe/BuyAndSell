@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { ProductModel } from '../models/product-model';
 import { Observable, of } from 'rxjs';
@@ -12,6 +12,7 @@ export class ProductService {
 
   private actionUrl: string;
   public product: ProductModel[] = [];
+  private token = localStorage.getItem("token");
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'product/';
@@ -23,7 +24,11 @@ export class ProductService {
    */
   public register(model: any): Observable<any> {
     model.active = true;
-    return this.http.post<any>(this.actionUrl + 'register', model)
+    return this.http.post<any>(this.actionUrl + 'register', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(_ => this.log('register')),
         catchError(this.handleError('register', []))

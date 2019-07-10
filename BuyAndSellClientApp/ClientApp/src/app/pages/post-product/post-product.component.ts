@@ -295,7 +295,6 @@ export class PostProductComponent implements OnInit {
 
   // Add product property/attribute
   addProperty() {
-    this.loading = true;
     this.dialogService.open(PostProductModalComponent)
       .onClose.subscribe(attribute => {
         if (attribute != null && attribute[0] != "") {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { tap, catchError } from 'rxjs/operators';
 export class OfferService {
   private actionUrl: string;
   public SearchByProductId: any = {};
+  private token = localStorage.getItem("token");
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'offer/';
@@ -20,7 +21,11 @@ export class OfferService {
    * @param id : offer id.
    */
   public get(id) {
-    return this.http.get(this.actionUrl + id)
+    return this.http.get(this.actionUrl + id, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Get Offer by id: ', []))
@@ -32,7 +37,11 @@ export class OfferService {
    * @param model: user id.
    */
   public getMyOffer(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'myoffers', model)
+    return this.http.post<any>(this.actionUrl + 'myoffers', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Get Offer: ', []))
@@ -45,7 +54,11 @@ export class OfferService {
    */
   public getByProductId(ProductId: any): Observable<any> {
     this.SearchByProductId.ProductId = ProductId;
-    return this.http.post<any>(this.actionUrl + 'searchbyproductid', this.SearchByProductId)
+    return this.http.post<any>(this.actionUrl + 'searchbyproductid', this.SearchByProductId, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('searchbyproductid', []))
@@ -57,7 +70,11 @@ export class OfferService {
    * @param model: Offer Model
    */
   public register(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'register', model)
+    return this.http.post<any>(this.actionUrl + 'register', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Offer Register', []))
@@ -69,7 +86,11 @@ export class OfferService {
    * @param model offer to update.
    */
   public updateOffer(model: any): Observable<any> {
-    return this.http.put<any>(this.actionUrl + 'updateoffer', model)
+    return this.http.put<any>(this.actionUrl + 'updateoffer', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Offer Updated', []))

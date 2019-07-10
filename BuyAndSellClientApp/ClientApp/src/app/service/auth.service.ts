@@ -17,10 +17,10 @@ export class AuthService {
     login(model: any): Observable<any> {
         console.log(model);
         return this.http.post<any>(this.actionUrl + 'login', model)
-            .pipe(
-                tap(_ => this.log('login')),
-                catchError(this.handleError('login', []))
-            );
+            // .pipe(
+            //     tap(_ => this.log('login')),
+            //     catchError(this.handleError('login', []))
+            // );
     }
 
     register(model: any): Observable<any> {

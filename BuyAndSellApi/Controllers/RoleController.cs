@@ -1,6 +1,7 @@
 using System;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,8 @@ namespace BuyAndSellApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize]
+
         public IActionResult GetAll()
         {
             try
@@ -51,6 +54,7 @@ namespace BuyAndSellApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult Get(int id)
         {
             try
@@ -85,6 +89,7 @@ namespace BuyAndSellApi.Controllers
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult Register([FromBody] Role role)
         {
             try

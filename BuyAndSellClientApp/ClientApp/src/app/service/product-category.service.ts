@@ -23,11 +23,7 @@ export class ProductCategoryService {
    */
   public get(): Observable<boolean> {
 
-    return this.http.get(this.actionUrl, {
-      headers: new HttpHeaders({
-        "Authorization": "Bearer " + this.token,
-      })
-    })
+    return this.http.get(this.actionUrl)
       .pipe(map((data: any[]) => {
         this.productCategory = data;
         return true;
@@ -39,11 +35,7 @@ export class ProductCategoryService {
    * @param model 
    */
   public getCategory(categoryName: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'searchByName', categoryName, {
-      headers: new HttpHeaders({
-        "Authorization": "Bearer " + this.token,
-      })
-    })
+    return this.http.post<any>(this.actionUrl + 'searchByName', categoryName)
       .pipe(
         tap(_ => this.log('searchByName')),
         catchError(this.handleError('searchByName', []))
@@ -72,11 +64,7 @@ export class ProductCategoryService {
    */
   public getMainCategory(): Observable<any> {
 
-    return this.http.get<any>(this.actionUrl + 'maincategory', {
-      headers: new HttpHeaders({
-        "Authorization": "Bearer " + this.token,
-      })
-    }).pipe(
+    return this.http.get<any>(this.actionUrl + 'maincategory').pipe(
       tap(),
       catchError(this.handleError('Get Main Category', []))
     );

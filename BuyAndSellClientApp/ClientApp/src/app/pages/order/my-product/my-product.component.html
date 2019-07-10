@@ -40,8 +40,8 @@
           </button>
           <button nbButton fullWidth shape="rectangle" status="success" (click)="openEdit(myProduct)">Edit
           </button>
-          <button nbButton fullWidth shape="rectangle" status="success"
-            (click)="openWindowOffer(myProduct)">Offers</button>
+          <button nbButton fullWidth shape="rectangle" status="success" (click)="openWindowOffer(myProduct)"
+            [disabled]="myProduct.disable">Offers</button>
         </nb-card-footer>
       </nb-card>
     </div>

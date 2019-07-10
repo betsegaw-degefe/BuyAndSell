@@ -9,6 +9,7 @@ import { SharedDataService } from 'src/app/service/shared-data.service';
 import { ProductCategoryService } from 'src/app/service/product-category.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [HomeComponent,],
@@ -18,13 +19,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NbCardModule,
     NgbModule,
     NgbButtonsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxLoadingModule
   ],
   providers: [
     ProductService,
     SharedDataService,
     ProductCategoryService,
     AuthService,
+
   ],
   exports: [HomeComponent],
   bootstrap: [HomeComponent]

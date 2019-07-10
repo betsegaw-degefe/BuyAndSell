@@ -15,6 +15,7 @@ import { RegisterModule } from './register/register.module';
 import { MatButtonModule, MatIconModule, MatProgressBarModule } from '@angular/material';
 import { MatFileUploadModule } from 'src/lib/matFileUpload';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxLoadingModule } from 'ngx-loading';
 //import { TokenInterceptor } from '../interceptors/token.interceptor';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatIconModule,
     MatProgressBarModule,
     MatFileUploadModule,
+    NgxLoadingModule.forRoot({}),
 
     NbAuthModule.forRoot({
       strategies: [

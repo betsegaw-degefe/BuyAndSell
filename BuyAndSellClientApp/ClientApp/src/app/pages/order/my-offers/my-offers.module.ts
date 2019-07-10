@@ -10,6 +10,7 @@ import { MyOffersModalComponent } from './my-offers-modal/my-offers-modal.compon
 import { Router } from '@angular/router';
 import { OrderModalComponent } from './order-modal/order-modal.component';
 import { OrderService } from 'src/app/service/order.service';
+import { PaymentOrderModalComponent } from '../my-orders/payment-order-modal/payment-order-modal.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { OrderService } from 'src/app/service/order.service';
     ProductService,
     NbDialogService,
     OrderService,
+    PaymentOrderModalComponent
   ],
   entryComponents: [
     MyOffersModalComponent,

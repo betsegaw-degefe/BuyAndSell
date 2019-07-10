@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { tap, catchError } from 'rxjs/operators';
 })
 export class CartService {
   private actionUrl: string;
+  private token = localStorage.getItem("token");
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'cart/';
@@ -19,19 +20,26 @@ export class CartService {
    * @param model: user id.
    */
   public getMyCart(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'mycarts', model)
+    return this.http.post<any>(this.actionUrl + 'mycarts', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Get Cart: ', []))
-      );
+      )
   }
-
   /**
    * Register Cart
    * @param model: Cart Model
    */
   public register(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'register', model)
+    return this.http.post<any>(this.actionUrl + 'register', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Cart Register', []))
@@ -43,7 +51,11 @@ export class CartService {
   * @param model cart to delete.
   */
   public deleteCart(model: any): Observable<any> {
-    return this.http.put<any>(this.actionUrl + 'deletecart', model)
+    return this.http.put<any>(this.actionUrl + 'deletecart', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('Cart Deleted', []))

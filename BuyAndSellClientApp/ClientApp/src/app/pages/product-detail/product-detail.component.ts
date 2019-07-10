@@ -186,15 +186,20 @@ export class ProductDetailComponent implements OnInit {
     // open order modal.
     this.dialogService.open(ProductDetailModalComponent)
       .onClose.subscribe(res => {
+        console.log(res);
         if (res != null) {
           // if the product is negotiable.
           if (res.offer != null) {
+            if (res.quantity != null)
+              this.offerModel.orderedQuantity = res.quantity;
+            else
+              this.offerModel.orderedQuantity = 1;
             this.offerModel.ProductId = this.product.id;
             this.offerModel.OfferPrice = res.offer;
             this.offerModel.Status = "Waiting for Approval."
             this.offerModel.CreatedBy = this.current_user.nameid;
             this.offerModel.Active = true;
-            //console.log(this.offerModel);
+            console.log(this.offerModel);
             this.offerService.register(this.offerModel)
               .subscribe(res => {
                 if (res) {
@@ -220,7 +225,9 @@ export class ProductDetailComponent implements OnInit {
           else {
             this.productService.getById(this.product.id)
               .subscribe(product_res => {
+                 if (this.product.quantity === 1) {
                 product_res.statusId = 3
+              }
                 this.productService.updateProduct(product_res)
                   .subscribe(updated_res => {
                     console.log(updated_res);

@@ -95,3 +95,5 @@
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
 </div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>

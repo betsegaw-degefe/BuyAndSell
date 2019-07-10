@@ -4,6 +4,7 @@ using AutoMapper;
 using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult Get (int id) {
             try {
                 var paymentService = _repository.Get (id);
@@ -52,6 +54,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult GetPayment ([FromBody] PaymentPinCode paymentPinCode) {
             try {
                 Console.WriteLine ("Pincode " + paymentPinCode);
@@ -84,6 +87,7 @@ namespace BuyAndSellApi.Controllers {
         [HttpPost ("register")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult Register ([FromBody] PaymentService paymentService) {
             try {
                 _repository.Insert (paymentService);
@@ -116,6 +120,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult PayPayment ([FromBody] PaymentDto paymentDto) {
             try {
                 //var user = _context..FirstOrDefaultAsync(x => x.UserName == username);
@@ -155,6 +160,7 @@ namespace BuyAndSellApi.Controllers {
         [HttpPut ("addbalance")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult AddBalance ([FromBody] PaymentService paymentService) {
             try {
                 _repository.Update (paymentService);

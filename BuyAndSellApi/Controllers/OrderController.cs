@@ -29,6 +29,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult Get (int id) {
             try {
                 var orders = from s in _repository.GetAll () select s;
@@ -50,6 +51,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult GetOrders ([FromBody] SearchByUserId searchByUserId) {
             try {
                 var orders = from s in _repository.GetAll () select s;
@@ -72,6 +74,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult GetProductOrders ([FromBody] SearchByUserId searchByUserId) {
             try {
                 var orders = from s in _repository.GetAll () select s;
@@ -94,6 +97,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult GetOrderByProductId ([FromBody] SearchByProductId searchByProductId) {
             try {
                 var orders = from s in _repository.GetAll () select s;
@@ -129,6 +133,7 @@ namespace BuyAndSellApi.Controllers {
         [HttpPost ("register")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult Register ([FromBody] OrderProduct order) {
             try {
                 _repository.Insert (order);
@@ -150,6 +155,7 @@ namespace BuyAndSellApi.Controllers {
         [HttpPut ("deleteorder")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult UpdateStatus ([FromBody] OrderProduct orderProduct) {
             try {
 

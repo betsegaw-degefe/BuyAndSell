@@ -22,14 +22,14 @@
               <div class="col-md-6">
                 <h6 class="text-hint">Price</h6>
                 <h6 class="text-danger">
-                  {{offerproduct.price}} Birr
+                  {{offerproduct.price | currency}} Birr
                 </h6>
               </div>
               <section *ngFor="let offer of offers">
                 <div class="col-md-12" *ngIf="offer.productId === offerproduct.id">
                   <h6 class="text-hint">Your Offer</h6>
                   <h6 class="text-danger">
-                    {{offer.offerPrice}} Birr
+                    {{offer.offerPrice | currency}} Birr
                   </h6>
                 </div>
               </section>
@@ -53,7 +53,7 @@
             Offer</button>
           <ng-container *ngFor="let offer of offers">
             <button *ngIf="offer.productId === offerproduct.id && offer.status === 'Accepted'" nbButton
-              shape="rectangle" status="success" fullWidth (click)="order(offerproduct)">Order
+              shape="rectangle" status="success" fullWidth (click)="order(offerproduct,offer)">Order
               now</button>
           </ng-container>
         </nb-card-footer>

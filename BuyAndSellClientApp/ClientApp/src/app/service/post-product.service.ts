@@ -12,6 +12,7 @@ export class PostProductService {
 
   private actionUrl: string;
   public productAttribute: ProductAttributeModel[] = [];
+  private token = localStorage.getItem("token");
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'productattribute/';
@@ -22,10 +23,9 @@ export class PostProductService {
    * @param id : product attribute id.
    */
   public get(id) {
-    let token = localStorage.getItem("token");
     return this.http.get(this.actionUrl + id, {
       headers: new HttpHeaders({
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer " + this.token,
       })
     });
   }
@@ -35,7 +35,11 @@ export class PostProductService {
    * @param categoryId : product attribute category id 
    */
   public getProductAttribute(categoryId: number): Observable<any> {
-    return this.http.get(this.actionUrl + "searchByCategoryId/" + categoryId)
+    return this.http.get(this.actionUrl + "searchByCategoryId/" + categoryId, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(map((data: any[]) => {
         this.productAttribute = data;
         return this.productAttribute;
@@ -47,7 +51,11 @@ export class PostProductService {
    * @param categoryId : product attribute category id 
    */
   public getUnApprovedProductAttribute(categoryId: number): Observable<any> {
-    return this.http.get(this.actionUrl + "searchunapprovedbycategoryid/" + categoryId)
+    return this.http.get(this.actionUrl + "searchunapprovedbycategoryid/" + categoryId, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(map((data: any[]) => {
         this.productAttribute = data;
         return this.productAttribute;

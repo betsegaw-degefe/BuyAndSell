@@ -29,7 +29,6 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
-        [Authorize]
 
         public IActionResult GetCategory ([FromBody] SearchByNameDto searchByName) {
             try {
@@ -51,7 +50,6 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
-        [Authorize]
 
         public IActionResult GetAll () {
             try {
@@ -100,7 +98,6 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
-        [Authorize]
 
         public IActionResult Get (int id) {
             try {

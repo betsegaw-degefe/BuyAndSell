@@ -18,4 +18,30 @@
     margin-top: 0rem;
     cursor: pointer;
   }
+  nb-card-footer {
+    display: flex;
+    justify-content: space-around;
+    border: none;
+  }
+}
+::ng-deep {
+  nb-layout-column {
+    height: 80vw;
+  }
+
+  button + button {
+    margin-left: 1rem;
+  }
+
+  .dialog-card {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  @media (min-width: 40rem) {
+    .dialog-card {
+      width: 38rem;
+    }
+  }
 }

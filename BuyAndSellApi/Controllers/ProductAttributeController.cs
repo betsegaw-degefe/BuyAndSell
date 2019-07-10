@@ -4,6 +4,7 @@ using System.Linq;
 using BuyAndSellApi.Models.Dtos;
 using BuyAndSellApi.Models.Entities;
 using BuyAndSellApi.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +55,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult GetUnapprovedByCategoryId (int categoryId) {
             try {
                 var productAttribute = from s in _repository.GetAll () select s;
@@ -79,6 +81,7 @@ namespace BuyAndSellApi.Controllers {
         [ProducesResponseType (StatusCodes.Status200OK)]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult GetByCategoryId (int categoryId) {
             try {
                 var productAttribute = from s in _repository.GetAll () select s;
@@ -136,6 +139,7 @@ namespace BuyAndSellApi.Controllers {
         [HttpPost ("register")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult Register ([FromBody] ProductAttribute productAttribute) {
             try {
                 _repository.Insert (productAttribute);
@@ -157,6 +161,7 @@ namespace BuyAndSellApi.Controllers {
         [HttpPut ("updateproductattribute")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        [Authorize]
         public IActionResult UpdateStatus ([FromBody] ProductAttribute productAttribute) {
             try {
                 _repository.Update (productAttribute);

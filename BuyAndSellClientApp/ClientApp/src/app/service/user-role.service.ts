@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { tap, catchError } from 'rxjs/operators';
 export class UserRoleService {
 
   private actionUrl: string;
+  private token = localStorage.getItem("token");
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'userrole/';
@@ -20,7 +21,11 @@ export class UserRoleService {
    * @param model: UserRoleModel
    */
   public register(model: any): Observable<any> {
-    return this.http.post<any>(this.actionUrl + 'register', model)
+    return this.http.post<any>(this.actionUrl + 'register', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
       .pipe(
         tap(),
         catchError(this.handleError('User role Register', []))

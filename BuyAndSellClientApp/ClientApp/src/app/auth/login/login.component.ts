@@ -12,6 +12,8 @@ import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Valida
 export class LoginComponent extends NbLoginComponent implements OnInit {
 
   user: any = {};
+  message: any;
+  public loading = false;
 
   constructor(private authService: AuthService, service: NbAuthService, @Inject(NB_AUTH_OPTIONS) protected options = {}, cd: ChangeDetectorRef, router: Router) {
     super(service, options, cd, router);
@@ -21,18 +23,23 @@ export class LoginComponent extends NbLoginComponent implements OnInit {
   }
 
   login() {
+    this.loading = true;
+    this.message = null;
     //this.router.navigate(['pages/agent']);
     //console.log(this.user);
     this.authService.login(this.user)
       .subscribe(res => {
-        
+
         if (res.token) {
-          console.log(res);
           localStorage.setItem("token", res.token);
           this.router.navigate(['pages']);
+          //this.loading = false;
         }
       }, (err) => {
-        console.log(err);
+        if (err.status == 401) {
+          this.message = "User name or password incorrect!"
+          this.loading = false;
+        }
       });
   }
 }

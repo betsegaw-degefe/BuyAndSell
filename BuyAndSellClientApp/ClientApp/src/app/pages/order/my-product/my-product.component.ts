@@ -8,6 +8,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { OfferListModalComponent } from './offer-list-modal/offer-list-modal.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { OfferService } from 'src/app/service/offer.service';
 
 @Component({
   selector: 'app-my-product',
@@ -38,6 +39,7 @@ export class MyProductComponent implements OnInit {
     private sharedData: SharedDataService,
     private jwtHelper: JwtHelperService,
     private router: Router,
+    private offerservice: OfferService,
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
     private windowService: NbWindowService,
@@ -55,7 +57,17 @@ export class MyProductComponent implements OnInit {
         if (resmyproducts) {
           resmyproducts.forEach(element => {
             element.imageUrl = encodeURI('http://localhost:5000/' + element.imageUrl);
-            this.myProducts.push(element);
+
+            // Check whether the product have an offer and enable or disable for the product.
+            this.offerservice.getByProductId(element.id)
+              .subscribe(offer_res => {
+                if (offer_res.length === 0) {
+                  element.disable = true;
+                } else {
+                  element.disable = false;
+                }
+                this.myProducts.push(element);
+              })
           });
         }
         console.log(this.myProducts)
@@ -97,7 +109,11 @@ export class MyProductComponent implements OnInit {
 
   openWindowOffer(product: any) {
     this.sharedData.changeMessage(product)
-    this.windowService.open(OfferListModalComponent, { title: `List of Offer` });
+    this.dialogService.open(OfferListModalComponent)
+      .onClose.subscribe(res => {
+
+      })
+    //this.windowService.open(OfferListModalComponent, { title: `List of Offer` });
   }
 
   /**

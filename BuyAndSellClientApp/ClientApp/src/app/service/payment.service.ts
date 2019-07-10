@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpHeaders } from '@angular/common/http';
 import { Configuration } from '../app.constants';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class PaymentService {
   private actionUrl: string;
+  private token = localStorage.getItem("token");
 
   constructor(private http: HttpClient, private configuration: Configuration) {
     this.actionUrl = configuration.serverWithApiUrl + 'paymentservice/';
@@ -19,23 +20,27 @@ export class PaymentService {
    * @param pincode : pincode of the account to search.
    */
   public GetByPinCode(model: any) {
-    return this.http.post<any>(this.actionUrl + 'paymentpincode', model)
-      // .pipe(
-      //   tap(),
-      //   catchError(this.handleError('Get By Pincode: ', []))
-      // );
+    return this.http.post<any>(this.actionUrl + 'paymentpincode', model, {
+      headers: new HttpHeaders({
+        "Authorization": "Bearer " + this.token,
+      })
+    })
+    // .pipe(
+    //   tap(),
+    //   catchError(this.handleError('Get By Pincode: ', []))
+    // );
   }
-  
+
   /**
   * Pay for the order
   * @param model Payment address to pay.
   */
   public PayPayment(model: any): Observable<any> {
     return this.http.put<any>(this.actionUrl + 'payment', model)
-      // .pipe(
-      //   tap(),
-      //   catchError(this.handleError('Payment Paid', []))
-      // );
+    // .pipe(
+    //   tap(),
+    //   catchError(this.handleError('Payment Paid', []))
+    // );
   }
 
   /**

@@ -7,6 +7,7 @@ import { RouterModule, Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import { FormBuilder } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxLoadingModule } from 'ngx-loading';
 //import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
 
 
@@ -14,6 +15,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     imports: [
         ThemeModule,
         RouterModule,
+        NgxLoadingModule
     ],
     declarations: [
         LoginComponent,

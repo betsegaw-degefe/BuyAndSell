@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder, NbWindowRef, NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder, NbWindowRef, NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrService, NbDialogRef } from '@nebular/theme';
 import { SharedDataService } from 'src/app/service/shared-data.service';
 import { Subscription, Subject, BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { OfferService } from 'src/app/service/offer.service';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/service/auth.service';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
+import { ProductService } from 'src/app/service/product.service';
 
 
 @Component({
@@ -33,10 +34,11 @@ export class OfferListModalComponent implements OnInit, OnDestroy {
   status: NbToastStatus = NbToastStatus.SUCCESS;
   title = 'Success!';
 
-  constructor(public windowRef: NbWindowRef,
+  constructor(protected dialogRef: NbDialogRef<OfferListModalComponent>,
     private sharedData: SharedDataService,
     private offerservice: OfferService,
     private toastrService: NbToastrService,
+    private productService: ProductService,
     private authService: AuthService, ) {
     this.subscription = this.sharedData.currentMessage
       .pipe(
@@ -75,6 +77,10 @@ export class OfferListModalComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  cancel() {
+    this.dialogRef.close();
+  }
+
   submit() {
     if (this.selectedOffer != undefined) {
       this.offerservice.get(+this.selectedOffer)
@@ -84,10 +90,19 @@ export class OfferListModalComponent implements OnInit, OnDestroy {
             offer.status = "Accepted"
             console.log(offer);
             this.offerservice.updateOffer(offer)
-              .subscribe(res => {
-                if (res) {
-                  console.log(res);
-                  this.showToast(this.status, this.title, `You accept an offer successfully!`);
+              .subscribe(offer_res => {
+                if (offer_res) {
+                  this.productService.getById(offer_res.productId)
+                    .subscribe(product_res => {
+                      if (product_res) {
+                        product_res.price = offer_res.offerPrice
+                        this.productService.updateProduct(product_res)
+                          .subscribe(updatedProduct_res => {
+                            console.log(updatedProduct_res);
+                            this.showToast(this.status, this.title, `You accept an offer successfully!`);
+                          })
+                      }
+                    })
                 }
               })
           }
@@ -107,13 +122,13 @@ export class OfferListModalComponent implements OnInit, OnDestroy {
     //     //   })
     //   }
     // });
-    this.windowRef.close();
+    this.dialogRef.close();
   }
 
   close() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-    this.windowRef.close();
+    this.dialogRef.close();
   }
 
   /**
