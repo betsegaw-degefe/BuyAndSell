@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { RegisterComponent } from './register.component';
 import { RouterModule, } from '@angular/router';
-import { NbDatepickerModule } from '@nebular/theme';
+import { NbDatepickerModule, NbToastrService } from '@nebular/theme';
 import { MatButtonModule, MatIconModule, MatProgressBarModule } from '@angular/material';
 import { MatFileUploadModule } from 'src/lib/matFileUpload';
 import { UserRoleService } from 'src/app/service/user-role.service';
@@ -27,6 +27,7 @@ import { UserRoleService } from 'src/app/service/user-role.service';
     ],
     providers: [
         UserRoleService,
+        NbToastrService,
     ]
 })
 export class RegisterModule { }

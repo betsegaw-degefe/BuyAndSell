@@ -206,7 +206,7 @@ export class ProductDetailComponent implements OnInit {
                   this.productService.getById(this.product.id)
                     .subscribe(product_res => {
                       if (product_res) {
-                        product_res.lastUpdated = moment().unix();
+                        //product_res.lastUpdated = moment().unix();
                         console.log(product_res);
                         this.productService.updateProduct(product_res)
                           .subscribe(update_res => {

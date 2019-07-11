@@ -161,7 +161,6 @@ namespace BuyAndSellApi.Controllers {
         [HttpPut ("updateproductattribute")]
         [ProducesResponseType (StatusCodes.Status201Created)]
         [ProducesResponseType (StatusCodes.Status400BadRequest)]
-        [Authorize]
         public IActionResult UpdateStatus ([FromBody] ProductAttribute productAttribute) {
             try {
                 _repository.Update (productAttribute);

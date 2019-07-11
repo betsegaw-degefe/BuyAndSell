@@ -32,14 +32,14 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="inputCondition">Condition</label>
+                <label for="inputCondition"><span class="text-danger">*</span> Condition</label>
                 <input id="inputCondition" type="text" nbInput fullWidth shape="rectangle"
                   [(ngModel)]="productModel.Condition" placeholder="Condition" />
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="inputQuantity">Quantity</label>
+                <label for="inputQuantity"><span class="text-danger">*</span> Quantity</label>
                 <input id="inputQuantity" type="number" nbInput fullWidth shape="rectangle"
                   [(ngModel)]="productModel.Quantity" placeholder="Quantity" />
               </div>
@@ -48,7 +48,7 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="inputPrice">Price</label>
+                <label for="inputPrice"><span class="text-danger">*</span> Price</label>
                 <input id="inputPrice" type="number" nbInput fullWidth shape="rectangle"
                   [(ngModel)]="productModel.Price" placeholder="Price" />
               </div>
@@ -93,8 +93,8 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label>Contact (Phone number)</label>
-                <input type="text" nbInput fullWidth shape="rectangle" [(ngModel)]="productModel.Contact"
+                <label><span class="text-danger">*</span> Contact (Phone number)</label>
+                <input type="number" nbInput fullWidth shape="rectangle" [(ngModel)]="productModel.Contact"
                   placeholder="Contact" />
               </div>
             </div>
@@ -105,13 +105,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="inputDescription">Description</label>
+                <label for="inputDescription"><span class="text-danger">*</span> Description</label>
                 <textarea id="inputDescription" class="form-control" [(ngModel)]="productModel.Description"
                   placeholder="Description"></textarea>
               </div>
             </div>
           </div>
-
+          <div class="text-warning"><span class="text-danger">*</span> Required fields!</div>
           <!-- <ng-container>
             <div class="row col-md-3" *ngFor="let unApprovedProperty of unApprovedProperties">
               {{unApprovedProperty.name}}
@@ -164,7 +164,8 @@
           *ngIf="role === 'User'">Suggest
           Property</button>
         <button *ngIf="productProperties.length != 0" type="submit" class="btn" nbButton status="success"
-          shape="rectangle" float="Right" (click)="saveProduct()">Save
+          shape="rectangle" float="Right" (click)="saveProduct()"
+          [disabled]="!productModel.Description || !productModel.Condition || !productModel.Quantity || !productModel.Price || !productModel.Contact">Save
           Property</button>
       </nb-card-footer>
     </nb-card>

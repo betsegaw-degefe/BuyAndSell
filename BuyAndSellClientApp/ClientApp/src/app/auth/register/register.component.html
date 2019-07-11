@@ -26,7 +26,6 @@
            placeholder="First name"
            autofocus
            fullWidth
-           [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
            [required]="getConfigValue('forms.validation.firstName.required')"
            [minlength]="getConfigValue('forms.validation.firstName.minLength')"
            [maxlength]="getConfigValue('forms.validation.firstName.maxLength')"
@@ -54,7 +53,6 @@
            placeholder="Middle name"
            autofocus
            fullWidth
-           [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
            [required]="getConfigValue('forms.validation.middleName.required')"
            [minlength]="getConfigValue('forms.validation.middleName.minLength')"
            [maxlength]="getConfigValue('forms.validation.middleName.maxLength')"
@@ -82,7 +80,6 @@
              placeholder="Last name"
              autofocus
              fullWidth
-             [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
              [required]="getConfigValue('forms.validation.lastName.required')"
              [minlength]="getConfigValue('forms.validation.lastName.minLength')"
              [maxlength]="getConfigValue('forms.validation.lastName.maxLength')"
@@ -137,7 +134,7 @@
     </nb-select>
   </div>
 
-  <div class="form-control-group">
+  <!-- <div class="form-control-group">
     <label class="label" for="input-pincode">Account Pin code:</label>
     <input nbInput
            type="number"
@@ -156,7 +153,7 @@
         Account Pin code is required!
       </p>
     </ng-container>
-  </div>
+  </div> -->
 
   <div class="form-control-group">
       <label class="label" for="input-address">Address:</label>
@@ -168,7 +165,6 @@
              placeholder="Address"
              autofocus
              fullWidth
-             [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
              [required]="getConfigValue('forms.validation.address.required')"
              [attr.aria-invalid]="address.invalid && address.touched ? true : null">
       <ng-container *ngIf="address.invalid && address.touched">
@@ -223,7 +219,6 @@
            placeholder="User name"
            autofocus
            fullWidth
-           [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
            [required]="getConfigValue('forms.validation.userName.required')"
            [minlength]="getConfigValue('forms.validation.userName.minLength')"
            [maxlength]="getConfigValue('forms.validation.userName.maxLength')"
@@ -250,7 +245,6 @@
            name="password"
            placeholder="Password"
            fullWidth
-           [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
            [required]="getConfigValue('forms.validation.password.required')"
            [minlength]="getConfigValue('forms.validation.password.minLength')"
            [maxlength]="getConfigValue('forms.validation.password.maxLength')"
@@ -278,7 +272,6 @@
            name="rePass"
            placeholder="Confirm Password"
            fullWidth
-           [status]="email.dirty ? (email.invalid || password.value != rePass.value  ? 'danger' : 'success') : ''"
            [required]="getConfigValue('forms.validation.password.required')"
            [attr.aria-invalid]="rePass.invalid && rePass.touched ? true : null">
     <ng-container *ngIf="rePass.invalid && rePass.touched">

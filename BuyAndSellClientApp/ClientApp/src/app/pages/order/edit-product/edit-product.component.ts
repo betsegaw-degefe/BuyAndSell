@@ -5,6 +5,8 @@ import { ProductAttributeService } from 'src/app/service/product-attribute.servi
 import { Router } from '@angular/router';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 
 @Component({
   selector: 'app-edit-product',
@@ -24,10 +26,19 @@ export class EditProductComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   private unsubscribe$: Subject<any> = new Subject<any>();
 
+  // Variables related with success toast.
+  destroyByClick = true;
+  duration = 4000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  status: NbToastStatus = NbToastStatus.SUCCESS;
+  title = 'Success!';
 
   constructor(private sharedData: SharedDataService,
     private productAttributeValueService: ProductAttributeValueService,
     private productAttributeService: ProductAttributeService,
+    private toastrService: NbToastrService,
     private router: Router
   ) {
     this.subscription = this.sharedData.currentMessage
@@ -102,8 +113,32 @@ export class EditProductComponent implements OnInit, OnDestroy {
     this.productAttributeValueService.update(this.productAttributeValue)
       .subscribe(res => {
         if (res) {
+          this.showToast(this.status, this.title, `Your Product Updated successfully!`);
           console.log(res);
         }
       })
+  }
+
+  /**
+   * A toast for success message
+   * @param type : type of toast. eg. success, warning...
+   * @param title : title of the toast. 
+   * @param body : message for the toast.
+   */
+  private showToast(type: NbToastStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: this.destroyByClick,
+      duration: this.duration,
+      hasIcon: this.hasIcon,
+      position: this.position,
+      preventDuplicates: this.preventDuplicates,
+    };
+    const titleContent = title ? `${title}` : '';
+
+    this.toastrService.show(
+      body,
+      `${titleContent}`,
+      config);
   }
 }

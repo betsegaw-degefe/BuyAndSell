@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
 import { parse } from 'querystring';
 import { UserRoleService } from 'src/app/service/user-role.service';
+import { NbToastStatus } from '@nebular/theme/components/toastr/model';
+import { NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 
 
 @Component({
@@ -18,8 +20,18 @@ export class RegisterComponent extends NbRegisterComponent implements OnInit {
     user: any = {};
     public userRole: any = {};
 
+    // Variables related with success toast.
+    destroyByClick = true;
+    duration = 4000;
+    hasIcon = true;
+    position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+    preventDuplicates = false;
+    status: NbToastStatus = NbToastStatus.SUCCESS;
+    title = 'Success!';
+
     constructor(private authService: AuthService,
         service: NbAuthService,
+        private toastrService: NbToastrService,
         private userRoleService: UserRoleService,
         @Inject(NB_AUTH_OPTIONS) protected options = {}, cd: ChangeDetectorRef, router: Router) {
         super(service, options, cd, router)
@@ -46,11 +58,36 @@ export class RegisterComponent extends NbRegisterComponent implements OnInit {
                     .subscribe(res => {
                         if (res) {
                             console.log(res);
+                            this.showToast(this.status, this.title, `Welcome to Dagu Buy and sell!`);
                             this.router.navigate(['auth/login']);
                         }
                     })
             }, (err) => {
                 console.log(err);
             });
+    }
+
+
+    /**
+   * A toast for success message
+   * @param type : type of toast. eg. success, warning...
+   * @param title : title of the toast. 
+   * @param body : message for the toast.
+   */
+    private showToast(type: NbToastStatus, title: string, body: string) {
+        const config = {
+            status: type,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+        };
+        const titleContent = title ? `${title}` : '';
+
+        this.toastrService.show(
+            body,
+            `${titleContent}`,
+            config);
     }
 }
