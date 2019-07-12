@@ -67,6 +67,7 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { AuthService } from '../service/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { RouterModule } from '@angular/router';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -101,6 +102,7 @@ const NB_MODULES = [
   NbRadioModule,
   NbSelectModule,
   NbTooltipModule,
+  RouterModule,
 ];
 
 const COMPONENTS = [

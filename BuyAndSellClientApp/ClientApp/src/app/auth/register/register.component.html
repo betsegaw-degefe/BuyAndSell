@@ -10,26 +10,31 @@
 <nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success" role="alert">
   <p class="alert-title"><b>Hooray!</b></p>
   <ul class="alert-message-list">
+    <li *ngFor="let message of messages" class="alert-message ">{{ message }}</li>
+  </ul>
+</nb-alert>
+
+<!-- <nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success" role="alert">
+  <p class="alert-title"><b>Hooray!</b></p>
+  <ul class="alert-message-list">
     <li *ngFor="let message of messages" class="alert-message">{{ message }}</li>
+  </ul>
+</nb-alert> -->
+<nb-alert outline="danger" role="alert" *ngIf="message">
+  <ul class="alert-message-list">
+    <li class="alert-message text-danger">{{ message }}</li>
   </ul>
 </nb-alert>
 
 <form (ngSubmit)="register()" #form="ngForm" aria-labelledby="title">
 
   <div class="form-control-group">
-    <label class="label" for="input-first-name">* First name:</label>
-    <input nbInput
-           [(ngModel)]="user.firstName"
-           #firstName="ngModel"
-           id="input-first-name"
-           name="firstName"
-           placeholder="First name"
-           autofocus
-           fullWidth
-           [required]="getConfigValue('forms.validation.firstName.required')"
-           [minlength]="getConfigValue('forms.validation.firstName.minLength')"
-           [maxlength]="getConfigValue('forms.validation.firstName.maxLength')"
-           [attr.aria-invalid]="firstName.invalid && firstName.touched ? true : null">
+    <label class="label" for="input-first-name"><span class="text-danger">*</span> First name:</label>
+    <input nbInput [(ngModel)]="user.firstName" #firstName="ngModel" id="input-first-name" name="firstName"
+      placeholder="First name" autofocus fullWidth [required]="getConfigValue('forms.validation.firstName.required')"
+      [minlength]="getConfigValue('forms.validation.firstName.minLength')"
+      [maxlength]="getConfigValue('forms.validation.firstName.maxLength')"
+      [attr.aria-invalid]="firstName.invalid && firstName.touched ? true : null">
     <ng-container *ngIf="firstName.invalid && firstName.touched">
       <p class="error-message" *ngIf="firstName.errors?.required">
         First name is required!
@@ -44,19 +49,12 @@
   </div>
 
   <div class="form-control-group">
-    <label class="label" for="input-middle-name">* Middle name:</label>
-    <input nbInput
-           [(ngModel)]="user.middleName"
-           #middleName="ngModel"
-           id="input-middle-name"
-           name="middleName"
-           placeholder="Middle name"
-           autofocus
-           fullWidth
-           [required]="getConfigValue('forms.validation.middleName.required')"
-           [minlength]="getConfigValue('forms.validation.middleName.minLength')"
-           [maxlength]="getConfigValue('forms.validation.middleName.maxLength')"
-           [attr.aria-invalid]="middleName.invalid && middleName.touched ? true : null">
+    <label class="label" for="input-middle-name"><span class="text-danger">*</span> Middle name:</label>
+    <input nbInput [(ngModel)]="user.middleName" #middleName="ngModel" id="input-middle-name" name="middleName"
+      placeholder="Middle name" autofocus fullWidth [required]="getConfigValue('forms.validation.middleName.required')"
+      [minlength]="getConfigValue('forms.validation.middleName.minLength')"
+      [maxlength]="getConfigValue('forms.validation.middleName.maxLength')"
+      [attr.aria-invalid]="middleName.invalid && middleName.touched ? true : null">
     <ng-container *ngIf="middleName.invalid && middleName.touched">
       <p class="error-message" *ngIf="middleName.errors?.required">
         Middle name is required!
@@ -71,44 +69,31 @@
   </div>
 
   <div class="form-control-group">
-      <label class="label" for="input-last-name">Last name:</label>
-      <input nbInput
-             [(ngModel)]="user.lastName"
-             #lastName="ngModel"
-             id="input-last-name"
-             name="lastName"
-             placeholder="Last name"
-             autofocus
-             fullWidth
-             [required]="getConfigValue('forms.validation.lastName.required')"
-             [minlength]="getConfigValue('forms.validation.lastName.minLength')"
-             [maxlength]="getConfigValue('forms.validation.lastName.maxLength')"
-             [attr.aria-invalid]="lastName.invalid && lastName.touched ? true : null">
-      <ng-container *ngIf="lastName.invalid && lastName.touched">
-        <p class="error-message" *ngIf="lastName.errors?.required">
-          Last name is required!
-        </p>
-        <p class="error-message" *ngIf="lastName.errors?.minlength || lastName.errors?.maxlength">
-          Last name should contains
-          from {{getConfigValue('forms.validation.lastName.minLength')}}
-          to {{getConfigValue('forms.validation.lastName.maxLength')}}
-          characters
-        </p>
-      </ng-container>
-    </div>
+    <label class="label" for="input-last-name">Last name:</label>
+    <input nbInput [(ngModel)]="user.lastName" #lastName="ngModel" id="input-last-name" name="lastName"
+      placeholder="Last name" autofocus fullWidth [required]="getConfigValue('forms.validation.lastName.required')"
+      [minlength]="getConfigValue('forms.validation.lastName.minLength')"
+      [maxlength]="getConfigValue('forms.validation.lastName.maxLength')"
+      [attr.aria-invalid]="lastName.invalid && lastName.touched ? true : null">
+    <ng-container *ngIf="lastName.invalid && lastName.touched">
+      <p class="error-message" *ngIf="lastName.errors?.required">
+        Last name is required!
+      </p>
+      <p class="error-message" *ngIf="lastName.errors?.minlength || lastName.errors?.maxlength">
+        Last name should contains
+        from {{getConfigValue('forms.validation.lastName.minLength')}}
+        to {{getConfigValue('forms.validation.lastName.maxLength')}}
+        characters
+      </p>
+    </ng-container>
+  </div>
 
   <div class="form-control-group">
-    <label class="label" for="input-birth-date">* Date of birth:</label>
-    <input nbInput
-           [(ngModel)]="user.dateOfBirth"
-           [nbDatepicker]="dateOfBirth"
-           #dateOfBirth="ngModel"
-           id="input-birth-date"
-           name="dateOfBirth"
-           placeholder="Date of birth"
-           autofocus
-           [required]="getConfigValue('forms.validation.dateOfBirth.required')"
-           [attr.aria-invalid]="dateOfBirth.invalid && dateOfBirth.touched ? true : null">
+    <label class="label" for="input-birth-date"><span class="text-danger">*</span> Date of birth:</label>
+    <input nbInput [(ngModel)]="user.dateOfBirth" [nbDatepicker]="dateOfBirth" #dateOfBirth="ngModel"
+      id="input-birth-date" name="dateOfBirth" placeholder="Date of birth" autofocus
+      [required]="getConfigValue('forms.validation.dateOfBirth.required')"
+      [attr.aria-invalid]="dateOfBirth.invalid && dateOfBirth.touched ? true : null">
     <nb-datepicker #dateOfBirth></nb-datepicker>
     <ng-container *ngIf="dateOfBirth.invalid && dateOfBirth.touched">
       <p class="error-message" *ngIf="dateOfBirth.errors?.required">
@@ -118,19 +103,11 @@
   </div>
 
   <div class="form-control-group">
-    <label class="label" for="input-gender">Gender:</label>
-    <nb-select 
-      [(ngModel)]="user.gender"
-      #gender="ngModel"
-      id="input-gender"
-      name="gender"
-      outline 
-      status="primary"
-      shape="rectangle"
-      placeholder="Select Gender" 
-      [(selected)]="selectedItem">
-          <nb-option value="male">Male</nb-option>
-          <nb-option value="female">Female</nb-option>
+    <label class="label" for="input-gender"><span class="text-danger">*</span> Gender:</label>
+    <nb-select [(ngModel)]="user.gender" #gender="ngModel" id="input-gender" name="gender" outline status="primary"
+      shape="rectangle" placeholder="Select Gender" [(selected)]="selectedItem">
+      <nb-option value="male">Male</nb-option>
+      <nb-option value="female">Female</nb-option>
     </nb-select>
   </div>
 
@@ -156,37 +133,23 @@
   </div> -->
 
   <div class="form-control-group">
-      <label class="label" for="input-address">Address:</label>
-      <input nbInput
-             [(ngModel)]="user.address"
-             #address="ngModel"
-             id="input-address"
-             name="address"
-             placeholder="Address"
-             autofocus
-             fullWidth
-             [required]="getConfigValue('forms.validation.address.required')"
-             [attr.aria-invalid]="address.invalid && address.touched ? true : null">
-      <ng-container *ngIf="address.invalid && address.touched">
-        <p class="error-message" *ngIf="address.errors?.required">
-          Address is required!
-        </p>
-      </ng-container>
-    </div>
-  
+    <label class="label" for="input-address">Address:</label>
+    <input nbInput [(ngModel)]="user.address" #address="ngModel" id="input-address" name="address" placeholder="Address"
+      autofocus fullWidth [required]="getConfigValue('forms.validation.address.required')"
+      [attr.aria-invalid]="address.invalid && address.touched ? true : null">
+    <ng-container *ngIf="address.invalid && address.touched">
+      <p class="error-message" *ngIf="address.errors?.required">
+        Address is required!
+      </p>
+    </ng-container>
+  </div>
+
   <div class="form-control-group">
-    <label class="label" for="input-email">Email address:</label>
-    <input nbInput
-           [(ngModel)]="user.email"
-           #email="ngModel"
-           id="input-email"
-           name="email"
-           pattern=".+@.+..+"
-           placeholder="Email address"
-           fullWidth
-           [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
-           [required]="getConfigValue('forms.validation.email.required')"
-           [attr.aria-invalid]="email.invalid && email.touched ? true : null">
+    <label class="label" for="input-email"><span class="text-danger">*</span> Email address:</label>
+    <input nbInput [(ngModel)]="user.email" #email="ngModel" id="input-email" name="email" pattern=".+@.+..+"
+      placeholder="Email address" fullWidth [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
+      [required]="getConfigValue('forms.validation.email.required')"
+      [attr.aria-invalid]="email.invalid && email.touched ? true : null">
     <ng-container *ngIf="email.invalid && email.touched">
       <p class="error-message" *ngIf="email.errors?.required">
         Email is required!
@@ -210,19 +173,12 @@
   </div> -->
 
   <div class="form-control-group">
-    <label class="label" for="input-last-name">User name:</label>
-    <input nbInput
-           [(ngModel)]="user.userName"
-           #userName="ngModel"
-           id="input-user-name"
-           name="userName"
-           placeholder="User name"
-           autofocus
-           fullWidth
-           [required]="getConfigValue('forms.validation.userName.required')"
-           [minlength]="getConfigValue('forms.validation.userName.minLength')"
-           [maxlength]="getConfigValue('forms.validation.userName.maxLength')"
-           [attr.aria-invalid]="userName.invalid && userName.touched ? true : null">
+    <label class="label" for="input-last-name"><span class="text-danger">*</span> User name:</label>
+    <input nbInput [(ngModel)]="user.userName" #userName="ngModel" id="input-user-name" name="userName"
+      placeholder="User name" autofocus fullWidth [required]="getConfigValue('forms.validation.userName.required')"
+      [minlength]="getConfigValue('forms.validation.userName.minLength')"
+      [maxlength]="getConfigValue('forms.validation.userName.maxLength')"
+      [attr.aria-invalid]="userName.invalid && userName.touched ? true : null">
     <ng-container *ngIf="userName.invalid && userName.touched">
       <p class="error-message" *ngIf="userName.errors?.required">
         User name is required!
@@ -236,19 +192,12 @@
     </ng-container>
   </div>
   <div class="form-control-group">
-    <label class="label" for="input-password">Password:</label>
-    <input nbInput
-           [(ngModel)]="user.password"
-           #password="ngModel"
-           type="password"
-           id="input-password"
-           name="password"
-           placeholder="Password"
-           fullWidth
-           [required]="getConfigValue('forms.validation.password.required')"
-           [minlength]="getConfigValue('forms.validation.password.minLength')"
-           [maxlength]="getConfigValue('forms.validation.password.maxLength')"
-           [attr.aria-invalid]="password.invalid && password.touched ? true : null">
+    <label class="label" for="input-password"><span class="text-danger">*</span> Password:</label>
+    <input nbInput [(ngModel)]="user.password" #password="ngModel" type="password" id="input-password" name="password"
+      placeholder="Password" fullWidth [required]="getConfigValue('forms.validation.password.required')"
+      [minlength]="getConfigValue('forms.validation.password.minLength')"
+      [maxlength]="getConfigValue('forms.validation.password.maxLength')"
+      [attr.aria-invalid]="password.invalid && password.touched ? true : null">
     <ng-container *ngIf="password.invalid && password.touched">
       <p class="error-message" *ngIf="password.errors?.required">
         Password is required!
@@ -261,28 +210,22 @@
       </p>
     </ng-container>
   </div>
-
   <div class="form-control-group">
-    <label class="label" for="input-re-password">Repeat password:</label>
-    <input nbInput
-           [(ngModel)]="user.confirmPassword"
-           #rePass="ngModel"
-           type="password"
-           id="input-re-password"
-           name="rePass"
-           placeholder="Confirm Password"
-           fullWidth
-           [required]="getConfigValue('forms.validation.password.required')"
-           [attr.aria-invalid]="rePass.invalid && rePass.touched ? true : null">
-    <ng-container *ngIf="rePass.invalid && rePass.touched">
-      <p class="error-message" *ngIf="rePass.errors?.required">
+    <label class="label" for="input-re-password"><span class="text-danger">*</span> Repeat password:</label>
+    <input nbInput [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" type="password" id="input-re-password"
+      name="confirmPassword" placeholder="Confirm Password" fullWidth
+      [required]="getConfigValue('forms.validation.confirmPassword.required')"
+      [attr.aria-invalid]="confirmPassword.invalid && confirmPassword.touched ? true : null">
+    <ng-container *ngIf="confirmPassword.touched">
+      <p class="error-message" *ngIf="confirmPassword.errors?.required">
         Password confirmation is required!
       </p>
-      <p class="error-message" *ngIf="password.value != rePass.value && !rePass.errors?.required">
+      <p class="error-message" *ngIf="user.password != user.confirmPassword">
         Password does not match the confirm password.
       </p>
     </ng-container>
   </div>
+  <div class="text-warning"><span class="text-danger">*</span> Required fields!</div>
 
   <div class="form-control-group accept-group" *ngIf="getConfigValue('forms.register.terms')">
     <nb-checkbox name="terms" [(ngModel)]="user.terms" [required]="getConfigValue('forms.register.terms')">
@@ -290,11 +233,7 @@
     </nb-checkbox>
   </div>
 
-  <button nbButton
-          fullWidth
-          status="success"
-          [disabled]="submitted || !form.valid"
-          [class.btn-pulse]="submitted">
+  <button nbButton fullWidth status="success" [disabled]="submitted || !form.valid" [class.btn-pulse]="submitted">
     Register
   </button>
 </form>
@@ -302,3 +241,5 @@
 <section class="another-action" aria-label="Sign in">
   Already have an account? <a class="text-link" routerLink="../login">Log in</a>
 </section>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>

@@ -8,6 +8,7 @@ import { NbDatepickerModule, NbToastrService } from '@nebular/theme';
 import { MatButtonModule, MatIconModule, MatProgressBarModule } from '@angular/material';
 import { MatFileUploadModule } from 'src/lib/matFileUpload';
 import { UserRoleService } from 'src/app/service/user-role.service';
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { UserRoleService } from 'src/app/service/user-role.service';
         MatIconModule,
         MatProgressBarModule,
         MatFileUploadModule,
-        
+        NgxLoadingModule
 
     ],
     declarations: [

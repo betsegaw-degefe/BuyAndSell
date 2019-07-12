@@ -28,10 +28,10 @@ export class AuthService {
         model.active = true;
         model.lastOnline = new Date().toLocaleDateString();
         return this.http.post<any>(this.actionUrl + 'register', model)
-            .pipe(
-                tap(_ => this.log('register')),
-                catchError(this.handleError('register', []))
-            );
+            // .pipe(
+            //     tap(_ => this.log('register')),
+            //     catchError(this.handleError('register', []))
+            // );
     }
 
     getUserById(id: number) {

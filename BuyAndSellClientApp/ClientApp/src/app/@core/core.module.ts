@@ -61,7 +61,7 @@ export const NB_CORE_PROVIDERS = [
         socialLinks: socialLinks,
       },
       validation: {
-        firstName:{
+        firstName: {
           required: true,
           minLength: 4,
           maxLength: 45,
@@ -79,15 +79,25 @@ export const NB_CORE_PROVIDERS = [
         dateOfBirth: {
           required: true,
         },
-        Gender:{
+        Gender: {
         },
-        pincode:{
+        pincode: {
           required: true,
         },
-        address:{
+        address: {
           required: false,
         },
         userName: {
+          required: true,
+          minLength: 4,
+          maxLength: 45,
+        },
+        password: {
+          required: true,
+          minLength: 4,
+          maxLength: 45,
+        },
+        confirmPassword: {
           required: true,
           minLength: 4,
           maxLength: 45,

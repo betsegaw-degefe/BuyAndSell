@@ -19,6 +19,8 @@ export class RegisterComponent extends NbRegisterComponent implements OnInit {
 
     user: any = {};
     public userRole: any = {};
+    message: any;
+    public loading = false;
 
     // Variables related with success toast.
     destroyByClick = true;
@@ -41,6 +43,8 @@ export class RegisterComponent extends NbRegisterComponent implements OnInit {
     }
 
     register() {
+        this.loading = true;
+        this.message = null;
         console.log(this.user.password);
         let address: Number = parseInt(<string>this.user.address);
         this.authService.register(this.user)
@@ -64,6 +68,9 @@ export class RegisterComponent extends NbRegisterComponent implements OnInit {
                     })
             }, (err) => {
                 console.log(err);
+                this.message = err.error
+                this.router.navigate(['auth/register']);
+                this.loading = false;
             });
     }
 
