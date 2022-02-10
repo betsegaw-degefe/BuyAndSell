@@ -42,7 +42,7 @@
     "ngx-pagination": "^4.0.0",
     "ngx-toggle-switch": "^2.0.5",
     "ngx-uploader": "^7.1.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "pace-js": "^1.0.2",
     "roboto-fontface": "^0.10.0",
     "rxjs": "~6.5.2",
